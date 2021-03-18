@@ -1,0 +1,323 @@
+body{
+    color: #000;
+    font-family: 'Lato', sans-serif;
+}
+h1, h2, h3, h4, h5, h6, p, a{
+    font-family: 'Lato', sans-serif;
+}
+h1, h2, h3, h4, h5, h6 { 
+    line-height: 1.4; 
+    font-weight: 400;
+}
+.btn{
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+.btn.active{
+    box-shadow: none;
+}
+.btn-default{
+    background: transparent;
+    border-width: 2px;
+    border-color: #000;
+    border-radius: 50px;
+    padding: 8px 24px;
+    color: #000;
+    font-weight: 600;
+}
+.btn-default:hover{
+    border-color: transparent;
+    background: #000;
+    color: #fff;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+.btn-primary{
+    background: #000;
+    border: 0px;
+    border-radius: 50px;
+    padding: 8px 24px;
+    color: #fff;
+    font-weight: 600;
+}
+.btn-primary:hover{
+    background: #8C8C8C;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+
+
+
+section{
+    padding: 100px 0px;
+}
+
+@media only screen and (min-width: 1400px) and (max-width: 1920px) {
+    .container { 
+        width: 75%; 
+    }
+}
+/* Navbar (menubar) */
+.logo .logo-img { 
+    float: left; 
+    height: 60px; 
+    width: auto; 
+    line-height: 110px;
+}
+.navbar-default{
+    background: transparent;
+    border: 0px; 
+}
+.navbar-fixed-top{
+    -webkit-transition: 0.2s all ease-in-out;
+    -moz-transition: 0.2s all ease-in-out;
+    -o-transition: 0.2s all ease-in-out;
+    -ms-transition: 0.2s all ease-in-out;
+    transition: 0.2s all ease-in-out;
+}
+.top-nav-collapse{
+    background: #fff;
+    border: 0px;
+    box-shadow: 0px 1px 3px #7f7f7f;
+    padding-top: 0px;
+    -webkit-transition: 0.s all ease-in-out;
+    -moz-transition: 0.2s all ease-in-out;
+    -o-transition: 0.2s all ease-in-out;
+    -ms-transition: 0.2s all ease-in-out;
+    transition: 0.2s all ease-in-out;
+}
+.top-nav-collapse .logo>.logo-img{
+    height: 40px;
+    width: auto;
+}
+.top-nav-collapse .navbar-brand{
+    padding-top: 5px;
+}
+@media only screen and (max-width: 480px){
+    .logo .logo-img, .top-nav-collapse .logo>.logo-img{ 
+        height: 36px; 
+        width: auto; 
+    }
+}
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+    .logo .logo-img{ 
+        height: 48px; 
+        width: auto; 
+    }
+}
+
+@media only screen and (min-width: 960px) and (max-width: 1400px) {
+    .navbar-default{
+        padding-top: 30px;
+    }
+    .top-nav-collapse{
+        padding-top: 0px;
+    }
+}
+@media only screen and (min-width: 1401px) and (max-width: 1920px) {
+    .navbar-default{
+        padding-top: 50px;
+    }
+    .top-nav-collapse{
+        padding-top: 0px;
+    }
+}
+.navbar-default .navbar-nav{
+    padding: 10px 0px;
+}
+.navbar-default .navbar-nav>li{
+    padding: 0px 16px;
+}
+.navbar-default .navbar-nav>li>a{
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #8C8C8C;
+    padding: 8px 0px;
+    font-weight: 400;
+    border-bottom: 2px solid transparent;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:active, .navbar-default .navbar-nav>li>a.active{
+    color: #000;
+    border-color: #000;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+.sub-menu-list{
+    display: none;
+}
+.sub-menu:hover .sub-menu-list{
+    display: block;
+    position: absolute;
+    background: #f2f2f2;
+    width: 160px;
+    left: 0px;
+    padding: 0px;
+    border-radius: 0px;
+    border: 0px;
+}
+.sub-menu-list li>a{
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #8C8C8C;
+    padding: 8px 16px;
+    font-weight: 400;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+.sub-menu-list li>a:hover, .sub-menu-list li>a:focus, .sub-menu-list li>a:active, .sub-menu-list li>a.active{
+    color: #fff;
+    background: #000;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+
+
+
+/* call to action */
+#call-to-action{
+    background: #f9f9f9;
+}
+#call-to-action .title-hero{
+    font-weight: 100;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+#call-to-action .sub-title-hero{
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-bottom: 0px;
+    text-transform: lowercase;
+}
+#call-to-action form input {
+    margin: 30px 20%;
+    width: 60%;
+    margin-bottom: 20px;
+    color: #8c8c8c;
+    background: transparent;
+    border-radius: 0px;
+    border: 0px;
+    border-bottom: 1px solid #8c8c8c;
+    box-shadow: none;
+    padding: 8px 24px;
+    font-weight: 300;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+#call-to-action form input:hover, #call-to-action form input:active, #call-to-action form input:focus, #call-to-action form input.active{
+    border-color: #000;
+    color: #000;
+    font-size: 20px;
+    height: 48px;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+@media only screen and (min-width: 1401px) and (max-width: 1920px) {
+    #call-to-action .title-hero{
+        font-size: 62px;
+    }
+    #call-to-action .sub-title-hero{
+        font-size: 24px;
+    }
+}
+@media only screen and (min-width: 1025px) and (max-width: 1400px) {
+    #call-to-action .title-hero{
+        font-size: 62px;
+    }
+    #call-to-action .sub-title-hero{
+        font-size: 24px;
+    }
+}
+
+
+
+/* footer  */
+footer { 
+    padding: 120px 0px 40px 0px; 
+}
+footer .logo{
+    height: 42px;
+    width: auto;
+    margin-bottom: 10px;
+}
+
+footer .social-icons { 
+    margin-top: -30px;
+}
+footer .social-icons a { 
+    font-size: 18px; 
+    margin: 0px 7px; 
+    color: #8c8c8c;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+footer .social-icons a:hover { 
+    color: #000;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+footer .credit{
+    text-align: right;
+}
+@media only screen and (max-width: 480px){
+    footer { 
+        padding: 70px 0px 40px 0px; 
+    }
+    footer .logo{ 
+        height: 32px; 
+        width: auto; 
+    }
+    footer img{
+        margin: 0px auto;
+        text-align: center;
+    }
+    footer .copyright{
+        margin-top: 60px;
+        text-align: center;
+    }
+    footer .social-icons{
+        position: absolute;
+        bottom: 70px;
+        width: 90%;
+        text-align: center;
+    }
+    footer .credit{
+        text-align: center;
+    }
+}
