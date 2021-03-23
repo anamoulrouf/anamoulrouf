@@ -3,6 +3,20 @@ header{
     background: #f9f9f9;
     padding-top: 192px;
 }
+
+header .title-hero{
+    font-weight: 700;
+    margin-top: -16px;
+    margin-bottom: 0px;
+}
+header .short-description{
+    margin-top: 24px;
+}
+header .h2.sub-title-hero{
+    font-weight: 200;
+}
+
+
 header .btn{
     margin-top: 24px;
     margin-bottom: 144px;
@@ -19,6 +33,8 @@ header:after{
     background-position: top;
 }
 
+
+
 @media only screen and (min-width: 668px) and (max-width: 768px) {
     header{}
 }
@@ -31,4 +47,10 @@ header:after{
 
 @media only screen and (min-width: 1401px) and (max-width: 1920px) {
     header{}
+}
+
+
+section img{
+    width: 512px;
+    height: 512px;
 }
