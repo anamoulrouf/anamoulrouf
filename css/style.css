@@ -79,7 +79,7 @@ p{
   line-height: 1.5;
 }
 .p-lg{
-    font-size: 1.05em;
+    font-size: 1.15em;
 }
 h6, .h6, .p-sm{
   font-size: .875em;
@@ -227,7 +227,7 @@ a:focus, a:hover, a:active{
 
 
 section{
-    padding: 500px 0px;
+    padding: 256px 0px;
 }
 
 @media only screen and (min-width: 1400px) and (max-width: 1920px) {
