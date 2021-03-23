@@ -5,16 +5,16 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <meta name="description" content="GeckPro">
 	    <meta name="author" content="ThemesPro">
-	    <title>ThemesGeck: Creative Theme Agency</title>
+	    <title>Anamoul Rouf: UX Designer | Problem Solver | Researcher | AR & VR Enthusiast</title>
 	    <link rel="icon" href="img/fabicon.png">
 	    <!-- Bootstrap Core CSS -->
-	    <link href="css/bootstrap.min.css" rel="stylesheet">
-	    <!-- FontAwsome -->
-	    <link href="css/font-awesome.min.css" rel="stylesheet">
+	    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+	    <!-- icon-font -->
+	    <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
+	    <!-- Fonts: -->
+	    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet" type="text/css">
 	    <!-- Animate CSS -->
 	    <link href="css/animate.min.css" rel="stylesheet">
-	    <!-- Fonts: -->
-	    <link href='https://fonts.googleapis.com/css?family=Lato:400,100,300,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
 
 	    <link href="css/style.css" rel="stylesheet">
 	    <link href="css/index.css" rel="stylesheet">
@@ -22,180 +22,77 @@
 		<script src="js/modernizr.custom.12691.js"></script>
 	</head>
 	<body>
-		<nav class="navbar navbar-default navbar-fixed-top">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-				        <span class="sr-only">Toggle navigation</span>
-				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span>
-		      		</button>
-		      		<a class="navbar-brand logo" href="#"><img src="img/logo.png" class="img-responsive logo-img"></a>
-		      	</div>
-		      	<div class="collapse navbar-collapse" id="navbar">
-		      		<ul class="nav navbar-nav navbar-right">
-		      			<li><a class="sr-only" href="index.html">home</a></li>
-		      			<li><a href="#">themes</a></li>
-				        <li class="dropdown sub-menu">
-				        	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">pages</a>
-				        	<ul class="dropdown-menu sub-menu-list">
-				        		<li><a href="#">about us</a></li>
-				        		<li><a href="#">services</a></li>
-					        </ul>
-				        </li>
-				        <li><a href="#">blog</a></li>
-				        <li><a href="#">say hello</a></li>
-				    </ul>
-		      	</div>
+		<nav class="navbar navbar-expand-lg navbar-light fixed-top justify-content-md-center">
+			<div class="container-fluid">
+				<a class="navbar-brand logo" href="index.html"><img src="img/logo.svg" class="img-responsive logo-img"></a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a href="works.html">Recent Works</a>
+						</li>
+						<li class="nav-item">
+							<a href="about.html">About Me</a>
+						</li>
+						<li class="nav-item">
+							<a href="blog.html">Blog</a>
+						</li>
+					</ul>
+				</div>
+				<div class="d-flex" id="navbarSupportedContent">
+					<a href="#call-to-action" class="btn btn-primary">Say Hello</a>
+				</div>
 			</div>
 		</nav>
+
+
 		<header>
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12 text-center content-hero">
-						<h4 class="sub-title-hero text-muted">Every design tells a story</h4>
-						<h1 class="title-hero">We'll help you to tell your's</h1>
-						<a href="#" class="btn btn-primary wow zoomIn">Explore</a>
+			<div class="container-fluid">
+				<div class="row justify-content-md-center">
+					<div class="col-lg-6 col-sm-12 text-center">
+						<p class="h3 sub-title-hero text-muted">Hi, I'm </p>
+						<p class="h1 title-hero">Anamoul Rouf</p>
+						<p class="h4 sub-title-hero text-muted">User-Centered Product Designer</p>
+						<p>I’m a passionate, organized, and experienced design professional with 6+ years of experience. I’ve helped organizations and agencies to develop easy, simple, functional, delightful, and persuasive experience for product users through the user-centric design approach.</p>
+						<a href="#call-to-action" class="btn btn-primary">Say Hello</a>
 					</div>
 				</div>
 			</div>
 		</header>
-		<section id="themes-section">
-			<div class="container">
-				<div class="row">
-					<div id="themes-items">
-						<!-- Mixtup Controllar -->
-		        		<div class="col-lg-2 col-sm-12">
-		        			<ul class="list-unstyled controls">
-							    <li><a class="filter btn btn-filter" data-filter="all">recent</a></li>
-								<li><a class="filter btn btn-filter" data-filter=".business">business</a></li>
-								<li><a class="filter btn btn-filter" data-filter=".blog">blog</a></li>
-								<li><a class="filter btn btn-filter" data-filter=".portfolio">portfolio</a></li>
-								<li><a class="filter btn btn-filter" data-filter=".restaurant">restaurant</a></li>
-								<li><a class="filter btn btn-filter" data-filter=".free">free</a></li>
-								<li><a class="btn btn-filter" href="">More themes</a></li>
-							</ul>
-		        		</div>
-						<div class="col-lg-10 col-sm-12">
-							<div class="row">
-								<!-- Portfolio 1 -->
-								<div class="col-lg-4 col-sm-6 col-sx-12 mix business restaurant" data-myorder="1">
-									<figure class="wow zoomIn">
-										<img class="img-responsive" src="img/themes/theme-1.jpg">
-										<a href="#">
-											<figcaption class="text-center">
-												<h4>Project 1</h4>
-												<hr/>
-												<p class="text-muted">Our websites are simply good!</p>
-											</figcaption>
-										</a>
-									</figure>
-								</div>
-								<!-- Portfolio 2 -->
-								<div class="col-lg-4 col-sm-6 col-sx-12 mix blog text-center" data-myorder="2">
-									<figure class="wow zoomIn">
-										<img class="img-responsive" src="img/themes/theme-2.jpg">
-										<a href="#">
-											<figcaption>
-												<h4>Project 2</h4>
-												<hr/>
-												<p class="text-muted">Our websites are simply good!</p>
-											</figcaption>
-										</a>
-									</figure>
-								</div>
-								<!-- Portfolio 3 -->
-								<div class="col-lg-4 col-sm-6 col-sx-12 mix portfolio restaurant free text-center" data-myorder="3">
-									<figure class="wow zoomIn">
-										<img class="img-responsive" src="img/themes/theme-3.jpg">
-										<a href="#">
-											<figcaption>
-												<h4>Project 3</h4>
-												<hr/>
-												<p>Our websites are simply good!</p>
-											</figcaption>
-										</a>
-									</figure>
-								</div>
-								<!-- Portfolio 4 -->
-								<div class="col-lg-4 col-sm-6 col-sx-12 mix business free text-center" data-myorder="4">
-									<figure class="wow zoomIn">
-										<img class="img-responsive" src="img/themes/theme-4.jpg">
-										<a href="#">
-											<figcaption>
-												<h4>Project 4</h4>
-												<hr/>
-												<p>Our websites are simply good!</p>
-											</figcaption>
-										</a>
-									</figure>
-								</div>
-								<!-- Portfolio 5 -->
-								<div class="col-lg-4 col-sm-6 col-sx-12 mix blog text-center" data-myorder="5">
-									<figure class="wow zoomIn">
-										<img class="img-responsive" src="img/themes/theme-5.jpg">
-										<a href="#">
-											<figcaption>
-												<h4>Project 5</h4>
-												<hr/>
-												<p>Our websites are simply good!</p>
-											</figcaption>
-										</a>
-									</figure>
-								</div>
-								<!-- Portfolio 6 -->
-								<div class="col-lg-4 col-sm-6 col-sx-12 mix portfolio free text-center" data-myorder="6">
-									<figure class="wow zoomIn">
-										<img class="img-responsive" src="img/themes/theme-6.jpg">
-										<a href="#">
-											<figcaption>
-												<h4>Project 6</h4>
-												<hr/>
-												<p>Our websites are simply good!</p>
-											</figcaption>
-										</a>
-									</figure>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+
+		<section>
+			<p class="display-1 text-center">Portfolio will goes here</p>
 		</section>
-		<section id="call-to-action">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-8 col-lg-push-2 col-sm-12 text-center">
-						<h4 class="sub-title-hero text-muted">We will contact you!</h4>
-						<h1 class="title-hero">Leave Your E-mail Address</h1>
-						<form name="newsletter" role="form" action="#" method="post">
-	                        <input type="email" class="form-control text-center" id="InputEmail" placeholder="enter email address here" required>
-	                        <button type="submit" class="btn btn-primary">Send Email</button>
-	                    </form>
-					</div>
-				</div>
-			</div>
+
+		<section>
+			<p class="display-1 text-center">Contact Form</p>
 		</section>
+
+
+		
+
+
+		
 		<footer>
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-12 col-sm-12 col-sx-12">
-						<img class="img-responsive logo" src="img/logo.png">
-					</div>
-					<div class="clearfix"></div>
-					<div class="col-lg-6 col-sm-6 col-sx-12">
-						<p class="copyright">© Copyright 2015</p>
-					</div>
-					<div class="col-lg-6 col-sm-6 col-sx-12">
-						<div class="text-right social-icons">
-							<a href="#"><i class="fa fa-twitter"></i></a>
-							<a href="#"><i class="fa fa-facebook"></i></a>
-							<a href="#"><i class="fa fa-behance"></i></a>
-							<a href="#"><i class="fa fa-dribbble"></i></a>
+					<div class="col-lg-12 col-sm-12 text-center">
+						<img class="img-responsive logo" src="img/logo.svg">
+						<div class="footer-contact text-left">
+							<a class="" href="mailto:anamoulrouf.bd@gmail.com">anammoulrouf.bd@gmail.com</a><br>
+							<a class="" href="callto:+8801759693045">+8801759693045</a>
 						</div>
-						<p class="credit">Design & Developed by ThemesGeck</p>
+						<div class="text-right social-icons">
+							<a class="linkedin" href="https://www.linkedin.com/in/roufuxdesigner/" target="blank"><i class="lni lni-linkedin-original"></i></a>
+							<a class="behance" href="https://www.behance.net/roufuxdesigner" target="blank"><i class="lni lni-behance-original"></i></a>
+							<a class="dribbble" href="https://dribbble.com/roufuxdesigner" target="blank"><i class="lni lni-dribbble"></i></a>
+							<a class="twitter" href="https://twitter.com/anamoulrouf" target="blank"><i class="lni lni-twitter-original"></i></a>
+						</div>
+						<p class="p-sm">© Copyright 2021.</p>
 					</div>
+					<div class="clear"></div>
 				</div>
 			</div>
 		</footer>
@@ -203,13 +100,9 @@
 
 
 		<!-- jQuery Version 1.11.0 -->
-	    <script src="js/jquery-1.12.0.min.js"></script>
+	    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	    <!-- Bootstrap Core JavaScript -->
-	    <script src="js/bootstrap.min.js"></script>
-	    <!-- Easing: Plugin JavaScript -->
-	    <script src="js/jquery.easing.min.js"></script>
-	    <!-- Mixitup: Plugin JavaScript -->
-	    <script src="js/jquery.mixitup.min.js"></script>
+	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 	    <!-- WOW JS: Plugin JavaScript  -->
 	    <script type="text/javascript" src="js/wow.min.js"></script>
 	    <!-- Main -->

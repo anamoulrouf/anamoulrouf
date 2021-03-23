@@ -1,171 +1,34 @@
 /* header (hero) Area */
 header{
-    background: url(../img/hero.svg) no-repeat #f9f9f9;
+    background: #f9f9f9;
+    padding-top: 192px;
 }
-header .title-hero{
-    font-weight: 100;
-    margin-top: 0px;
-    margin-bottom: 20px;
+header .btn{
+    margin-top: 24px;
+    margin-bottom: 144px;
 }
-header .sub-title-hero{
-    font-weight: 400;
-    letter-spacing: 1px;
-    margin-bottom: 0px;
-    text-transform: lowercase;
+
+header:after{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 240px;
+    background-color: transparent;
+    background: url(../img/hero-img.png) no-repeat #f9f9f9;
+    background-position: center;
+    background-position: top;
 }
 
 @media only screen and (min-width: 668px) and (max-width: 768px) {
-    header{
-        background-size: 105% auto;
-        background-position: 50% 245px;
-        padding: 170px 0px 0px;
-    }
-    .content-hero {
-        margin-bottom: 170px;
-    }
+    header{}
 }
 @media only screen and (min-width: 769px) and (max-width: 1024px) {
-    header{
-        background-size: 95% auto;
-        background-position: 50% 275px;
-        padding: 200px 0px 0px;
-    }
-    .content-hero {
-        margin-bottom: 200px;
-    }
+    header{}
 }
 @media only screen and (min-width: 1025px) and (max-width: 1400px) {
-    header{
-        background-size: 95% auto;
-        background-position: 50% 205px;
-        padding: 200px 0px 0px;
-    }
-    .content-hero {
-        margin-bottom: 200px;
-    }
-    header .title-hero{
-        font-size: 62px;
-    }
-    header .sub-title-hero{
-        font-size: 24px;
-    }
+    header{}
 }
 
 @media only screen and (min-width: 1401px) and (max-width: 1920px) {
-    header{
-        background-size: 82% auto;
-        padding: 260px 0px 0px 0px;
-        background-position: 50% 230px;
-    }
-    .content-hero{
-        margin-bottom: 280px;
-    }
-    header .title-hero{
-        font-size: 62px;
-    }
-    header .sub-title-hero{
-        font-size: 24px;
-    }
-}
-
-
-/* themes area */
-.btn-filter{
-    box-shadow: none;
-    padding: 8px 4px;
-    font-weight: 600;
-    color: #8c8c8c;
-    border: 0px;
-    border-radius: 0px;
-    border-bottom: 2px solid transparent;
-}
-.btn-filter.active{
-    border-color: #000;
-    color: #000;
-    margin: 10px 0px;
-}
-
-
-#themes-items .mix{
-    display: none;
-}
-#themes-items figure{
-    margin-bottom: 30px;
-}
-#themes-items figcaption{
-    display: none;
-    -webkit-transition: 0.3s all ease-in-out;
-    -moz-transition: 0.3s all ease-in-out;
-    -o-transition: 0.3s all ease-in-out;
-    -ms-transition: 0.3s all ease-in-out;
-    transition: 0.3s all ease-in-out;
-}
-#themes-items figure img{
-    -webkit-transition: 0.3s all ease-in-out;
-    -moz-transition: 0.3s all ease-in-out;
-    -o-transition: 0.3s all ease-in-out;
-    -ms-transition: 0.3s all ease-in-out;
-    transition: 0.3s all ease-in-out;
-}
-#themes-items figure:hover img{
-    opacity: .05;
-    -webkit-transition: 0.3s all ease-in-out;
-    -moz-transition: 0.3s all ease-in-out;
-    -o-transition: 0.3s all ease-in-out;
-    -ms-transition: 0.3s all ease-in-out;
-    transition: 0.3s all ease-in-out;
-}
-#themes-items figure:hover figcaption{
-    display: block;
-    position: absolute;
-    top: 40%;
-    width: 100%;
-    -webkit-transition: 0.3s all ease-in-out;
-    -moz-transition: 0.3s all ease-in-out;
-    -o-transition: 0.3s all ease-in-out;
-    -ms-transition: 0.3s all ease-in-out;
-    transition: 0.3s all ease-in-out;
-}
-#themes-items figure figcaption h4, #themes-items figure figcaption p{
-    color: #000;
-}
-#themes-items figure figcaption h4 {
-    font-size: 24px;
-    letter-spacing: 1px;
-    font-weight: 600;
-}
-#themes-items figure figcaption hr {
-    border-top: 2px solid #8c8c8c;
-    width: 40%;
-    margin: 10px 30%;
-}
-
-@media only screen and (min-width: 668px) and (max-width: 768px) {
-    #themes-items .controls{
-        margin-bottom: 60px;
-    }
-    #themes-items .controls li{
-        float: left;
-        margin: 0px 10px;
-    }
-    #themes-items figure:hover figcaption{
-        top: 35%;
-    }
-    #themes-items figure figcaption h4 {
-        font-size: 18px;
-    }
-    .btn-filter{
-        font-size: 12px
-    }
-    .btn-filter.active{
-        margin: 0px;
-    }
-}
-@media only screen and (min-width: 960px) and (max-width: 1400px) {
-    #themes-items figure:hover figcaption{
-        top: 35%;
-    }
-    #themes-items figure figcaption h4 {
-        font-size: 20px;
-    }
+    header{}
 }
