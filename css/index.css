@@ -1,0 +1,34 @@
+/* header (hero) Area */
+header{
+    background: #f9f9f9;
+    padding-top: 192px;
+}
+header .btn{
+    margin-top: 24px;
+    margin-bottom: 144px;
+}
+
+header:after{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 240px;
+    background-color: transparent;
+    background: url(../img/hero-img.png) no-repeat #f9f9f9;
+    background-position: center;
+    background-position: top;
+}
+
+@media only screen and (min-width: 668px) and (max-width: 768px) {
+    header{}
+}
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+    header{}
+}
+@media only screen and (min-width: 1025px) and (max-width: 1400px) {
+    header{}
+}
+
+@media only screen and (min-width: 1401px) and (max-width: 1920px) {
+    header{}
+}
