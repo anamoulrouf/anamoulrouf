@@ -1,14 +1,15 @@
 body{
     color: #000;
     font-family: 'Lato', sans-serif;
+    background: #fdfdfd;
 }
 
 
 /* ---Typhography--- */
 
 body{
-  font-family: 'Lato', sans-serif;
-  font-size: 16px;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
     font-weight: 300;
 }
 /* ---Typhography Responsive--- */
@@ -93,15 +94,50 @@ h6, .h6, .p-sm{
 
 a, a:focus, a:hover, a:active{
     text-decoration: none;
-    font-size: 1em;
     letter-spacing: 1px;
     font-weight: 600;
 }
 a{
-    color: #212121;
+    color: #424242;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
 }
 a:focus, a:hover, a:active{
-    ccolor: #000;
+    color: #000;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+
+
+.font-weight-100{
+    font-weight: 100;
+}
+.font-weight-200{
+    font-weight: 200;
+}
+.font-weight-300{
+    font-weight: 300;
+}
+.font-weight-400{
+    font-weight: 400;
+}
+.font-weight-500{
+    font-weight: 500;
+}
+.font-weight-600{
+    font-weight: 600;
+}
+.font-weight-700{
+    font-weight: 700;
+}
+.font-weight-800{
+    font-weight: 800;
 }
 
 
@@ -128,22 +164,35 @@ a:focus, a:hover, a:active{
     border-radius: 3em;
     font-weight: 600;
     border: 0px;
+    border-color: transparent;
     padding: .5em 1.25em;
     box-shadow: none;
-}
-
-.btn, .btn:hover, .btn:focus, .btn:active, .btn.active, .btn.disable{
     -webkit-transition: 0.3s all ease-in-out;
     -moz-transition: 0.3s all ease-in-out;
     -o-transition: 0.3s all ease-in-out;
     -ms-transition: 0.3s all ease-in-out;
     transition: 0.3s all ease-in-out;
 }
+.btn-sm{
+    font-size: .75em;
+}
+.btn-lg{
+    font-size: 1.15em;
+}
+.btn:hover, .btn:focus, .btn:active, .btn.active, .btn.disable{
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+    box-shadow: 0 0 24px 0.48rem #42424208;
+    border-color: transparent;
+}
 .btn-primary{
-    background: #212121;
+    background: #424242;
     color: #fff;
 }
-.btn-primary:hover{
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus{
     background: #000;
     color: #fff;
 }
@@ -153,7 +202,7 @@ a:focus, a:hover, a:active{
     background: #E843A1;
     color: #fff; 
 }
-.btn-secondary:hover{
+.btn-secondary:hover, .btn-secondary:active, .btn-secondary:focus{
     background: #E30070;
     color: #fff;
 }
@@ -163,7 +212,7 @@ a:focus, a:hover, a:active{
     background: #00C66D;
     color: #fff;  
 }
-.btn-success:hover{
+.btn-success:, .btn-success:active, .btn-success:focus{
     background: #00993B;
     color: #fff;
 }
@@ -173,7 +222,7 @@ a:focus, a:hover, a:active{
     background: #D10049;
     color: #fff; 
 }
-.btn-danger:hover{
+.btn-danger:, .btn-danger:active, .btn-danger:focus{
     background: #A80043;
     color: #fff;
 }
@@ -183,7 +232,7 @@ a:focus, a:hover, a:active{
     background: #F9A825;
     color: #fff;  
 }
-.btn-warning:hover{
+.btn-warning:, .btn-warningwarning:active, .btn-warningwarning:focus{
     background: #FF9B03;
     color: #fff;
 }
@@ -193,16 +242,16 @@ a:focus, a:hover, a:active{
     background: #4A6DFF;
     color: #fff;  
 }
-.btn-info:hover{
+.btn-info:, .btn-info:active, .btn-info:focus{
     background: #003CE6;
     color: #fff;
 }
 
 
 .btn-link{
-    color: #212121;
+    color: #424242;
 }
-.btn-link:hover{
+.btn-link:, .btn-link:active, .btn-link:focus{
     color: #000;
 }
 
@@ -226,15 +275,6 @@ a:focus, a:hover, a:active{
 
 
 
-section{
-    padding: 256px 0px;
-}
-
-@media only screen and (min-width: 1400px) and (max-width: 1920px) {
-    .container {}
-}
-
-
 /* Navbar (menubar) */
 .navbar .logo .logo-img { 
     height: 48px; 
@@ -243,6 +283,15 @@ section{
 .navbar{
     background: transparent;
     border: 0px;
+    width: 96%;
+    margin: 16px auto;
+}
+.top-nav-collapse{
+    background: #fff;
+    border-radius: 5rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    box-shadow: 0 0 24px 0.48rem #42424216;
 }
 .navbar, .top-nav-collapse{
     -webkit-transition: 0.5s all ease-in-out;
@@ -250,9 +299,6 @@ section{
     -o-transition: 0.5s all ease-in-out;
     -ms-transition: 0.5s all ease-in-out;
     transition: 0.5s all ease-in-out;
-}
-.top-nav-collapse{
-    background: #fff;
 }
 
 @media only screen and (max-width: 480px){
@@ -277,8 +323,7 @@ section{
 }
 .navbar .navbar-nav>li>a{
     text-decoration: none;
-    text-transform: uppercase;
-    color: #212121;
+    color: #424242;
     padding: 8px 0px;
     font-weight: 400;
     border-bottom: 2px solid transparent;
@@ -293,6 +338,60 @@ section{
     -o-transition: 0.3s all ease-in-out;
     -ms-transition: 0.3s all ease-in-out;
     transition: 0.3s all ease-in-out;
+}
+
+
+/* Form */
+form .form-group{
+    margin-bottom: 16px;
+}
+form .form-group label{
+    margin-bottom: 8px;
+}
+form#contact-form input, form#contact-form textarea{
+    text-align: center;
+    padding: .75rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #fafafa;
+}
+
+form#contact-form input:active,
+form#contact-form input:visited,
+form#contact-form input:focus,  
+form#contact-form textarea:active, 
+form#contact-form textarea:visited, 
+form#contact-form textarea:focus{
+    color: #000;
+    font-size: 1em;
+    box-shadow: 0 0 0 0.16rem #42424224;
+
+}
+form#contact-form input:hover,
+form#contact-form textarea:hover{
+    color: #000;
+    border-color: #bbb;
+    box-shadow: 0 0 0 0.16rem #42424208;
+}
+form#contact-form input, 
+form#contact-form input:hover,
+form#contact-form input:active,
+form#contact-form input:visited,
+form#contact-form input:focus,
+form#contact-form textarea, 
+form#contact-form textarea:hover,
+form#contact-form textarea:active, 
+form#contact-form textarea:visited, 
+form#contact-form textarea:focus{
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+
+form#contact-form button{
+    margin-top: 16px;
 }
 
 
@@ -357,4 +456,20 @@ footer .social-icons a, footer .social-icons a:hover{
         height: 32px; 
         width: auto; 
     }
+}
+
+
+
+
+section{
+    padding: 144px 0px;
+    width: 96%;
+    height: auto;
+    margin: 16px auto;
+    border-radius:24px;
+    background: #fff;
+}
+
+@media only screen and (min-width: 1400px) and (max-width: 1920px) {
+    .container {}
 }
