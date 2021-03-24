@@ -98,10 +98,10 @@ a, a:focus, a:hover, a:active{
     font-weight: 600;
 }
 a{
-    color: #475364;
+    color: #212121;
 }
 a:focus, a:hover, a:active{
-    ccolor: #0E1217;
+    ccolor: #000;
 }
 
 
@@ -140,11 +140,11 @@ a:focus, a:hover, a:active{
     transition: 0.3s all ease-in-out;
 }
 .btn-primary{
-    background: #475364;
+    background: #212121;
     color: #fff;
 }
 .btn-primary:hover{
-    background: #0E1217;
+    background: #000;
     color: #fff;
 }
 
@@ -200,10 +200,10 @@ a:focus, a:hover, a:active{
 
 
 .btn-link{
-    color: #475364;
+    color: #212121;
 }
 .btn-link:hover{
-    color: #0E1217;
+    color: #000;
 }
 
 
@@ -278,13 +278,13 @@ section{
 .navbar .navbar-nav>li>a{
     text-decoration: none;
     text-transform: uppercase;
-    color: #475364;
+    color: #212121;
     padding: 8px 0px;
     font-weight: 400;
     border-bottom: 2px solid transparent;
 }
 .navbar .navbar-nav>li>a:hover, .navbar .navbar-nav>li>a:focus, .navbar .navbar-nav>li>a:active, .navbar .navbar-nav>li>a.active{
-    color: #0E1217;
+    color: #000;
     border-color: #000;
 }
 .navbar .navbar-nav>li>a, .navbar .navbar-nav>li>a:hover, .navbar .navbar-nav>li>a:focus, .navbar .navbar-nav>li>a:active, .navbar .navbar-nav>li>a.active{
@@ -341,7 +341,7 @@ footer .social-icons a {
 }
 
 footer .social-icons a:hover { 
-    color: #0E1217;
+    color: #000;
 }
 footer .social-icons a, footer .social-icons a:hover{
     -webkit-transition: 0.3s all ease-in-out;
