@@ -1,27 +1,24 @@
 /* header (hero) Area */
-header{
-    background: #fafafa;
-    padding-top: 150px;
-    width: 96%;
-    height: auto;
-    margin: 16px auto;
-    margin-top: 112px;
-    border-radius:24px;
-}
 
+header{
+    padding-top: 9em;
+    padding-bottom: 0em;
+    height: auto;
+    
+}
 header .title-hero{
-    margin-top: -16px;
+    margin-top: -.125em;
     margin-bottom: 0px;
 }
 header .short-description{
-    margin-top: 24px;
+    margin-top: 1.5em;
 }
 header .h2.sub-title-hero{}
 
 
 header .btn{
-    margin-top: 24px;
-    margin-bottom: 120px;
+    margin-top: 1.5em;
+    margin-bottom: 7.5em;
 }
 
 header .header-img{
@@ -51,6 +48,6 @@ header .header-img img{
 
 
 section img{
-    width: 512px;
-    height: 512px;
+    width: 32em;
+    height: 32em;
 }

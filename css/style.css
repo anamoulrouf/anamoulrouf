@@ -1,6 +1,6 @@
 body{
     color: #000;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Manrope', sans-serif;
     background: #fdfdfd;
 }
 
@@ -8,7 +8,7 @@ body{
 /* ---Typhography--- */
 
 body{
-    font-family: 'Lato', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: 16px;
     font-weight: 300;
 }
@@ -54,7 +54,7 @@ h4, .h4{
 h5, .h5{
   font-size: 1.25em;
 }
-h6, .h6, .p-sm{
+h6, .h6{
   font-size: .875em;
   letter-spacing: 1px;
 }
@@ -82,7 +82,7 @@ p{
 .p-lg{
     font-size: 1.15em;
 }
-h6, .h6, .p-sm{
+.p-sm{
   font-size: .875em;
   letter-spacing: 1px;
 }
@@ -258,8 +258,6 @@ a:focus, a:hover, a:active{
 
 
 
-
-
 .btn-sm{
   font-size: .875em;
 }
@@ -277,21 +275,21 @@ a:focus, a:hover, a:active{
 
 /* Navbar (menubar) */
 .navbar .logo .logo-img { 
-    height: 48px; 
+    height: 2.5em; 
     width: auto; 
 }
 .navbar{
     background: transparent;
     border: 0px;
     width: 96%;
-    margin: 16px auto;
+    margin: 1em auto;
 }
 .top-nav-collapse{
     background: #fff;
-    border-radius: 5rem;
-    padding-left: .5rem;
-    padding-right: .5rem;
-    box-shadow: 0 0 24px 0.48rem #42424216;
+    border-radius: 5em;
+    padding-left: .5em;
+    padding-right: .5em;
+    box-shadow: 0 0 1.5em 0.48rem #42424216;
 }
 .navbar, .top-nav-collapse{
     -webkit-transition: 0.5s all ease-in-out;
@@ -316,17 +314,17 @@ a:focus, a:hover, a:active{
 }
 
 .navbar .navbar-nav{
-    padding: 10px 0px;
+    padding: .75em 0px;
 }
 .navbar .navbar-nav>li{
-    padding: 0px 16px;
+    padding: 0px 1em;
 }
 .navbar .navbar-nav>li>a{
     text-decoration: none;
     color: #424242;
-    padding: 8px 0px;
+    padding: .5em 0px;
     font-weight: 400;
-    border-bottom: 2px solid transparent;
+    border-bottom: .125em solid transparent;
 }
 .navbar .navbar-nav>li>a:hover, .navbar .navbar-nav>li>a:focus, .navbar .navbar-nav>li>a:active, .navbar .navbar-nav>li>a.active{
     color: #000;
@@ -343,15 +341,15 @@ a:focus, a:hover, a:active{
 
 /* Form */
 form .form-group{
-    margin-bottom: 16px;
+    margin-bottom: 1em;
 }
 form .form-group label{
-    margin-bottom: 8px;
+    margin-bottom: .5em;
 }
 form#contact-form input, form#contact-form textarea{
     text-align: center;
     padding: .75rem;
-    border-radius: 8px;
+    border-radius: .5em;
     border: 1px solid #ddd;
     background: #fafafa;
 }
@@ -361,17 +359,17 @@ form#contact-form input:visited,
 form#contact-form input:focus,  
 form#contact-form textarea:active, 
 form#contact-form textarea:visited, 
-form#contact-form textarea:focus{
+form#contact-form textarea:focus, {
     color: #000;
     font-size: 1em;
-    box-shadow: 0 0 0 0.16rem #42424224;
+    box-shadow: 0 0 0 0.16em #42424224;
 
 }
 form#contact-form input:hover,
 form#contact-form textarea:hover{
     color: #000;
     border-color: #bbb;
-    box-shadow: 0 0 0 0.16rem #42424208;
+    box-shadow: 0 0 24px 0.48em #42424208;
 }
 form#contact-form input, 
 form#contact-form input:hover,
@@ -382,7 +380,7 @@ form#contact-form textarea,
 form#contact-form textarea:hover,
 form#contact-form textarea:active, 
 form#contact-form textarea:visited, 
-form#contact-form textarea:focus{
+form#contact-form textarea:focus {
     -webkit-transition: 0.3s all ease-in-out;
     -moz-transition: 0.3s all ease-in-out;
     -o-transition: 0.3s all ease-in-out;
@@ -391,7 +389,7 @@ form#contact-form textarea:focus{
 }
 
 form#contact-form button{
-    margin-top: 16px;
+    margin-top: 1em;
 }
 
 
@@ -405,26 +403,88 @@ form#contact-form button{
 
 
 
+/* Header */
+header{
+    background: #fafafa;
+    padding-top: 7em;
+    padding-bottom: 3em;
+    width: 96%;
+    height: auto;
+    margin: 1em auto;
+    margin-top: 6em;
+    border-radius:2em;
+}
+header, header:hover{
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+header:hover{
+    box-shadow: 0 0 1em 0.4rem #42424201;
+}
+
+
+/* Sections  */
+
+section{
+    padding: 120px 0px;
+}
+section, footer{
+    width: 96%;
+    height: auto;
+    margin: 1em auto;
+    border-radius:24px;
+    background: #fff;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+section:hover, footer:hover{
+    box-shadow: 0 0 1em 0.4rem #42424201;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+
+@media only screen and (min-width: 1400px) and (max-width: 1920px) {
+    .container {}
+}
+
+section img{
+    width: 32em;
+    height: 32em;
+}
+
+
+
+
 /* footer  */
 footer { 
-    padding: 120px 0px 40px 0px; 
-    background: #f5f5f5;
+    padding: 7.5em 0px 2.5em 0px; 
+    margin-bottom: 2em;
+    background: #fafafa;
 }
 footer .logo{
-    height: 44px;
+    height: 2.75em;
     width: auto;
-    margin-bottom: 24px;
+    margin-bottom: 1.5em;
 }
 
 footer .footer-contact{}
 
 footer .social-icons { 
-    margin-top: 16px;
-    margin-bottom: 16px;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 footer .social-icons a { 
-    font-size: 24px; 
-    margin: 8px 8px;
+    font-size: 1em; 
+    margin: .5em;
 }
 .linkedin{
     color: #1B66C2;
@@ -453,7 +513,7 @@ footer .social-icons a, footer .social-icons a:hover{
 @media only screen and (max-width: 480px){
     footer {}
     footer .logo{ 
-        height: 32px; 
+        height: 2em; 
         width: auto; 
     }
 }
@@ -461,15 +521,4 @@ footer .social-icons a, footer .social-icons a:hover{
 
 
 
-section{
-    padding: 144px 0px;
-    width: 96%;
-    height: auto;
-    margin: 16px auto;
-    border-radius:24px;
-    background: #fff;
-}
 
-@media only screen and (min-width: 1400px) and (max-width: 1920px) {
-    .container {}
-}
