@@ -1,7 +1,7 @@
 /* header (hero) Area */
 
 header{
-    padding-top: 9em;
+    padding-top: 8em;
     padding-bottom: 0em;
     height: auto;
     
@@ -17,8 +17,8 @@ header .h2.sub-title-hero{}
 
 
 header .btn{
-    margin-top: 1.5em;
-    margin-bottom: 7.5em;
+    margin-top: 1.25em;
+    margin-bottom: 3em;
 }
 
 header .header-img{
