@@ -352,6 +352,7 @@ form#contact-form input, form#contact-form textarea{
     border-radius: .5em;
     border: 1px solid #ddd;
     background: #fafafa;
+    font-weight: 700;
 }
 
 form#contact-form input:active,
@@ -460,6 +461,8 @@ section img{
     width: 32em;
     height: 32em;
 }
+
+
 
 
 
