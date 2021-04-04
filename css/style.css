@@ -437,7 +437,7 @@ section, footer{
     height: auto;
     margin: 1em auto;
     border-radius:24px;
-    background: #fff;
+    background-color: #fff;
     -webkit-transition: 0.3s all ease-in-out;
     -moz-transition: 0.3s all ease-in-out;
     -o-transition: 0.3s all ease-in-out;
