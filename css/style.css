@@ -3,6 +3,49 @@ body{
     font-family: 'Manrope', sans-serif;
     background: #fdfdfd;
 }
+/*  Color  */
+.primary-color{
+    color: #424242;
+}
+.primary-background{
+    color: #424242;
+}
+
+.secondary-color{
+    color: #E843A1;
+}
+.secondary-background{
+    color: #E843A1;
+}
+
+.success-color{
+    color: #00C66D;
+}
+.success-background{
+    color: #00C66D;
+}
+
+.danger-color{
+    color: #D10049;
+}
+.danger-background{
+    color: #D10049;
+}
+
+.warning-color{
+    color: #F9A825;
+}
+.warning-background{
+    color: #F9A825;
+}
+
+.info-color{
+    color: #4A6DFF;
+}
+.info-background{
+    color: #4A6DFF;
+}
+
 
 
 /* ---Typhography--- */
@@ -278,39 +321,14 @@ a:focus, a:hover, a:active{
     height: 2.5em; 
     width: auto; 
 }
+.logo-mobile{
+        display: none;
+}
 .navbar{
     background: transparent;
     border: 0px;
     width: 96%;
     margin: 1em auto;
-}
-.top-nav-collapse{
-    background: #fff;
-    border-radius: 5em;
-    padding-left: .5em;
-    padding-right: .5em;
-    box-shadow: 0 0 1.5em 0.48rem #42424216;
-}
-.navbar, .top-nav-collapse{
-    -webkit-transition: 0.5s all ease-in-out;
-    -moz-transition: 0.5s all ease-in-out;
-    -o-transition: 0.5s all ease-in-out;
-    -ms-transition: 0.5s all ease-in-out;
-    transition: 0.5s all ease-in-out;
-}
-
-@media only screen and (max-width: 480px){
-    .logo .logo-img, .top-nav-collapse .logo>.logo-img{}
-}
-@media only screen and (min-width: 481px) and (max-width: 768px) {
-    .logo .logo-img{}
-}
-
-@media only screen and (min-width: 960px) and (max-width: 1400px) {
-    .navbar-default{}
-}
-@media only screen and (min-width: 1401px) and (max-width: 1920px) {
-    .navbar-default{}
 }
 
 .navbar .navbar-nav{
@@ -338,6 +356,71 @@ a:focus, a:hover, a:active{
     transition: 0.3s all ease-in-out;
 }
 
+.top-nav-collapse{
+    background-color: #fff;
+    border-radius: 5em;
+    padding-left: .5em;
+    padding-right: .5em;
+    box-shadow: 0 0 1.5em 0.48rem #42424216;
+}
+.navbar, .top-nav-collapse{
+    -webkit-transition: 0.5s all ease-in-out;
+    -moz-transition: 0.5s all ease-in-out;
+    -o-transition: 0.5s all ease-in-out;
+    -ms-transition: 0.5s all ease-in-out;
+    transition: 0.5s all ease-in-out;  
+}
+.navbar-light .navbar-toggler{
+    background-color: #42424232;
+    border-color: transparent;
+    color: #424242;
+}
+.navbar-light .navbar-toggler:focus{
+    background-color: #42424200;
+    border-color: transparent;
+}
+
+
+@media only screen and (max-width: 480px){
+    .logo-desktop{
+        display: none;
+    }
+    .logo-mobile{
+        display: block;
+    }
+}
+@media only screen and (max-width: 960px){
+    .top-nav-collapse{
+        border-radius: 2em;
+    }
+    .navbar-collapse.collapsing, .navbar-collapse.collapse {
+        background-color: #fafafa;
+        text-align: end;
+        padding: 1.5em;
+        border-radius: 0 0 1em 1em;
+        box-shadow: 0 0 1.5em 0.48rem #42424216;
+    }
+    .navbar .navbar-nav>li{
+        margin-bottom: 1.25em;
+    }
+}
+
+
+
+
+@media only screen and (max-width: 480px){
+    .logo .logo-img, .top-nav-collapse .logo>.logo-img{}
+}
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+    .logo .logo-img{}
+}
+
+@media only screen and (min-width: 960px) and (max-width: 1400px) {
+    .navbar-default{}
+}
+@media only screen and (min-width: 1401px) and (max-width: 1920px) {
+    .navbar-default{}
+}
 
 /* Form */
 form .form-group{

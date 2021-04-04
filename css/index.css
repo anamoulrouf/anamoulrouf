@@ -29,6 +29,15 @@ header .header-img img{
     height: auto;
 }
 
+@media only screen and (max-width: 960px){
+    header .header-img{
+        width: 100%;
+    }
+}
+
+
+
+
 
 
 @media only screen and (min-width: 668px) and (max-width: 768px) {
