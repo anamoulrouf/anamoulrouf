@@ -7,27 +7,28 @@
 
 
 <url>
-  <loc>https://anamoulrouf.com/</loc>
+  <loc>https://www.anamoulrouf.com/</loc>
   <lastmod>2021-04-04T10:29:26+00:00</lastmod>
   <priority>1.00</priority>
+  <xhtml:link rel="alternate" hreflang="en" href="http://www.anamoulrouf.com/index.html"/>
 </url>
 <url>
-  <loc>https://anamoulrouf.com/works.html</loc>
+  <loc>https://www.anamoulrouf.com/works.html</loc>
   <lastmod>2021-04-04T10:29:26+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://anamoulrouf.com/about.html</loc>
+  <loc>https://www.anamoulrouf.com/about.html</loc>
   <lastmod>2021-04-04T10:29:26+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://anamoulrouf.com/blog.html</loc>
+  <loc>https://www.anamoulrouf.com/blog.html</loc>
   <lastmod>2021-04-04T10:29:26+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://anamoulrouf.com/contact.html</loc>
+  <loc>https://www.anamoulrouf.com/contact.html</loc>
   <lastmod>2021-04-04T10:29:26+00:00</lastmod>
   <priority>0.80</priority>
 </url>
