@@ -629,11 +629,11 @@ footer .social-icons a, footer .social-icons a:hover{
 
 
 /* about page  */
-.company-logo{
+img.company-logo{
     height: 4em;
     width: auto;
 }
-.img-rounded{
+img.img-rounded{
     border-radius:1.25em; 
 }
 
