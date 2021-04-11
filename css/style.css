@@ -559,8 +559,8 @@ section:hover, footer:hover{
 
 
 section img{
-    width: 72%;
-    height: 72%;
+    width: 80%;
+    height: 80%;
 }
 
 section .content-block{
@@ -634,7 +634,7 @@ img.company-logo{
     width: auto;
 }
 img.img-rounded{
-    border-radius:1.25em; 
+    border-radius:1em; 
 }
 
 
