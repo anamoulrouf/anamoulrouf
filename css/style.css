@@ -161,6 +161,24 @@ a:focus, a:hover, a:active{
     transition: 0.3s all ease-in-out;
 }
 
+.line-height-1{
+    line-height: 1;
+}
+.line-height-125{
+    line-height: 1.25;
+}
+.line-height-15{
+    line-height: 1.5;
+}
+.line-height-175{
+    line-height: 1.75;
+}
+.line-height-2{
+    line-height: 2;
+}
+.line-height-225{
+    line-height: 2.25;
+}
 
 .font-weight-100{
     font-weight: 100;
@@ -636,5 +654,7 @@ img.company-logo{
 img.img-rounded{
     border-radius:1em; 
 }
-
-
+img.un-logo{
+    height: 3em;
+    width: auto;
+}
