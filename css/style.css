@@ -8,10 +8,13 @@ body{
 }
 /*  Color  */
 .primary-color{
-    color: #424242;
+    color: #003FFF;
+}
+.primary-varient-color{
+    color: #0029E6;
 }
 .primary-background{
-    color: #424242;
+    color: #003FFF;
 }
 
 .secondary-color{
@@ -145,7 +148,7 @@ a, a:focus, a:hover, a:active{
     font-weight: 600;
 }
 a{
-    color: #424242;
+    color: #003FFF;
     -webkit-transition: 0.3s all ease-in-out;
     -moz-transition: 0.3s all ease-in-out;
     -o-transition: 0.3s all ease-in-out;
@@ -153,7 +156,7 @@ a{
     transition: 0.3s all ease-in-out;
 }
 a:focus, a:hover, a:active{
-    color: #000;
+    color: #0029E6;
     -webkit-transition: 0.3s all ease-in-out;
     -moz-transition: 0.3s all ease-in-out;
     -o-transition: 0.3s all ease-in-out;
@@ -249,19 +252,19 @@ a:focus, a:hover, a:active{
     -o-transition: 0.3s all ease-in-out;
     -ms-transition: 0.3s all ease-in-out;
     transition: 0.3s all ease-in-out;
-    box-shadow: 0 0 24px 0.48rem #42424208;
+    box-shadow: 0 0 24px 0.48rem #003FFF08;
     border-color: transparent;
 }
 .btn-primary{
-    background: #424242;
+    background: #003FFF;
     color: #fff;
 }
 .btn-outline-primary{
-    color: #424242;
-    border-color: #424242;
+    color: #003FFF;
+    border-color: #003FFF;
 }
 .btn-primary:hover, .btn-primary:active, .btn-primary:focus, .btn-outline-primary:hover, .btn-outline-primary:active, .btn-outline-primary:focus{
-    background: #111111;
+    background: #0029E6;
     color: #fff;
 }
 
@@ -317,7 +320,7 @@ a:focus, a:hover, a:active{
 
 
 .btn-link{
-    color: #424242;
+    color: #003FFF;
 }
 .btn-link:, .btn-link:active, .btn-link:focus{
     color: #000;
@@ -373,14 +376,14 @@ a:focus, a:hover, a:active{
 }
 .navbar .navbar-nav>li>a{
     text-decoration: none;
-    color: #424242;
+    color: #000;
     padding: .5em 0px;
     font-weight: 400;
     border-bottom: .125em solid transparent;
 }
 .navbar .navbar-nav>li>a:hover, .navbar .navbar-nav>li>a:focus, .navbar .navbar-nav>li>a:active, .navbar .navbar-nav>li>a.active{
-    color: #000;
-    border-color: #000;
+    color: #003FFF;
+    border-color: #003FFF;
 }
 .navbar .navbar-nav>li>a, .navbar .navbar-nav>li>a:hover, .navbar .navbar-nav>li>a:focus, .navbar .navbar-nav>li>a:active, .navbar .navbar-nav>li>a.active{
     -webkit-transition: 0.3s all ease-in-out;
@@ -393,7 +396,7 @@ a:focus, a:hover, a:active{
 .top-nav-collapse{
     background-color: #fff;
     border-radius: 5em;
-    box-shadow: 0 0 1.5em 0.48rem #42424216;
+    box-shadow: 0 0 1.5em 0.48rem #003FFF16;
     margin-top: .125em;
 }
 .navbar, .top-nav-collapse{
@@ -404,12 +407,12 @@ a:focus, a:hover, a:active{
     transition: 0.5s all ease-in-out;  
 }
 .navbar-light .navbar-toggler{
-    background-color: #42424232;
+    background-color: #003FFF32;
     border-color: transparent;
-    color: #424242;
+    color: #003FFF;
 }
 .navbar-light .navbar-toggler:focus{
-    background-color: #42424200;
+    background-color: #003FFF00;
     border-color: transparent;
 }
 
@@ -431,7 +434,7 @@ a:focus, a:hover, a:active{
         text-align: end;
         padding: 1.5em;
         border-radius: 0 0 1em 1em;
-        box-shadow: 0 0 1.5em 0.48rem #42424216;
+        box-shadow: 0 0 1.5em 0.48rem #003FFF16;
     }
     .navbar .navbar-nav>li{
         margin-bottom: 1.25em;
@@ -486,7 +489,7 @@ form#contact-form textarea:target{
     font-size: 1.15em;
     font-weight: 500;
     border-color: #bbb;
-    box-shadow: 0 0 24px 0.48em #42424208;
+    box-shadow: 0 0 24px 0.48em #003FFF08;
 
 }
 
@@ -541,7 +544,7 @@ header, header:hover{
     transition: 0.3s all ease-in-out;
 }
 header:hover{
-    box-shadow: 0 0 1em 0.4rem #42424200;
+    box-shadow: 0 0 1em 0.4rem #003FFF00;
 }
 
 
@@ -563,7 +566,7 @@ section, footer{
     transition: 0.3s all ease-in-out;
 }
 section:hover, footer:hover{
-    box-shadow: 0 0 1em 0.4rem #42424208;
+    box-shadow: 0 0 1em 0.4rem #003FFF08;
     -webkit-transition: 0.3s all ease-in-out;
     -moz-transition: 0.3s all ease-in-out;
     -o-transition: 0.3s all ease-in-out;
@@ -648,7 +651,7 @@ footer .social-icons a, footer .social-icons a:hover{
 
 /* about page  */
 img.company-logo{
-    height: 4em;
+    height: 3em;
     width: auto;
 }
 img.img-rounded{
