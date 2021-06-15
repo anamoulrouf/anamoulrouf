@@ -323,7 +323,7 @@ a:focus, a:hover, a:active{
     color: #003FFF;
 }
 .btn-link:, .btn-link:active, .btn-link:focus{
-    color: #000;
+    color: #212121;
 }
 
 
@@ -376,7 +376,7 @@ a:focus, a:hover, a:active{
 }
 .navbar .navbar-nav>li>a{
     text-decoration: none;
-    color: #000;
+    color: #212121;
     padding: .5em 0px;
     font-weight: 400;
     border-bottom: .125em solid transparent;
@@ -485,7 +485,7 @@ form#contact-form textarea:active,
 form#contact-form textarea:visited, 
 form#contact-form textarea:focus,
 form#contact-form textarea:target{
-    color: #000;
+    color: #212121;
     font-size: 1.15em;
     font-weight: 500;
     border-color: #bbb;
@@ -562,7 +562,7 @@ header:hover{
 /* Sections  */
 
 section{
-    padding: 120px 0px;
+    padding: 5.5em 0em;
 }
 section, footer{
     width: 96%;
@@ -637,7 +637,7 @@ footer .social-icons a {
 }
 
 footer .social-icons a:hover { 
-    color: #000;
+    color: #212121;
 }
 footer .social-icons a, footer .social-icons a:hover{
     -webkit-transition: 0.3s all ease-in-out;
