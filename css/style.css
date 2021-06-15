@@ -252,7 +252,7 @@ a:focus, a:hover, a:active{
     -o-transition: 0.3s all ease-in-out;
     -ms-transition: 0.3s all ease-in-out;
     transition: 0.3s all ease-in-out;
-    box-shadow: 0 0 24px 0.48rem #003FFF08;
+    box-shadow: 0 0 24px 0.48rem #003FFF12;
     border-color: transparent;
 }
 .btn-primary{
@@ -491,6 +491,17 @@ form#contact-form textarea:target{
     border-color: #bbb;
     box-shadow: 0 0 24px 0.48em #003FFF08;
 
+}
+
+form#contact-form input:active,
+form#contact-form input:visited,
+form#contact-form input:focus,
+form#contact-form input:target,  
+form#contact-form textarea:active, 
+form#contact-form textarea:focus,
+form#contact-form textarea:target{
+    border-color: #0029E6;
+    box-shadow: 0 0 24px 0.48em #003FFF10;
 }
 
 form#contact-form input, 
