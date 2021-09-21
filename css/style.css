@@ -561,10 +561,10 @@ header:hover{
 
 /* Sections  */
 
-section{
+section.content{
     padding: 5.5em 0em;
 }
-section, footer{
+section.content, footer{
     width: 96%;
     height: auto;
     margin: 1em auto;
@@ -576,13 +576,17 @@ section, footer{
     -ms-transition: 0.3s all ease-in-out;
     transition: 0.3s all ease-in-out;
 }
-section:hover, footer:hover{
+section.content:hover, footer:hover{
     box-shadow: 0 0 1em 0.4rem #003FFF08;
     -webkit-transition: 0.3s all ease-in-out;
     -moz-transition: 0.3s all ease-in-out;
     -o-transition: 0.3s all ease-in-out;
     -ms-transition: 0.3s all ease-in-out;
     transition: 0.3s all ease-in-out;
+}
+
+section .content-alignment{
+    align-items: center;
 }
 
 @media only screen and (min-width: 1400px) and (max-width: 1920px) {
@@ -620,7 +624,7 @@ footer .social-icons {
     margin-bottom: 1em;
 }
 footer .social-icons a { 
-    font-size: 1em; 
+    font-size: 1.5em; 
     margin: .5em;
 }
 .linkedin{
