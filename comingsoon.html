@@ -19,7 +19,7 @@
 	    <meta name="keywords" content="Anamoul Rouf, Product Designer, UX Designer, User Centered Product Designer, User Experience Designer, Human Experience Designer, Problem Solver, Researcher, AR & VR Enthusiast, Dhaka, Bangladesh">
 
 
-	    <link rel="icon" href="img/fab.svg">
+	    <link rel="icon" href="img/fab.png">
 	    <!-- Bootstrap Core CSS -->
 	    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 	    <!-- icon-font -->
@@ -28,9 +28,8 @@
 	    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet" type="text/css">
 
 	    <link href="css/style.css" rel="stylesheet">
-	    
 	</head>
-	<body class="pt-5">
+	<body>
 		<!--Website Title-->
 		<div class="d-none">
 			<h1 class="d-none">Anamoul Rouf, Product Designer, UX Designer, User Centered Product Designer, User Experience Designer, Human Experience Designer, Problem Solver, Researcher, AR & VR Enthusiast, Dhaka, Bangladesh</h1>
@@ -54,7 +53,7 @@
 							<a class="nav-link" href="about.html">About</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link active" href="blog.html">Stories</a>
+							<a class="nav-link" href="blog.html">Stories</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="contact.html">Contact</a>
@@ -68,83 +67,27 @@
 			</nav>
 		</div>
 
-		<!--Header
-		<header>
+		<header class="header-content">
 			<div class="container-fluid">
 				<div class="row justify-content-md-center">
 					<div class="col-lg-6 col-sm-12 text-center">
-						<p class="h2 title-hero font-weight-700"><span class="text-muted font-weight-200">My</span> Stories</p>
+						<img class="img-fluid" src="img/under-dev.svg" style="width: 20rem;">
 					</div>
 				</div>
-			</div>
-		</header>-->
-
-		<!--Medium Feeds-->
-		<section class="content">
-			<div class="container-fluid">
 				<div class="row justify-content-md-center">
-					<div class="col-lg-6 col-sm-12">
-						<div id="medium-widget"></div>
-						<script src="https://medium-widget.pixelpoint.io/widget.js"></script>
-						<script>MediumWidget.Init({renderTo: '#medium-widget', params: {"resource":"https://medium.com/@anamoulrouf","postsPerLine":2,"limit":10,"picture":"big","fields":["description","author","claps","publishAt"],"ratio":"square"}})</script>
-
+					<div class="col-lg-6 col-sm-12 text-center">
+						<p class="display-4 title-hero font-weight-700">Coming Soon</p>
+						<p class="short-description p-lg mb-3">I'm working on it. Explore my other works.</p>
+						<a href="works.html" class="btn btn-primary btn-lg">Recent Works</a>
 					</div>
 				</div>
 			</div>
-		</section>
+		</header>
 
 
-		<!--Download Resume & Offline Portfolio-->
-		<section class="content">
-			<div class="container-fluid">
-				<div class="row flex-md-row flex-sm-column-reverse justify-content-md-center content-alignment px-5 p-1-sm">
-					<div class="col-lg-5 col-md-6 col-sm-12 justify-content-center text-center">
-						<p class="h2 sub-title-hero mb-3"><span class="text-muted font-weight-200">My </span>Resume & Portfilio</p>
-						<p class="h5 sub-title-hero text-muted font-weight-200">Download my Resume and Offline Portfolio in PDF.</p>
-						<div class="mt-5 mt-4-md mt-3-sm">
-							<a href="reso/Portfolio-Anamoul-Rouf.pdf" target="blank" class="btn btn-outline-primary m-1">Offline Portfilio 🗂</a>
-							<a href="reso/Resume-Anamoul-Rouf.pdf" target="blank" class="btn btn-primary m-1">Download Resume 📥</a>
-						</div>
-					</div>
+		
 
-					<div class="col-lg-5 col-md-6 col-sm-12 d-flex justify-content-center">
-						<img class="img-fluid align-self-end" src="img/download-resume.svg">
-					</div>
-				</div>
-			</div>
-		</section>
 
-		<!--Contact Form-->
-		<section id="contact-form-section" class="content text-center">
-			<div class="container">
-				<div class="row justify-content-md-center">
-					<div class="col-sm-12 text-center">
-						<p class="h5 sub-title-hero text-muted font-weight-200">Feel Free to Reach Me</p>
-						<p class="h2 font-weight-600 section-heading">I will Get Back to You Soon!</p>
-					</div>
-				</div>
-				<div class="row justify-content-md-center mt-5">
-					<div class="col-md-6 col-sm-12 text-center">
-						<form id="contact-form" action="https://getform.io/f/fd679188-8297-4291-a981-e1da6ad52904" method="post" accept-charset="UTF-8">
-							<div class="form-group">
-								<!--<label for="name" class="p">Your Name 🙂</label>-->
-								<input id="name" name="name" type="text" class="form-control" id="contact-name" placeholder="enter your name" required="true" />
-							</div>
-							<div class="form-group">
-								<!--<label for="email" class="p">Email Address 📧</label>-->
-								<input name="email" type="email" class="form-control" id="email" placeholder="enter your email address" required="true" />
-								<small class="form-text text-muted p-sm">I'll never share your email with anyone else 🛡</small>
-							</div>
-							<div class="form-group">
-								<!--<label for="contact-message" class="p">Your Message ✍🏼</label>-->
-								<textarea id="comment" name="comment" class="form-control" rows="3" placeholder="write your messages"></textarea>
-							</div>
-							<button id="submit" name="submit" type="Submit" class="btn btn-primary btn-lg">Send Message 📭</button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</section>
 
 
 		<!--footer-->
@@ -172,30 +115,8 @@
 		</footer>
 
 
-		<!-- Custom CSS -->
-		<style type="text/css"  rel="stylesheet">
 
-	    	/*  Medium Post Overide  */
-	    	.medium-widget-article__content .medium-widget-article__title{
-	    		font-size: 1.5rem;
-	    		margin-top: 1rem;
-	    		line-height: 1.25;
-	    		margin-bottom: .5rem;
-	    	}
-	    	.medium-widget-article__content .medium-widget-article__description{
-	    		margin-bottom: 1rem;
-	    	}
-	    	.medium-widget-article__content .medium-widget-article__author, .medium-widget-article__content .medium-widget-article__clap{
-	    		height: auto;
-	    		margin-right: .5rem;
-	    	}
-	    	.medium-widget-article__content .medium-widget-article__avatar-picture{
-	    		width: 2rem;
-	    		height: 2rem;
-	    	}
-	    </style>
-
-	    <!-- jQuery Version 1.11.0 -->
+		<!-- jQuery Version 1.11.0 -->
 	    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	    <!-- Bootstrap Core JavaScript -->
 	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
