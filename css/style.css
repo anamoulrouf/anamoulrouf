@@ -163,6 +163,12 @@ a:focus, a:hover, a:active{
     -ms-transition: 0.3s all ease-in-out;
     transition: 0.3s all ease-in-out;
 }
+.tag {
+    background: #efefef;
+    padding: .25rem .5rem;
+    border-radius: 2rem;
+    margin: auto .25rem;
+}
 
 .line-height-1{
     line-height: 1;
@@ -427,9 +433,11 @@ a:focus, a:hover, a:active{
     -o-transition: 0.3s all ease-in-out;
     -ms-transition: 0.3s all ease-in-out;
     transition: 0.3s all ease-in-out;
-    box-shadow: 0 0 24px 0.48rem #003FFF12;
+    box-shadow: 0 0 16px 0.16rem #003fff32;
     border-color: transparent;
 }
+
+
 .btn-primary{
     background: #003FFF;
     color: #fff;
