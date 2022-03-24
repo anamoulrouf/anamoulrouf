@@ -1,0 +1,752 @@
+/* general css */
+body {
+    margin: 0px;
+    padding: 0px;
+    color: #2D2D2D;
+    font-weight: 200;
+    webkit-tap-highlight-color: #262C30;
+    box-sizing: border-box;
+}
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+::-moz-selection {
+    text-shadow: none;
+    background: #3A7BD5;
+    color: #ffffff;
+}
+::selection {
+    text-shadow: none;
+    background: #3A7BD5;
+    color: #ffffff;
+}
+img::selection {
+    background: 0 0;
+}
+img::-moz-selection {
+    background: 0 0;
+}
+
+
+
+/* Typhography */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
+
+body{
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    color: #656c7c;
+}
+h1 {
+    font-size: 45px;
+    line-height: 56px;
+}
+h2 {
+    font-size: 34px;
+    line-height: 46px;
+}
+h3 {
+    font-size: 28px;
+    line-height: 34px;
+}
+h4 {
+    font-size: 24px;
+    line-height: 28px;
+}
+h5 {
+    font-size: 20px;
+    line-height: 24px;
+}
+h6 {
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 1px;
+}	
+p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 28px;
+    opacity: .85;
+}
+@media (max-width: 1040px) {
+    p {
+        font-size: 14px;
+        line-height: 24px;
+    }
+}
+@media (max-width: 640px) {
+    p {
+        font-size: 12px;
+        line-height: 16px;
+    }
+}
+/* Link */
+
+a{
+    display: inline-block;
+}
+a, a abbr{
+    color: #3A7BD5;
+    text-decoration: none;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.3pt;
+    padding: 2px 5px;
+        -webkit-transition: 0.3s all ease-in-out;
+        -moz-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+
+/* abbr */
+abbr {
+	display: inline-block;
+    color: #656c7c;
+    text-decoration: none;
+	font-weight: 600;
+	background: #F9AEDD;
+	padding: 2px 4px;
+        -webkit-transition: 0.3s all ease-in-out;
+        -moz-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+
+}
+abbr:hover{
+	background: #656c7c;
+    cursor: pointer;
+	color: #ffffff;
+        -webkit-transition: 0.3s all ease-in-out;
+        -moz-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+
+a:hover {
+        background: -webkit-linear-gradient(90deg, #F9AEDD, #3A7BD5);
+	    background: -moz-linear-gradient(90deg, #F9AEDD, #3A7BD5);
+	background: linear-gradient(90deg, #F9AEDD, #3A7BD5);
+}
+a:hover, a:hover abbr {
+        -webkit-transition: 0.3s all ease-in-out;
+        -moz-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+    color: #ffffff;
+}
+
+a abbr, a abbr:hover{
+	background: transparent;
+    padding: 0px;
+}
+
+
+
+
+/* Header */
+header {
+    width: 100%;
+    height: 786px;
+    background: #796EFF;
+    padding: 12.5% 0px;
+    text-align: center;
+    background-image: url('img/img-1.png'), url('img/pattern.png');
+    background-repeat: no-repeat, repeat;
+    background-position: center bottom;
+    background-attachment: scroll, fixed;
+}
+header:before{
+    content: "";
+    position: absolute;
+    width: 122px;
+    height: 56px;
+    background-color: transparent;
+    top: 10px;
+    margin-left: -56px;
+    background-image: url('img/icon-1.svg'), url('img/icon-2.svg');
+    background-position: left, right;
+    background-repeat: no-repeat, no-repeat;
+}
+header h1 {
+    font-size: 92px;
+    font-weight: 100;
+    letter-spacing: -2pt;
+    margin-bottom: 40px;
+    color: #fff;
+}
+header h2 {
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: #fff;
+}
+header h2 abbr{
+    background-color: transparent;
+    color: #fff;
+}
+@media (max-width: 1040px) {
+    header {
+        padding: 20% 0px;
+    }
+    header h1 {
+        font-size: 62px;
+        margin-bottom: 0px;
+    }
+    header h2 {
+        font-size: 24px;
+    }
+}
+@media (max-width: 768px) {
+    header {
+        padding: 30% 0px;
+        background-size: 100%, auto;
+    }
+}
+@media (max-width: 640px) {
+    header {
+        height: 480px;
+        padding: 25% 0px;
+    }
+    header h1 {
+        font-size: 34px;
+        letter-spacing: 0;
+    }
+    header h2 {
+        font-size: 16px;
+        margin-top: 0px;
+        line-height: 22px;
+    }
+}
+
+
+/* Common CSS for sections */
+.summary,
+.preamble,
+.explanation,
+.participation,
+.benefits,
+.requirements,
+footer{
+    padding: 120px 0px;
+}
+.summary:before,
+.preamble:before,
+.explanation:before,
+.participation:before {
+    content: "";
+    width: 50%;
+    height: 500px;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: center;
+    position: absolute;
+}
+.preamble,
+.participation,
+.requirements {
+    background: rgba(45, 45, 45, 0.05);
+}
+@media (max-width: 1040px) {
+    .summary,
+    .preamble,
+    .explanation,
+    .participation,
+    .benefits,
+    .requirements,
+    footer{
+        padding: 90px 0px;
+    }
+    .summary:before,
+    .preamble:before,
+    .explanation:before,
+    .participation:before {
+        width: 100%;
+        height: 500px;
+    }
+}
+@media (max-width: 640px) {
+    .summary,
+    .preamble,
+    .explanation,
+    .participation,
+    .benefits,
+    .requirements,
+    footer{
+        padding: 70px 0px;
+    }
+    .summary:before,
+    .preamble:before,
+    .explanation:before,
+    .participation:before {
+        height: 300px;
+    }
+}
+
+
+
+
+
+/* Summary */
+.summary {
+    background-color: #fff;
+}
+.summary:before {
+    background-image: url(img/img-2.png);
+    left: 0px;
+}
+.summary p {
+    width: 50%;
+    padding: 0px 7%;
+}
+.summary p:nth-child(1){
+    font-size: 45px;
+    line-height: 62px;
+}
+.summary p {
+    width: 50%;
+    padding: 0px 7%;
+    margin-left: 50%;
+    text-align: right;
+}
+.summary p a{
+    color: #ffffff;
+	    background: -webkit-linear-gradient(90deg, #F9AEDD, #3A7BD5);
+	    background: -moz-linear-gradient(90deg, #F9AEDD, #3A7BD5);
+	background: linear-gradient(90deg, #F9AEDD, #3A7BD5);
+}
+.summary p a:hover{
+    color: #ffffff;
+    background: #3A7BD5;
+}
+@media (max-width: 1040px) {
+    .summary p {
+        width: 100%;
+        margin-left: 0px;
+        text-align: center;
+        padding: 0px 5%;
+        font-size: 16px;
+        line-height: 26px;
+    }
+    .summary p:nth-child(1) {
+        margin-top: 590px;
+        font-size: 34px;
+        line-height: 48px;
+    }
+}
+@media (max-width: 640px) {
+    .summary p:nth-child(1) {
+        margin-top: 390px;
+        font-size: 24px;
+        line-height: 34px;
+    }
+}
+
+
+
+
+/* Common CSS for sections */
+.preamble h3,
+.preamble p,
+.explanation h3,
+.explanation p,
+.participation h3,
+.participation p {
+    width: 50%;
+    padding: 0px 7%;
+}
+.preamble h3,
+.explanation h3,
+.participation h3,
+.benefits h3,
+.requirements h3 {
+    font-size: 56px;
+    line-height: 72px;
+}
+@media (max-width: 1040px) {
+    .preamble h3,
+    .preamble p,
+    .explanation h3,
+    .explanation p,
+    .participation h3,
+    .participation p {
+        width: 100%;
+        padding: 0px 5%;
+        margin-left: 0px !important;
+    }
+    .preamble h3,
+    .explanation h3,
+    .participation h3,
+    .benefits h3,
+    .requirements h3{
+        text-align: center;
+        font-size: 34px;
+        line-height: 48px;
+    }
+    .explanation h3,
+    .participation h3 {
+        margin-top: 590px;
+    }
+    .preamble h3 {
+        margin-top: 500px;
+    }
+}
+@media (max-width: 768px) {
+    .preamble h3 {
+        margin-top: 460px;
+    }
+}
+@media (max-width: 640px) {
+    .preamble h3,
+    .explanation h3,
+    .participation h3,
+    .benefits h3,
+    .requirements h3{
+        font-size: 24px;
+        line-height: 28px;
+    }
+    .explanation h3,
+    .participation h3 {
+        margin-top: 390px;
+    }
+    .preamble h3 {
+        margin-top: 300px;
+    }
+}
+
+
+
+
+/* Preamble Section */
+.preamble:before {
+    background-image: url(img/img-3.png);
+    right: 0px;
+}
+
+/* Explanation Section */
+.explanation:before {
+    background-image: url(img/img-5.png);
+    left: 0px;
+}
+.explanation h3,
+.explanation p{
+    margin-left: 50%;
+}
+
+/* Participation Section */
+.participation:before {
+    background-image: url(img/img-4.png);
+    right: 0px;
+}
+
+
+
+
+
+/* Common CSS for Benefits & Requirements Section */
+.benefits,
+.requirements{
+    text-align: center;
+}
+.benefits h3,
+.requirements h3{
+    width: 100%;
+}
+.benefits p,
+.requirements p {
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+@media (max-width: 1040px) {
+    .benefits p,
+    .requirements p {
+        width: 90%;
+        margin-right: 5%;
+        margin-left: 5%;
+    }
+}
+
+
+/* Benefits Section */
+.benefits {
+    padding-bottom: 260px;
+}
+
+/* Requirements Section */
+.requirements{
+    padding-top: 160px;
+}
+.requirements:before {
+    content: "";
+    width: 100%;
+    height: 350px;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: center;
+    position: absolute;
+    left: 0px;
+    margin-top: -360px;
+    background-image: url(img/img-6.png);
+}
+.requirements p {
+    text-align: left;
+}
+.requirements p:nth-child(4) {
+    background: #796EFF;
+    line-height: 48px;
+    font-size: 34px;
+    font-style: italic;
+    padding: 70px 15%;
+    padding-top: 90px;
+    font-weight: 100;
+    color: #fff;
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+}
+.requirements p:nth-child(4):before {
+    content: "";
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    left: 49%;
+    margin-top: -50px;
+    background-repeat: no-repeat;
+    background-image: url('img/quote.svg');
+}
+
+@media (max-width: 1040px) {
+    .requirements h3{
+        margin-top: 90px;
+    }
+}
+@media (max-width: 640px) {
+    .benefits {
+        padding-bottom: 160px;
+    }
+    .requirements:before{
+        height: 200px;
+        margin-top: -270px;
+    }
+    .requirements h3{
+        margin-top: 0px;
+    }
+    .requirements p:nth-child(4){
+        font-size: 16px;
+        line-height: 28px;
+        padding: 70px 40px;
+    }
+    .requirements p:nth-child(4):before{
+        left: 44%;
+    }
+}
+
+
+
+/* Footer */
+footer{
+    padding: 160px 0px;
+    background: url('img/pattern.png') repeat fixed #796EFF;
+    text-align: center;
+}
+footer:before {
+    content: "Follow Us:";
+    position: relative;
+    display: inherit;
+    margin-bottom: 30px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 400;
+}
+footer a{
+    position: relative;
+    top: -30px;
+    display: inline-block;
+    background-color: transparent;
+    margin: auto 20px;
+}
+footer a:hover{
+    background: transparent;
+}
+footer a:before {
+    content: "";
+    width: 66px;
+    height: 66px;
+    background-color: #796EFF;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: center;
+    position: relative;
+    top: 30px;
+    display: block;
+}
+footer a.zen-validate-html:before{
+    background-image: url('img/html.svg');
+}
+footer a.zen-validate-css:before{
+    background-image: url('img/css.svg');
+}
+footer a.zen-license:before{
+    background-image: url('img/cc.svg');
+}
+footer a.zen-accessibility:before{
+    background-image: url('img/access.svg');
+}
+footer a.zen-github:before{
+    background-image: url('img/github.svg');
+}
+@media (max-width: 640px) {
+    footer{
+        padding: 60px 0px;
+    }
+    footer a {
+        margin: auto 3px;
+    }
+    footer a:before {
+        width: 46px;
+        height: 46px;
+    }
+}
+
+
+
+/* ASIDE */
+aside.sidebar {
+    padding: 30px 0px;
+    display: inline-block;
+    width: 100%;
+}
+.design-selection, .design-archives, .zen-resources {
+    position: relative;
+    float: left;
+}
+.design-selection {
+    width: 50%;
+    padding: 30px 0px;
+}
+.design-archives, .zen-resources {
+    width: 25%;
+    padding: 30px 2%;
+}
+.sidebar h3.select, 
+.sidebar h3.archives, 
+.sidebar h3.resources {
+    font-size: 16px;
+    font-weight: 100;
+    color: #796EFF;
+}
+.sidebar ul {
+	padding: 0px;
+}
+.sidebar li {
+	list-style-type: none;
+}
+
+.sidebar h3.select, 
+.sidebar .design-selection li {
+    padding: 0px 4%;
+}
+.sidebar .design-selection li {
+    margin-bottom: 30px;
+    width: 50%;
+    position: relative;
+    float: left;
+}
+.sidebar .design-selection li a{
+	background: transparent;
+    padding: 0px;
+    color: #656c7c;
+}
+.sidebar .design-selection li a:focus,
+.sidebar .design-selection li a:hover,
+.sidebar .design-selection li a:active{
+	background: none;
+	box-shadow: none;
+    color: #656c7c;
+}
+.sidebar .design-selection li a.design-name {
+    text-transform: capitalize;
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 100;
+    margin: 0px;
+}
+.sidebar .design-selection li a:nth-child(2){
+	opacity: .54;
+    margin-top: 10px;
+}
+.sidebar .design-archives li a,
+.sidebar .zen-resources li a {
+    margin-top: 16px;
+}
+@media (max-width: 1040px) {
+    .design-selection {
+        width: 100%;
+    }
+    .design-archives, 
+    .zen-resources {
+        width: 50%;
+        padding: 30px 4%;
+    }
+}
+@media (max-width: 640px) {
+    aside.sidebar, 
+    .design-archives,
+    .zen-resources {
+        padding-top: 0px;
+    }
+    .sidebar .design-selection li,
+    .design-archives, 
+    .zen-resources {
+        width: 100%;
+    }
+    .sidebar .design-selection li a.design-name {
+        font-size: 16px;
+    }
+    .sidebar .design-selection li a:nth-child(2){
+        font-size: 12px;
+    }
+}
+
+
+
+
+/* Extra 1 */
+.extra1 {
+    padding: 10px 4%;
+    background: #B066FE;
+    text-align: center;
+}
+.extra1:before,
+.extra1:after {
+    position: relative;
+    display: inherit;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 100;
+    padding-top: 16px;
+}
+.extra1:before {
+    content: "Design & Developed by Anamoul Rouf.";
+}
+.extra1:after {
+    content: "Image credit: Dribbble.";
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+@media (max-width: 640px) {
+    .extra1:before {
+        font-size: 14px;
+    }
+    .extra1:after {
+        font-size: 12px;
+    }
+}
