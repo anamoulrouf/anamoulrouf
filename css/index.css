@@ -29,6 +29,11 @@ header .header-img img{
     height: auto;
 }
 
+header.header-content .header-content-block{
+    margin-top: -2.5rem;
+    padding-top: 1rem;
+}
+
 @media only screen and (max-width: 960px){
     header .header-img{
         width: 100%;
@@ -38,7 +43,12 @@ header .header-img img{
 
 
 
-
+@media only screen and (min-width: 340px) and (max-width: 1600px) {
+    header.header-content .header-content-block{
+        margin-top: -4.5rem;
+        padding-top: 2rem;
+    }
+}
 
 @media only screen and (min-width: 668px) and (max-width: 768px) {
     header{}
