@@ -3,7 +3,7 @@
 header{
     padding-top: 8em;
     padding-bottom: 0em;
-    
+    overflow: hidden;
 }
 header .title-hero{
     margin-top: -.125em;
