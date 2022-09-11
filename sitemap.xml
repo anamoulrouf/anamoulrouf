@@ -1,37 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
 <url>
-  <loc>https://www.anamoulrouf.com/</loc>
-  <lastmod>2021-04-04T10:29:26+00:00</lastmod>
-  <priority>1.00</priority>
-  <xhtml:link rel="alternate" hreflang="en" href="http://www.anamoulrouf.com/index.html"/>
+<loc>https://anamoulrouf.com/</loc>
+<lastmod>2022-09-11T17:53:09+00:00</lastmod>
+<priority>1.00</priority>
 </url>
 <url>
-  <loc>https://www.anamoulrouf.com/works.html</loc>
-  <lastmod>2021-04-04T10:29:26+00:00</lastmod>
-  <priority>0.80</priority>
+<loc>https://anamoulrouf.com/works.html</loc>
+<lastmod>2022-09-11T17:53:09+00:00</lastmod>
+<priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.anamoulrouf.com/about.html</loc>
-  <lastmod>2021-04-04T10:29:26+00:00</lastmod>
-  <priority>0.80</priority>
+<loc>https://anamoulrouf.com/about.html</loc>
+<lastmod>2022-09-11T17:53:08+00:00</lastmod>
+<priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.anamoulrouf.com/blog.html</loc>
-  <lastmod>2021-04-04T10:29:26+00:00</lastmod>
-  <priority>0.80</priority>
+<loc>https://anamoulrouf.com/blog.html</loc>
+<lastmod>2022-09-11T17:53:08+00:00</lastmod>
+<priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.anamoulrouf.com/contact.html</loc>
-  <lastmod>2021-04-04T10:29:26+00:00</lastmod>
-  <priority>0.80</priority>
+<loc>https://anamoulrouf.com/contact.html</loc>
+<lastmod>2022-09-11T17:53:08+00:00</lastmod>
+<priority>0.80</priority>
 </url>
-
-
+<url>
+<loc>https://anamoulrouf.com/portfolio/Resume-Anamoul-Rouf.pdf</loc>
+<lastmod>2022-09-11T17:53:09+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://anamoulrouf.com/sharetrip.html</loc>
+<lastmod>2022-09-11T17:53:09+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://anamoulrouf.com/comingsoon.html</loc>
+<lastmod>2022-09-11T17:53:08+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://anamoulrouf.com/jobike.html</loc>
+<lastmod>2022-09-11T17:53:09+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://anamoulrouf.com/portfolio/Portfolio-Anamoul-Rouf.pdf</loc>
+<lastmod>2022-09-11T17:53:09+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://anamoulrouf.com/reso/Resume-Anamoul-Rouf.pdf</loc>
+<lastmod>2022-09-11T17:53:09+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://anamoulrouf.com/reso/Portfolio-Anamoul-Rouf.pdf</loc>
+<lastmod>2022-09-11T17:53:09+00:00</lastmod>
+<priority>0.64</priority>
+</url>
 </urlset>
