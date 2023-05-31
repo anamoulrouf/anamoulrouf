@@ -56,33 +56,41 @@ body{
 
 /* ---Typhography--- */
 
-body{
+html, body{
     font-family: 'Manrope', sans-serif;
-    font-size: 16px;
     font-weight: 300;
+    font-size: 12px;
 }
+
 /* ---Typhography Responsive--- */
-@media(min-width:1600px) {
-    body{
-      font-size: 18px;
-    }
+/* Medium screens */
+@media (min-width: 768px) {
+  html {
+    font-size: 14px;
+  }
 }
-@media(max-width:1600px) {
-    body{
-      font-size: 16px;
-    }
+
+/* Large screens */
+@media (min-width: 1200px) {
+  html {
+    font-size: 16px;
+  }
 }
-@media(max-width:1024px) {
-    body{
-      font-size: 14px;
-    }
+
+/* Large screens */
+@media (min-width: 1400px) {
+  html {
+    font-size: 18px;
+  }
 }
-@media(max-width:640px) {
-    body{
-      font-size: 12px;
-        font-weight: 400;
-    }
+
+/* Large screens */
+@media (min-width: 1600px) {
+  html {
+    font-size: 20px;
+  }
 }
+
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-weight: 700;
@@ -141,10 +149,14 @@ p, .p{
   letter-spacing: 1px;
 }
 
+a{
+    font-size: 1rem;
+}
 
 a, a:focus, a:hover, a:active{
     text-decoration: none;
     letter-spacing: 1px;
+    line-height: 1.5;
     font-weight: 600;
 }
 a{
@@ -408,7 +420,7 @@ a:focus, a:hover, a:active{
 /* ---Button---  */
 .btn{
     font-size: 1rem;
-    text-transform: uppercase;
+    text-transform: capitalize;
     letter-spacing: 1px;
     border-radius: 3rem;
     font-weight: 600;
