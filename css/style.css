@@ -534,6 +534,10 @@ a:focus, a:hover, a:active{
 }
 
 
+.figma-button img{
+    width: 24px;
+    height: 24px;
+}
 
 
 /* Image */
@@ -544,6 +548,10 @@ a:focus, a:hover, a:active{
 .img-fullheight{
     height: 100%;
     width: auto;
+}
+.img-radious{
+    border-radius: 2rem;
+    overflow: hidden;
 }
 
 
@@ -764,6 +772,7 @@ header{
     margin: 1rem auto;
     margin-top: 6rem;
     border-radius:2rem;
+    overflow: hidden;
 }
 header, header:hover{
     -webkit-transition: 0.3s all ease-in-out;
@@ -788,6 +797,7 @@ section.content, footer{
     margin: 1rem auto;
     border-radius:1.25rem;
     background-color: #fff;
+    overflow: hidden;
     -webkit-transition: 0.3s all ease-in-out;
     -moz-transition: 0.3s all ease-in-out;
     -o-transition: 0.3s all ease-in-out;
