@@ -830,15 +830,40 @@ section .content-block{
 .mt-site{
     margin-top: 6.5rem !important;
 }
-
+section.portfolio-content{
+    width: 47.25%;
+    padding: 5.5rem 0rem;
+    height: auto;
+    margin: 1rem auto;
+    border-radius:1.25rem;
+    background-color: #fff;
+    overflow: hidden;
+    text-align: center;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+section.portfolio-content:hover{
+    box-shadow: 0 0 1rem 0.4rem #003FFF08;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -o-transition: 0.3s all ease-in-out;
+    -ms-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+}
+.text-left{
+    text-align: left;
+}
 
 @media only screen and (max-width: 480px){
-    section .content-block{
+    section .content-block, section.portfolio-content{
         width: 88%;
     }
 }
 @media only screen and (max-width: 960px){
-    section.content{
+    section.content, section.portfolio-content{
         padding: 3rem 0rem;
     }
 }
