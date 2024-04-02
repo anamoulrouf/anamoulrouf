@@ -795,7 +795,7 @@ section.content, footer{
     width: 96%;
     height: auto;
     margin: 1rem auto;
-    border-radius:1.25rem;
+    border-radius:2rem;
     background-color: #fff;
     overflow: hidden;
     -webkit-transition: 0.3s all ease-in-out;
@@ -830,15 +830,21 @@ section .content-block{
 .mt-site{
     margin-top: 6.5rem !important;
 }
-section.portfolio-content{
-    width: 47.25%;
-    padding: 5.5rem 0rem;
+
+section.portfolio-row{
+    width: 96%;
     height: auto;
     margin: 1rem auto;
-    border-radius:1.25rem;
+    border-radius:2rem;
     background-color: #fff;
     overflow: hidden;
+}
+section.portfolio-content{
+    padding: 5.5rem 0rem;
+    height: auto;
+    overflow: hidden;
     text-align: center;
+    box-shadow: 0 0 .04rem .04rem #003FFF08;
     -webkit-transition: 0.3s all ease-in-out;
     -moz-transition: 0.3s all ease-in-out;
     -o-transition: 0.3s all ease-in-out;
@@ -846,7 +852,10 @@ section.portfolio-content{
     transition: 0.3s all ease-in-out;
 }
 section.portfolio-content:hover{
-    box-shadow: 0 0 1rem 0.4rem #003FFF08;
+    z-index: 500;
+    background-color: #fff;
+    border-radius:2rem;
+    box-shadow: 0 0 2rem .8rem #003FFF16;
     -webkit-transition: 0.3s all ease-in-out;
     -moz-transition: 0.3s all ease-in-out;
     -o-transition: 0.3s all ease-in-out;
