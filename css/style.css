@@ -805,7 +805,7 @@ section.content, footer{
     transition: 0.3s all ease-in-out;
 }
 section.content:hover, footer:hover{
-    box-shadow: 0 0 1rem 0.4rem #003FFF08;
+    box-shadow: 0 0 2rem .8rem #003FFF16;
     -webkit-transition: 0.3s all ease-in-out;
     -moz-transition: 0.3s all ease-in-out;
     -o-transition: 0.3s all ease-in-out;
@@ -837,13 +837,15 @@ section.portfolio-row{
     margin: 1rem auto;
     border-radius:2rem;
     background-color: #fff;
-    overflow: hidden;
 }
 section.portfolio-content{
-    padding: 5.5rem 0rem;
+    padding: 2.5rem 0rem;
+    padding-bottom: 5.5rem;
     height: auto;
     overflow: hidden;
+    background: #fff;
     text-align: center;
+    border-radius:2rem;
     box-shadow: 0 0 .04rem .04rem #003FFF08;
     -webkit-transition: 0.3s all ease-in-out;
     -moz-transition: 0.3s all ease-in-out;
