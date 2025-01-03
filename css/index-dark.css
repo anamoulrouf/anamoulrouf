@@ -20,6 +20,10 @@ header .btn{
     margin-bottom: 5em;
 }
 
+header img.hero-img{
+    height: 360px;
+    width: auto;
+}
 header .header-img{
     width: 56%;
     height: auto; 
@@ -28,6 +32,7 @@ header .header-img img{
     width: 100%;
     height: auto;
 }
+
 
 header.header-content .header-content-block{
     margin-top: -2.5rem;
@@ -67,11 +72,14 @@ header.header-content .header-content-block br.line-break{
 @media only screen and (min-width: 769px) and (max-width: 1024px) {
     header{}
 }
-@media only screen and (min-width: 1025px) and (max-width: 1400px) {
+@media only screen and (min-width: 1025px) and (max-width: 1600px) {
     header{}
 }
 
-@media only screen and (min-width: 1401px) and (max-width: 1920px) {
-    header{}
+@media only screen and (min-width: 1601px) and (max-width: 3220px) {
+    header img.hero-img{
+        height: 720px;
+        width: auto;
+    }
 }
 

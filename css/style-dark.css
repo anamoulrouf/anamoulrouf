@@ -245,7 +245,9 @@ a:focus, a:hover, a:active{
 .no-padding{
   padding: 0px;
 }
-
+.no-radius{
+    border-radius: 0px !important;
+}
 
 /* Text alignment */
 @media only screen and (max-width: 480px){
@@ -586,6 +588,7 @@ a:focus, a:hover, a:active{
 .navbar .navbar-nav>li>a.nav-link{
     text-decoration: none;
     color: #ffffff;
+    font-size: 1rem;
     padding: .5rem;
     font-weight: 500;
     border-bottom: .125rem solid transparent;
