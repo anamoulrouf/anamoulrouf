@@ -38,12 +38,17 @@
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://anamoulrouf.com/portfolio/Resume-Anamoul-Rouf.pdf</loc>
+  <loc>https://anamoulrouf.com/portfolio/Portfolio-Anamoul-Rouf.pdf</loc>
   <lastmod>2024-04-03T04:21:35+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://anamoulrouf.com/sharetrip</loc>
+  <lastmod>2024-04-03T04:21:35+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://anamoulrouf.com/sick</loc>
   <lastmod>2024-04-03T04:21:35+00:00</lastmod>
   <priority>0.80</priority>
 </url>
@@ -54,6 +59,11 @@
 </url>
 <url>
   <loc>https://anamoulrouf.com/workd</loc>
+  <lastmod>2024-04-03T04:21:35+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://anamoulrouf.com/rinkel</loc>
   <lastmod>2024-04-03T04:21:35+00:00</lastmod>
   <priority>0.80</priority>
 </url>
