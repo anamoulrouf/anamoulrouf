@@ -59,6 +59,7 @@ body{
     border-radius: 2rem;
 }
 
+
 /* ---Typhography--- */
 
 html, body{
@@ -165,7 +166,7 @@ a, a:focus, a:hover, a:active{
     font-weight: 600;
 }
 a{
-    color: #5EFF9E;
+    color: #3CDA64;
     -webkit-transition: 0.3s all ease-in-out;
     -moz-transition: 0.3s all ease-in-out;
     -o-transition: 0.3s all ease-in-out;
@@ -248,6 +249,14 @@ a:focus, a:hover, a:active{
 .no-radius{
     border-radius: 0px !important;
 }
+.height-100{
+    height: 100%;
+}
+.width-100{
+    width: 100%;
+}
+
+
 
 /* Text alignment */
 @media only screen and (max-width: 480px){
@@ -772,7 +781,6 @@ form#contact-form button{
 
 /* Header */
 header{
-    background: #150737;
     padding-top: 7rem;
     padding-bottom: 3rem;
     width: 96%;
@@ -781,6 +789,9 @@ header{
     margin-top: 6rem;
     border-radius:2rem;
     overflow: hidden;
+    background-image: url(/../img/grid.svg), linear-gradient(180deg, #15073700 48%, #10042E 99%);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 header, header:hover{
     -webkit-transition: 0.3s all ease-in-out;
@@ -804,13 +815,15 @@ section.content, footer{
     height: auto;
     margin: 1rem auto;
     border-radius:2rem;
-    background-image: linear-gradient(180deg, #0B0120, #10042E);
     overflow: hidden;
     -webkit-transition: 0.3s all ease-in-out;
     -moz-transition: 0.3s all ease-in-out;
     -o-transition: 0.3s all ease-in-out;
     -ms-transition: 0.3s all ease-in-out;
     transition: 0.3s all ease-in-out;
+    background-image: url(../img/grid.svg), linear-gradient(180deg, #15073700 48%, #10042E 99%);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 section.content:hover, footer:hover{
     box-shadow: 0 0 2rem .8rem #10042E56;
@@ -831,7 +844,7 @@ section img{
 }
 
 section .content-block{
-    width: 72%;
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -896,8 +909,10 @@ section.portfolio-content .content-block-text{
 /* footer  */
 footer { 
     padding: 7.5rem 0px 2.5rem 0px; 
-    margin-bottom: 1.5rem;
-    background: #150737;
+    margin: 1.5rem auto;
+    background-image: url(/../img/grid.svg), linear-gradient(180deg, #15073700 8%, #10042E 99%);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 footer .logo{
     height: 2.75rem;
