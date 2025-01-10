@@ -1,10 +1,9 @@
 /* header (hero) Area */
 
-header.header-wrap{
-    padding: 0px;
-    padding-top: 6rem;
+header{
+    padding: 6rem 0 2rem 0;
     overflow: hidden;
-    height: 85vh;
-    min-height: 800px;
 }
 
+header.header-wrap .header-content{
+}

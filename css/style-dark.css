@@ -58,6 +58,19 @@ body{
 .img-radious{
     border-radius: 2rem;
 }
+.badge{
+    margin-right: .5rem;
+}
+.badge-outline{
+    border-radius: 99px;
+    border: 1px solid #ffffff32;
+}
+.badge img{
+    width: 1.75rem;
+    height: auto;
+    margin-right: .5rem;
+    opacity: .75;
+}
 
 
 /* ---Typhography--- */
@@ -927,8 +940,12 @@ footer .social-icons {
     margin-bottom: 1rem;
 }
 footer .social-icons a { 
-    font-size: 1.5rem; 
+    font-size: 2rem; 
     margin: .5rem;
+}
+
+.text-white{
+    color: #fff;
 }
 .linkedin{
     color: #ffffff;
@@ -944,6 +961,13 @@ footer .social-icons a {
 }
 .producthunt{
     color: #fff;
+}
+
+footer .social-icons a.contra img{
+    margin-top: -1rem;
+    width: 1.5rem;
+    height: auto;
+
 }
 
 footer .social-icons a, footer .social-icons a:hover{
@@ -964,6 +988,7 @@ footer .social-icons a img:hover {
     -ms-transition: 0.3s all ease-in-out;
     transition: 0.3s all ease-in-out;
 }
+
 
 
 @media only screen and (max-width: 480px){
