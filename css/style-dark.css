@@ -902,6 +902,22 @@ section.portfolio-content .content-block-text{
     padding: 0 4rem;
 }
 
+section .scrolling-wrapper{
+    overflow-x: auto; 
+}
+section .scrolling-wrapper .card-block{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    background-color: #00000000;
+    border: none;
+}
+
+section .scrolling-wrapper .card-block-works{
+    text-align: left;
+}
+
 
 .text-left{
     text-align: left;
@@ -964,7 +980,7 @@ footer .social-icons a {
 }
 
 footer .social-icons a.contra img{
-    margin-top: -1rem;
+    margin-top: -.75rem;
     width: 1.5rem;
     height: auto;
 
