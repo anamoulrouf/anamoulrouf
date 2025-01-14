@@ -282,6 +282,15 @@ a:focus, a:hover, a:active{
     .text-center-sm{
         text-align: center;
     }
+    .text-left-sm-imp{
+        text-align: left !important;
+    }
+    .text-right-sm-imp{
+        text-align: right !important;
+    }
+    .text-center-sm-imp{
+        text-align: center !important;
+    }
 }
 
 
@@ -646,19 +655,19 @@ a:focus, a:hover, a:active{
 .navbar-light .navbar-toggler{
     background-color: transparent;
     border-color: #5EFF9E16;
-    color: #5EFF9E32;
+    color: #5EFF9E00;
     min-height: 48px;
     padding: .5rem;
     border-radius: 1rem;
 }
-.navbar-light .navbar-toggler:focus{
+.navbar-light button.navbar-toggler:focus{
     background-color: #5EFF9E00;
     border-color: transparent;
 }
-.navbar-light .navbar-toggler-icon {
+.navbar-light button.navbar-toggler .navbar-toggler-icon {
     background-image: url(../img/navbar-toggler.svg);
-    
 }
+
 
 @media only screen and (max-width: 480px){
     .logo-desktop{
@@ -677,9 +686,10 @@ a:focus, a:hover, a:active{
         border-radius: 2rem;
     }
     .navbar-collapse.collapsing, .navbar-collapse.collapse {
-        background-color: #fff;
+        background-image: linear-gradient(180deg, #1e0758 48%, #0B0121 99%);
         text-align: end;
         padding: 1.5rem;
+        padding-bottom: 4rem;
         border-radius: .5rem .5rem 1rem 1rem;
     }
     .navbar .navbar-nav>li{
@@ -816,6 +826,21 @@ header, header:hover{
 header:hover{
     box-shadow: 0 0 1rem 0.4rrem #5EFF9E00;
 }
+@media only screen and (max-width: 860px){
+    header .header-content{
+        padding: 0rem 2rem;
+    }
+}
+@media only screen and (min-width: 861px){
+    header .header-content{
+        padding: 0rem 3rem;
+    }
+}
+@media only screen and (min-width: 1800px){
+    header .header-content{
+        padding: 0rem 16rem;
+    }
+}
 
 
 /* Sections  */
@@ -931,6 +956,9 @@ section .scrolling-wrapper .card-block-works{
 @media only screen and (max-width: 960px){
     section.content, section.portfolio-content{
         padding: 3rem 0rem;
+    }
+    .flex-tab-column-reverse{
+        flex-direction: column-reverse !important;
     }
 }
 
