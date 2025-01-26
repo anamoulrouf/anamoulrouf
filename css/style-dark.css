@@ -262,12 +262,84 @@ a:focus, a:hover, a:active{
 .no-radius{
     border-radius: 0px !important;
 }
-.height-100{
-    height: 100%;
+
+
+
+.width-25{
+    width: 25% !important;
+}
+.width-50{
+    width: 50% !important;
+}
+.width-75{
+    width: 75% !important;
 }
 .width-100{
-    width: 100%;
+    width: 100% !important;
 }
+.width-25vw{
+    width: 25vw !important;
+}
+.width-50vw{
+    width: 50vw !important;
+}
+.width-75vw{
+    width: 75vw !important;
+}
+.width-100vw{
+    width: 100vw !important;
+}
+
+
+.height-25{
+    height: 25% !important;
+}
+.height-50{
+    height: 50% !important;
+}
+.height-75{
+    height: 75% !important;
+}
+.height-100{
+    height: 100% !important;
+}
+.height-25vh{
+    height: 25vh !important;
+}
+.height-50vh{
+    height: 50vh !important;
+}
+.height-75vh{
+    height: 75vh !important;
+}
+.height-100vh{
+    height: 100vh !important;
+}
+
+
+.flex-masonry{
+    border-radius: 3px;
+    padding: 20px;
+    display: flex;
+    flex-flow: column wrap;
+    align-content: space-between;
+    height: 580px;
+}
+.flex-child {
+    border-radius: 3px;
+    background-color: #A2CBFA;
+    border: 1px solid #4390E1;
+    box-shadow: 0 2px 2px rgba(0, 90, 250, 0.05), 0 4px 4px rgba(0, 90, 250, 0.05), 0 8px 8px rgba(0, 90, 250, 0.05), 0 16px 16px rgba(0, 90, 250, 0.05);
+    width: 32%;
+    margin-bottom: 2%;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    color: white;
+}
+
+
+
 
 
 
