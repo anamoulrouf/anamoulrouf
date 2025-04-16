@@ -910,7 +910,7 @@ header:hover{
 }
 @media only screen and (min-width: 1800px){
     header .header-content{
-        padding: 0rem 16rem;
+        padding: 0rem 6rem;
     }
 }
 
