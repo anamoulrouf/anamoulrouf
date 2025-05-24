@@ -1381,7 +1381,7 @@ img.un-logo{
 
 /* Calendly */
 .calendly-inline-widget{
-    background-color: #10042e !important;
+    background-color: #10042e00 !important;
     border-radius: 2rem;
     overflow: hidden;
 }
