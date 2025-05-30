@@ -5,13 +5,24 @@ header{
     overflow: hidden;
     min-height: 80vh;
     display: flex;
+    align-items: flex-end !important;
 }
 
 header.header-wrap .header-content{
 }
 
-
-
+@media only screen and (max-width: 1280px){
+  header{
+    min-height: 84vh;
+    align-items: center !important;
+  }
+}
+@media only screen and (max-width: 860px){
+  header{
+    min-height: 84vh;
+    align-items: center !important;
+  }
+}
 
 
 
