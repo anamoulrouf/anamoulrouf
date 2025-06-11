@@ -1583,6 +1583,14 @@ section .blarb-1:hover{
     transition: 0.3s all ease-in-out;
 }
 
+
+iframe.about-video{
+    position: absolute;
+    top: 0px;
+    z-index: -9999;
+    opacity: 0;
+}
+
 @media only screen and (max-width: 1600px){
     section .section-title, .section-title-2{
         font-size: 2.75rem;
