@@ -1055,7 +1055,7 @@ a:focus, a:hover, a:active{
 .btn-primary{
     background: #0BFF7B;
     color: #0BFF7B;
-    background: linear-gradient(0deg, #0BFF7B32 0%, #0BFF7B16 100%), #00000024;
+    background: linear-gradient(0deg, #0BFF7B16 0%, #0BFF7B00 100%), #00000032;
     mix-blend-mode: lighten;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10), 0px 1.69px 13.521px 0px rgba(0, 0, 0, 0.12), 5.07px 5.07px 0.845px -5.915px #0BFF7Bbf inset, -5.07px -5.07px 0.845px -5.07px #0BFF7Bcc inset, 1.69px 1.69px 1.69px -0.845px #0BFF7Bbf inset, -1.69px -1.69px 1.69px -0.845px #0BFF7Bbf inset, 0px 0px 1.69px 1.69px #0BFF7B24 inset, 0px 0px 1.69px 1.69px #0BFF7B32 inset, 0px 0px 27.041px 0px #0BFF7B32 inset;
     backdrop-filter: blur(6px);
@@ -1067,7 +1067,7 @@ a:focus, a:hover, a:active{
 .btn-primary:hover, .btn-primary:active, .btn-primary:focus, .btn-outline-primary:hover, .btn-outline-primary:active, .btn-outline-primary:focus{
     background: #0BFF7B;
     color: #150737;
-    background: linear-gradient(0deg, #0BFF7B72 0%, #0BFF7B80 100%), #0BFF7B80;
+    background: linear-gradient(0deg, #0BFF7B72 0%, #0BFF7B80 100%), #0BFF7B72;
     mix-blend-mode: lighten;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10), 0px 1.69px 13.521px 0px rgba(0, 0, 0, 0.12), 5.07px 5.07px 0.845px -5.915px #0BFF7Bbf inset, -5.07px -5.07px 0.845px -5.07px #0BFF7Bcc inset, 1.69px 1.69px 1.69px -0.845px #0BFF7Bbf inset, -1.69px -1.69px 1.69px -0.845px #0BFF7Bbf inset, 0px 0px 1.69px 1.69px #0BFF7B24 inset, 0px 0px 1.69px 1.69px #0BFF7B32 inset, 0px 0px 27.041px 0px #0BFF7B32 inset;
 }
@@ -1076,14 +1076,14 @@ a:focus, a:hover, a:active{
 .btn-secondary{
     background: #A4FFCA;
     color: #A4FFCA;
-    background: linear-gradient(0deg, #A4FFCA16 0%, #A4FFCA08 100%), #00000016;
+    background: linear-gradient(0deg, #A4FFCA16 0%, #A4FFCA00 100%), #00000016;
     mix-blend-mode: lighten;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10), 0px 2px 12px 0px rgba(0, 0, 0, 0.12), 5px 5px 1px -6px #A4FFCAbf inset, -5px -5px 1px -5px #A4FFCAcc inset, 2px 2px 2px -1px #A4FFCAbf inset, -2px -2px 2px -1px #A4FFCAbf inset, 0px 0px 2px 2px #A4FFCA24 inset, 0px 0px 2px 2px #A4FFCA32 inset, 0px 0px 28px 0px #A4FFCA32 inset;
     backdrop-filter: blur(6px);
 }
 .btn-secondary:hover, .btn-secondary:active, .btn-secondary:focus{
     background: #A4FFCA;
-    background: linear-gradient(0deg, #A4FFCA72 0%, #A4FFCA80 100%), #A4FFCA80;
+    background: linear-gradient(0deg, #A4FFCA72 0%, #A4FFCA80 100%), #A4FFCA72;
     color: #110534;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10), 0px 2px 12px 0px rgba(0, 0, 0, 0.12), 5px 5px 1px -6px #A4FFCAbf inset, -5px -5px 1px -5px #A4FFCAcc inset, 2px 2px 2px -1px #A4FFCAbf inset, -2px -2px 2px -1px #A4FFCAbf inset, 0px 0px 2px 2px #A4FFCA24 inset, 0px 0px 2px 2px #A4FFCA32 inset, 0px 0px 28px 0px #A4FFCA32 inset;
 }
@@ -1172,10 +1172,10 @@ a:focus, a:hover, a:active{
 
 /* Navbar (menubar) */
 .navbar .logo .logo-img { 
-    height: 2.5rem; 
+    height: 2.75rem; 
     width: auto;
     border-radius: 16rem;
-    padding: .125rem;
+    padding: .25rem;
     background: linear-gradient(0deg, #A4FFCA16 0%, #A4FFCA08 100%), #00000016;
     mix-blend-mode: lighten;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10), 0px 2px 12px 0px rgba(0, 0, 0, 0.12), 5px 5px 1px -6px #ffffffbf inset, -5px -5px 1px -5px #ffffffcc inset, 2px 2px 2px -1px #ffffffbf inset, -2px -2px 2px -1px #ffffffbf inset, 0px 0px 2px 2px #ffffff24 inset, 0px 0px 2px 2px #ffffff32 inset, 0px 0px 28px 0px #ffffff32 inset;
@@ -1607,7 +1607,7 @@ section .blarb-1{
 }
 section .blarb-1:hover{
     border-radius: 2rem;
-    background: linear-gradient(0deg, #A4FFCA16 0%, #A4FFCA08 100%), #00000024;
+    background: linear-gradient(0deg, #A4FFCA16 0%, #A4FFCA08 100%), #00000008;
     mix-blend-mode: darken;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10), 0px 2px 12px 0px rgba(0, 0, 0, 0.12), 5px 5px 1px -6px #A4FFCAbf inset, -5px -5px 1px -5px #A4FFCAcc inset, 2px 2px 2px -1px #A4FFCAbf inset, -2px -2px 2px -1px #A4FFCAbf inset, 0px 0px 2px 2px #A4FFCA24 inset, 0px 0px 2px 2px #A4FFCA32 inset, 0px 0px 28px 0px #A4FFCA32 inset;
     backdrop-filter: blur(6px);
@@ -1678,13 +1678,17 @@ footer .social-icons {
     margin-bottom: 2rem;
 }
 footer .social-icons a { 
-    font-size: 2rem; 
-    margin: .5rem;
-    align-items: center;
+    font-size: 2rem;
+    line-height: 2rem; 
+}
+footer .social-icons div.icons { 
+    height: 4rem;
+    width: 4rem;
+    align-content: center;
     padding: 1rem;
-    padding-bottom: .5rem;
+    margin: .5rem;
     border-radius: 16rem;
-    background: linear-gradient(0deg, #A4FFCA16 0%, #A4FFCA08 100%), #00000016;
+    background: linear-gradient(0deg, #A4FFCA16 0%, #A4FFCA00 100%), #00000008;
     mix-blend-mode: darken;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10), 0px 2px 12px 0px rgba(0, 0, 0, 0.12), 5px 5px 1px -6px #ffffffbf inset, -5px -5px 1px -5px #ffffffcc inset, 2px 2px 2px -1px #ffffffbf inset, -2px -2px 2px -1px #ffffffbf inset, 0px 0px 2px 2px #ffffff24 inset, 0px 0px 2px 2px #ffffff32 inset, 0px 0px 28px 0px #ffffff32 inset;
     backdrop-filter: blur(6px);
@@ -1713,8 +1717,8 @@ footer .social-icons a {
 }
 
 footer .social-icons a.contra img{
-    margin-top: -.75rem;
-    width: 1.5rem;
+    margin-top: -.25rem;
+    width: 1.75rem;
     height: auto;
 
 }
