@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Task 3 — Mobile Field Officer · MFS LoanFlow</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#F8FAFC;--surface:#FFFFFF;--card:#F8FAFC;--card2:#F1F5F9;--border:#E2E8F0;
+  --amber:#B45309;--amber-bg:#FEF3C7;--amber-border:#FCD34D;
+  --green:#047857;--green-bg:#D1FAE5;--green-border:#A7F3D0;
+  --red:#B91C1C;--red-bg:#FEE2E2;--red-border:#FCA5A5;
+  --blue:#1D4ED8;--blue-bg:#DBEAFE;--blue-border:#93C5FD;
+  --orange:#C2410C;--orange-bg:#FFEDD5;--orange-border:#FDBA74;
+  --t1:#0F172A;--t2:#334155;--t3:#64748B;--t4:#94A3B8;
+  --mono:'IBM Plex Mono',monospace;--sans:'DM Sans',sans-serif;
+}
+body{background:var(--bg);color:var(--t1);font-family:var(--sans);}
+a{color:var(--amber);text-decoration:none;}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.logo{font-family:var(--mono);font-size:13px;color:var(--amber);letter-spacing:3px;font-weight:600;}
+.logo-sub{font-family:var(--mono);font-size:9px;color:var(--t4);letter-spacing:2px;margin-top:3px;}
+.nav-links{display:flex;gap:4px;}
+.nav-link{font-family:var(--mono);font-size:10px;color:var(--t3);padding:6px 12px;border:1px solid var(--border);letter-spacing:1px;text-decoration:none;transition:all .2s;}
+.nav-link:hover,.nav-link.active{background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber);}
+.badge{background:var(--amber-bg);border:1px solid var(--amber-border);color:var(--amber);font-family:var(--mono);font-size:10px;padding:5px 12px;letter-spacing:1px;}
+.page-wrap{max-width:1280px;margin:0 auto;padding:48px;}
+.screen-nav{display:flex;gap:6px;margin-bottom:36px;flex-wrap:wrap;}
+.snav{background:var(--surface);border:1px solid var(--border);color:var(--t3);font-family:var(--mono);font-size:10px;padding:8px 14px;cursor:pointer;letter-spacing:1px;transition:all .2s;border-radius:2px;}
+.snav:hover{border-color:var(--amber-border);color:var(--amber);}
+.snav.active{background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber);}
+/* DEVICE */
+.device-wrap{display:flex;gap:48px;align-items:flex-start;justify-content:center;flex-wrap:wrap;}
+.device{width:375px;background:#fff;border:1.5px solid #CBD5E1;border-radius:40px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.12),0 0 0 6px rgba(0,0,0,.04);flex-shrink:0;position:relative;}
+.notch-bar{height:44px;background:#F8FAFC;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);}
+.notch-pill{width:100px;height:22px;background:#E2E8F0;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.notch-cam{width:8px;height:8px;background:#CBD5E1;border-radius:50%;}
+.screen-body{min-height:740px;background:var(--bg);overflow:hidden;position:relative;}
+.home-bar{width:100px;height:4px;background:#CBD5E1;border-radius:2px;margin:10px auto 12px;}
+/* STATUS BAR */
+.sbar{display:flex;align-items:center;justify-content:space-between;padding:10px 18px 6px;background:var(--surface);border-bottom:1px solid var(--border);}
+.sbar-time{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--t1);}
+.sbar-right{display:flex;align-items:center;gap:6px;}
+.offline-pill{background:var(--orange-bg);border:1px solid var(--orange-border);color:var(--orange);font-family:var(--mono);font-size:7px;padding:2px 6px;border-radius:8px;letter-spacing:.5px;font-weight:600;}
+.sync-pill{background:var(--amber-bg);border:1px solid var(--amber-border);color:var(--amber);font-family:var(--mono);font-size:7px;padding:2px 6px;border-radius:8px;letter-spacing:.5px;font-weight:600;}
+.online-pill{background:var(--green-bg);border:1px solid var(--green-border);color:var(--green);font-family:var(--mono);font-size:7px;padding:2px 6px;border-radius:8px;letter-spacing:.5px;font-weight:600;}
+/* APP HEADER */
+.app-hdr{padding:12px 18px 10px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.back-btn{color:var(--amber);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:3px;font-weight:600;}
+.app-title{font-size:14px;font-weight:700;color:var(--t1);}
+.app-meta{font-family:var(--mono);font-size:9px;color:var(--t4);}
+/* SCROLL */
+.scroll{overflow-y:auto;max-height:660px;padding-bottom:72px;}
+.scroll::-webkit-scrollbar{display:none;}
+/* BOTTOM NAV */
+.bnav{position:absolute;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;padding:10px 0 8px;}
+.bni{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;opacity:.4;}
+.bni.active{opacity:1;}
+.bni-icon{font-size:17px;}
+.bni-label{font-family:var(--mono);font-size:7px;color:var(--t3);}
+.bni.active .bni-label{color:var(--amber);}
+/* PAD */
+.pad{padding:14px 16px;}
+/* ALERT */
+.alert{padding:10px 12px;border-radius:3px;margin:10px 16px 0;display:flex;align-items:flex-start;gap:8px;font-size:11px;line-height:1.5;}
+.alert-warn{background:var(--orange-bg);border:1px solid var(--orange-border);color:var(--orange);}
+.alert-info{background:var(--blue-bg);border:1px solid var(--blue-border);color:var(--blue);}
+.alert-partial{background:var(--amber-bg);border:1px solid var(--amber-border);color:var(--amber);}
+.alert-icon{font-size:13px;flex-shrink:0;margin-top:1px;}
+/* SECTION LABEL */
+.slabel{font-family:var(--mono);font-size:8px;color:var(--t4);letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;}
+/* CARD */
+.mcard{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:13px 14px;margin-bottom:8px;}
+.mcard:last-child{margin-bottom:0;}
+/* RISK PILL */
+.rpill{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:2px;font-family:var(--mono);font-size:8px;letter-spacing:.5px;font-weight:700;}
+.rp-high{background:var(--red-bg);border:1px solid var(--red-border);color:var(--red);}
+.rp-med{background:var(--amber-bg);border:1px solid var(--amber-border);color:var(--amber);}
+.rp-low{background:var(--green-bg);border:1px solid var(--green-border);color:var(--green);}
+/* QUEUE ITEM */
+.qi{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:12px 14px;margin-bottom:7px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .2s;}
+.qi:hover{box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.qi.qhigh{border-left:3px solid var(--red);}
+.qi.qmed{border-left:3px solid var(--amber);}
+.qi.qlow{border-left:3px solid var(--green);}
+.qi-avatar{width:34px;height:34px;background:var(--card2);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--t3);flex-shrink:0;}
+.qi-body{flex:1;min-width:0;}
+.qi-name{font-size:12px;font-weight:700;color:var(--t1);margin-bottom:3px;}
+.qi-meta{display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+.qi-right{text-align:right;}
+.qi-amount{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--t1);}
+.qi-time{font-family:var(--mono);font-size:8px;color:var(--t4);}
+/* CONFLICT BADGE */
+.cfbadge{display:inline-flex;align-items:center;gap:3px;background:var(--orange-bg);border:1px solid var(--orange-border);color:var(--orange);font-family:var(--mono);font-size:7px;padding:2px 6px;border-radius:2px;letter-spacing:.5px;}
+.partial-badge{display:inline-flex;align-items:center;background:#EDE9FE;border:1px solid #C4B5FD;color:#6D28D9;font-family:var(--mono);font-size:7px;padding:2px 6px;border-radius:2px;letter-spacing:.5px;}
+/* SUMMARY BAND */
+.sum-band{background:var(--card2);border:1px solid var(--border);border-radius:3px;padding:12px 14px;margin-bottom:10px;}
+.sum-band-title{font-family:var(--mono);font-size:7px;color:var(--t4);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+.sum-flag{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--t2);margin-bottom:4px;line-height:1.4;}
+.sum-flag:last-child{margin-bottom:0;}
+/* DATA ROW */
+.dr{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);}
+.dr:last-child{border-bottom:none;}
+.dr-key{font-size:11px;color:var(--t3);}
+.dr-val{font-size:11px;font-weight:700;color:var(--t1);font-family:var(--mono);}
+.dr-val.good{color:var(--green);}
+.dr-val.bad{color:var(--red);}
+.dr-val.warn{color:var(--amber);}
+/* STAT GRID */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;}
+.stat-box{background:var(--surface);border:1px solid var(--border);padding:10px 12px;border-radius:3px;}
+.sb-label{font-family:var(--mono);font-size:7px;color:var(--t4);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}
+.sb-val{font-size:14px;font-weight:700;}
+.sb-sub{font-size:9px;margin-top:2px;}
+/* CHART */
+.trend-chart{height:56px;display:flex;align-items:flex-end;gap:3px;padding:0 2px;}
+.bar{flex:1;border-radius:1px 1px 0 0;min-height:3px;}
+.bar.b1{background:#BBF7D0;border:1px solid #6EE7B7;}
+.bar.b2{background:#86EFAC;border:1px solid #4ADE80;}
+.bar.b3{background:#22C55E;border:1px solid #16A34A;}
+.bar.bmiss{background:var(--card2);border:1px solid var(--border);background-image:repeating-linear-gradient(45deg,transparent,transparent 2px,rgba(0,0,0,.05) 2px,rgba(0,0,0,.05) 4px);}
+.chart-labels{display:flex;justify-content:space-around;margin-top:4px;}
+.chart-label{font-family:var(--mono);font-size:7px;color:var(--t4);}
+/* REC BUTTONS */
+.rec-btn{width:100%;padding:14px;border-radius:3px;border:2px solid;font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:10px;transition:all .2s;}
+.rec-approve{background:var(--green-bg);border-color:var(--green-border);color:var(--green);}
+.rec-approve.sel,.rec-approve:hover{background:var(--green);color:#fff;border-color:var(--green);}
+.rec-reject{background:var(--red-bg);border-color:var(--red-border);color:var(--red);}
+.rec-reject.sel,.rec-reject:hover{background:var(--red);color:#fff;border-color:var(--red);}
+/* NOTE */
+.note-area{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--t1);font-family:var(--sans);font-size:12px;padding:10px 12px;resize:none;border-radius:3px;margin-bottom:8px;min-height:80px;outline:none;}
+.note-area:focus{border-color:var(--amber-border);box-shadow:0 0 0 3px rgba(180,83,9,.08);}
+.note-area::placeholder{color:var(--t4);}
+/* BTN */
+.btn-primary{width:100%;padding:14px;background:var(--amber);color:#fff;font-size:13px;font-weight:700;border:none;border-radius:3px;cursor:pointer;font-family:var(--sans);transition:all .2s;}
+.btn-primary:hover{background:#92400E;}
+.btn-primary:disabled{background:var(--card2);color:var(--t4);cursor:not-allowed;}
+.btn-outline{width:100%;padding:14px;background:transparent;color:var(--amber);font-size:13px;font-weight:700;border:2px solid var(--amber-border);border-radius:3px;cursor:pointer;font-family:var(--sans);margin-bottom:10px;}
+/* SKEL */
+.skel{background:linear-gradient(90deg,var(--card2) 25%,var(--border) 50%,var(--card2) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:3px;}
+@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+/* STATES */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 20px;text-align:center;}
+.error-state{display:flex;flex-direction:column;align-items:center;padding:36px 20px;text-align:center;}
+/* SUCCESS */
+.success-ring{width:72px;height:72px;border:2.5px solid var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:18px;animation:pg 2s ease-in-out infinite;}
+@keyframes pg{0%,100%{box-shadow:0 0 0 0 rgba(4,120,87,.2);}50%{box-shadow:0 0 0 12px rgba(4,120,87,0);}}
+/* PROGRESS */
+.progress-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:12px;}
+.progress-fill{height:100%;background:var(--amber);border-radius:2px;width:60%;animation:loading 1.2s ease-in-out infinite alternate;}
+@keyframes loading{0%{width:20%}100%{width:90%}}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+/* SCREEN DOTS */
+.screen-dots{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:12px;}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--border);}
+.dot.active{background:var(--amber);width:14px;border-radius:3px;}
+.screen-lbl{font-family:var(--mono);font-size:9px;color:var(--t4);text-align:center;margin-top:7px;letter-spacing:1px;}
+/* ANNOTATIONS */
+.ann-panel{width:290px;flex-shrink:0;}
+.ann-title{font-family:var(--mono);font-size:10px;color:var(--amber);letter-spacing:2px;text-transform:uppercase;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+.ann-item{margin-bottom:18px;}
+.ann-num{font-family:var(--mono);font-size:8px;color:var(--amber);margin-bottom:3px;font-weight:600;}
+.ann-name{font-size:13px;font-weight:700;color:var(--t1);margin-bottom:4px;}
+.ann-desc{font-size:12px;color:var(--t2);line-height:1.6;}
+.ann-sep{height:1px;background:var(--border);margin:18px 0;}
+/* profile */
+.ph-wrap{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.ph-avatar{width:44px;height:44px;background:var(--card2);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--t3);flex-shrink:0;}
+footer{background:var(--surface);border-top:1px solid var(--border);padding:22px 48px;display:flex;justify-content:space-between;}
+.ft{font-family:var(--mono);font-size:9px;color:var(--t4);letter-spacing:1px;}
+</style>
+</head>
+<body>
+<header>
+  <div><div class="logo">MFS · LOANFLOW OS</div><div class="logo-sub">TASK 03 · MOBILE EXPERIENCE · FIELD OFFICER</div></div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <nav class="nav-links">
+      <a class="nav-link" href="task1-journey-map.html">01 Journey</a>
+      <a class="nav-link" href="task2-icon-spec.html">02 Icons</a>
+      <a class="nav-link active" href="task3-mobile-officer.html">03 Mobile</a>
+      <a class="nav-link" href="task4-web-manager.html">04 Web</a>
+      <a class="nav-link" href="index.html">↩ Home</a>
+    </nav>
+    <div class="badge">TASK 3 OF 4</div>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <div class="screen-nav">
+    <button class="snav active" onclick="showScreen(0)">01 · Dashboard</button>
+    <button class="snav" onclick="showScreen(1)">02 · Customer Profile</button>
+    <button class="snav" onclick="showScreen(2)">03 · Transaction Trends</button>
+    <button class="snav" onclick="showScreen(3)">04 · Recommendation</button>
+    <button class="snav" onclick="showScreen(4)">05 · Sync Status</button>
+  </div>
+
+  <div class="device-wrap">
+    <!-- DEVICE -->
+    <div>
+      <div class="device">
+        <div class="notch-bar"><div class="notch-pill"><div class="notch-cam"></div></div></div>
+        <div class="screen-body">
+
+          <!-- S0: DASHBOARD -->
+          <div id="s0">
+            <div class="sbar"><span class="sbar-time">09:42</span><div class="sbar-right"><div class="offline-pill">OFFLINE</div></div></div>
+            <div class="alert alert-warn"><div class="alert-icon">📵</div><div><strong>Offline Mode</strong> — 4 apps pre-loaded. Last sync: 08:31 AM</div></div>
+            <div class="pad" style="padding-top:12px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                <div><div style="font-family:var(--mono);font-size:8px;color:var(--t4);margin-bottom:2px;">GOOD MORNING</div><div style="font-size:16px;font-weight:700;">Farhan Ahmed</div></div>
+                <div style="text-align:right;"><div style="font-family:var(--mono);font-size:8px;color:var(--t4);">TODAY'S VISITS</div><div style="font-size:20px;font-weight:700;color:var(--amber);">4 <span style="font-size:12px;color:var(--t4);">/ 8</span></div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:14px;">
+                <div style="background:var(--red-bg);border:1px solid var(--red-border);padding:9px;border-radius:3px;text-align:center;"><div style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--red);">2</div><div style="font-family:var(--mono);font-size:7px;color:var(--red);margin-top:1px;">HIGH</div></div>
+                <div style="background:var(--amber-bg);border:1px solid var(--amber-border);padding:9px;border-radius:3px;text-align:center;"><div style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--amber);">1</div><div style="font-family:var(--mono);font-size:7px;color:var(--amber);margin-top:1px;">MED</div></div>
+                <div style="background:var(--green-bg);border:1px solid var(--green-border);padding:9px;border-radius:3px;text-align:center;"><div style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--green);">1</div><div style="font-family:var(--mono);font-size:7px;color:var(--green);margin-top:1px;">LOW</div></div>
+              </div>
+              <div class="slabel">APPLICATION QUEUE</div>
+              <div class="qi qhigh" onclick="showScreen(1)">
+                <div class="qi-avatar">RF</div>
+                <div class="qi-body">
+                  <div class="qi-name">Rokeya Fatema</div>
+                  <div class="qi-meta"><span class="rpill rp-high"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M12 3L21.5 20H2.5L12 3Z" stroke="#B91C1C" stroke-width="2" stroke-linejoin="round"/></svg>HIGH</span></div>
+                </div>
+                <div class="qi-right"><div class="qi-amount">৳ 85,000</div><div class="qi-time">10:00 AM</div></div>
+              </div>
+              <div class="qi qhigh">
+                <div class="qi-avatar">MH</div>
+                <div class="qi-body">
+                  <div class="qi-name">Mohammad Hasan</div>
+                  <div class="qi-meta"><span class="rpill rp-high"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M12 3L21.5 20H2.5L12 3Z" stroke="#B91C1C" stroke-width="2" stroke-linejoin="round"/></svg>HIGH</span>&nbsp;<span class="cfbadge">⚠ CONFLICT</span></div>
+                </div>
+                <div class="qi-right"><div class="qi-amount">৳ 1,20,000</div><div class="qi-time">11:30 AM</div></div>
+              </div>
+              <div class="qi qmed">
+                <div class="qi-avatar">SA</div>
+                <div class="qi-body">
+                  <div class="qi-name">Salma Akter</div>
+                  <div class="qi-meta"><span class="rpill rp-med"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M12 2L22 12L12 22L2 12L12 2Z" stroke="#B45309" stroke-width="2" stroke-linejoin="round"/></svg>MED</span>&nbsp;<span class="partial-badge">◑ PARTIAL</span></div>
+                </div>
+                <div class="qi-right"><div class="qi-amount">৳ 50,000</div><div class="qi-time">1:00 PM</div></div>
+              </div>
+              <div class="qi qlow">
+                <div class="qi-avatar">KI</div>
+                <div class="qi-body">
+                  <div class="qi-name">Karim Islam</div>
+                  <div class="qi-meta"><span class="rpill rp-low"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#047857" stroke-width="2"/><path d="M8 12L10.5 14.5L16 9" stroke="#047857" stroke-width="2" stroke-linecap="round"/></svg>LOW</span></div>
+                </div>
+                <div class="qi-right"><div class="qi-amount">৳ 30,000</div><div class="qi-time">2:30 PM</div></div>
+              </div>
+            </div>
+            <div class="bnav">
+              <div class="bni active"><div class="bni-icon">⬜</div><div class="bni-label">QUEUE</div></div>
+              <div class="bni"><div class="bni-icon">📋</div><div class="bni-label">SUBMITTED</div></div>
+              <div class="bni"><div class="bni-icon">👤</div><div class="bni-label">PROFILE</div></div>
+            </div>
+          </div>
+
+          <!-- S1: CUSTOMER PROFILE -->
+          <div id="s1" style="display:none;">
+            <div class="sbar"><span class="sbar-time">10:08</span><div class="sbar-right"><div class="offline-pill">OFFLINE</div></div></div>
+            <div class="app-hdr"><div class="back-btn" onclick="showScreen(0)">← Queue</div><div class="app-title">Customer Profile</div><div class="app-meta">1 of 4</div></div>
+            <div class="scroll">
+              <div class="pad">
+                <div class="ph-wrap">
+                  <div class="ph-avatar">RF</div>
+                  <div>
+                    <div style="font-size:16px;font-weight:700;">Rokeya Fatema</div>
+                    <div style="font-size:10px;color:var(--t3);margin-top:2px;">MFS-2024-018743 · Dhaka North</div>
+                    <div style="margin-top:6px;"><span class="rpill rp-high"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M12 3L21.5 20H2.5L12 3Z" stroke="#B91C1C" stroke-width="2" stroke-linejoin="round"/></svg>HIGH RISK</span></div>
+                  </div>
+                </div>
+                <div class="sum-band">
+                  <div class="sum-band-title">✦ AI RISK SUMMARY</div>
+                  <div class="sum-flag"><span style="color:var(--red);font-size:8px;">⬤</span> Requested ৳85K vs eligible ৳42K — overextension flag</div>
+                  <div class="sum-flag"><span style="color:var(--amber);font-size:8px;">⬤</span> Cash-in spike Month 3 — unusual pattern detected</div>
+                  <div class="sum-flag"><span style="color:var(--amber);font-size:8px;">⬤</span> 1 active loan — double exposure risk</div>
+                  <div class="sum-flag"><span style="color:var(--green);font-size:8px;">⬤</span> 3-month bill payment consistency: 94%</div>
+                </div>
+                <div class="slabel">LOAN REQUEST</div>
+                <div class="mcard">
+                  <div class="dr"><div class="dr-key">Requested Amount</div><div class="dr-val bad">৳ 85,000</div></div>
+                  <div class="dr"><div class="dr-key">System Eligible</div><div class="dr-val good">৳ 42,000</div></div>
+                  <div class="dr"><div class="dr-key">Tenure</div><div class="dr-val">12 months</div></div>
+                  <div class="dr"><div class="dr-key">Interest Rate</div><div class="dr-val">18% p.a.</div></div>
+                  <div class="dr"><div class="dr-key">Gap</div><div class="dr-val bad">−৳ 43,000</div></div>
+                </div>
+                <div class="slabel" style="margin-top:12px;">APPLICATION HISTORY</div>
+                <div class="mcard">
+                  <div class="dr"><div class="dr-key">Previous Applications</div><div class="dr-val">3</div></div>
+                  <div class="dr"><div class="dr-key">Approved</div><div class="dr-val good">2</div></div>
+                  <div class="dr"><div class="dr-key">Rejected</div><div class="dr-val bad">1</div></div>
+                  <div class="dr"><div class="dr-key">Active Loans</div><div class="dr-val warn">1 (৳ 30,000)</div></div>
+                  <div class="dr"><div class="dr-key">Repayment Rate</div><div class="dr-val good">91%</div></div>
+                </div>
+                <button class="btn-outline" style="margin-top:14px;" onclick="showScreen(2)">View Transaction Trends →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- S2: TRANSACTIONS -->
+          <div id="s2" style="display:none;">
+            <div class="sbar"><span class="sbar-time">10:12</span><div class="sbar-right"><div class="offline-pill">OFFLINE</div></div></div>
+            <div class="app-hdr"><div class="back-btn" onclick="showScreen(1)">← Profile</div><div class="app-title">Transactions</div><div style="display:flex;gap:4px;"><button onclick="togglePartial()" style="background:var(--amber-bg);border:1px solid var(--amber-border);color:var(--amber);font-family:var(--mono);font-size:7px;padding:3px 6px;cursor:pointer;border-radius:2px;letter-spacing:.5px;">PARTIAL</button></div></div>
+            <div class="scroll">
+              <div class="pad">
+                <div id="partial-banner" style="display:none;margin-bottom:10px;"><div class="alert alert-partial" style="margin:0;"><div class="alert-icon">◑</div><div><strong>Partial Data:</strong> Only 1 of 3 months available. Risk score uses conservative estimate.</div></div></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                  <div><div style="font-size:12px;font-weight:700;">Rokeya Fatema</div><div style="font-family:var(--mono);font-size:8px;color:var(--t4);">FEB – APR 2025</div></div>
+                  <span id="cov-badge" class="rpill rp-low" style="font-size:8px;">3/3 MONTHS</span>
+                </div>
+                <div class="slabel">TOTAL PAYMENTS TREND</div>
+                <div class="mcard" style="padding:12px 12px 10px;">
+                  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;"><div style="font-size:10px;color:var(--t3);">Monthly Payment Volume</div><div style="font-family:var(--mono);font-size:10px;color:var(--green);font-weight:700;">↑ 12%</div></div>
+                  <div class="trend-chart" id="chart-bars">
+                    <div class="bar b1" style="height:52%;"></div><div class="bar b1" style="height:58%;"></div><div class="bar b1" style="height:55%;"></div>
+                    <div class="bar b2" style="height:62%;"></div><div class="bar b2" style="height:68%;"></div><div class="bar b2" style="height:65%;"></div>
+                    <div class="bar b3" style="height:74%;"></div><div class="bar b3" style="height:80%;"></div><div class="bar b3" style="height:84%;"></div>
+                  </div>
+                  <div class="chart-labels"><span id="lbl1" class="chart-label">FEB</span><span id="lbl2" class="chart-label">MAR</span><span id="lbl3" class="chart-label">APR</span></div>
+                </div>
+                <div class="slabel" style="margin-top:12px;">KEY INDICATORS</div>
+                <div class="stat-grid">
+                  <div class="stat-box"><div class="sb-label">BILL PAYMENTS</div><div class="sb-val" style="color:var(--green);">৳ 12,400</div><div class="sb-sub" style="color:var(--green);">↑ Consistent</div></div>
+                  <div class="stat-box"><div class="sb-label">P2P TRANSFERS</div><div class="sb-val">৳ 8,200</div><div class="sb-sub" style="color:var(--t4);">→ Stable</div></div>
+                  <div class="stat-box"><div class="sb-label">CASH-IN VOL</div><div class="sb-val" style="color:var(--red);">৳ 94,000</div><div class="sb-sub" style="color:var(--red);">↑↑ SPIKE M3</div></div>
+                  <div class="stat-box"><div class="sb-label">CASH-OUT VOL</div><div class="sb-val" style="color:var(--amber);">৳ 88,500</div><div class="sb-sub" style="color:var(--amber);">↑ Rising</div></div>
+                  <div class="stat-box"><div class="sb-label">MOB. RECHARGE</div><div class="sb-val">৳ 1,800</div><div class="sb-sub" style="color:var(--t4);">→ Normal</div></div>
+                  <div class="stat-box"><div class="sb-label">DATA COVERAGE</div><div class="sb-val" id="cov-val" style="color:var(--green);">3 / 3</div><div class="sb-sub" id="cov-sub" style="color:var(--green);">Full history</div></div>
+                </div>
+                <div class="alert alert-warn" style="margin:4px 0 14px;"><div class="alert-icon">⚠</div><div><strong>Anomaly:</strong> Cash-in in Month 3 is 3.2× the 2-month average. Verify income source in field.</div></div>
+                <button class="btn-primary" onclick="showScreen(3)">Make Recommendation →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- S3: RECOMMENDATION -->
+          <div id="s3" style="display:none;">
+            <div class="sbar"><span class="sbar-time">10:18</span><div class="sbar-right"><div class="offline-pill">OFFLINE</div></div></div>
+            <div class="app-hdr"><div class="back-btn" onclick="showScreen(2)">← Transactions</div><div class="app-title">Recommendation</div><div></div></div>
+            <div class="scroll">
+              <div class="pad">
+                <div class="mcard" style="border-left:3px solid var(--red);margin-bottom:12px;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <div><div style="font-size:12px;font-weight:700;">Rokeya Fatema</div><div style="font-size:10px;color:var(--t3);">Requested: ৳85,000 · Eligible: ৳42,000</div></div>
+                    <span class="rpill rp-high"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M12 3L21.5 20H2.5L12 3Z" stroke="#B91C1C" stroke-width="2" stroke-linejoin="round"/></svg>HIGH</span>
+                  </div>
+                </div>
+                <div class="sum-band" style="margin-bottom:12px;">
+                  <div class="sum-band-title">DECISION CONTEXT</div>
+                  <div class="sum-flag"><span style="color:var(--red);font-size:8px;">⬤</span> Over-requested by ৳43,000</div>
+                  <div class="sum-flag"><span style="color:var(--amber);font-size:8px;">⬤</span> Cash-in spike — unverified source</div>
+                  <div class="sum-flag"><span style="color:var(--green);font-size:8px;">⬤</span> Repayment track record: 91%</div>
+                </div>
+                <div class="slabel">YOUR RECOMMENDATION</div>
+                <button class="rec-btn rec-approve" id="btn-app" onclick="selectRec('approve')">✓ &nbsp; RECOMMEND APPROVE</button>
+                <button class="rec-btn rec-reject" id="btn-rej" onclick="selectRec('reject')">✕ &nbsp; RECOMMEND REJECT</button>
+                <div class="slabel" style="margin-top:4px;">FIELD NOTES <span style="color:var(--red);">*</span></div>
+                <textarea class="note-area" id="note-inp" placeholder="Required: Explain your recommendation based on field observations. Min. 20 characters." oninput="chkSubmit()"></textarea>
+                <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:8px;color:var(--t4);margin-bottom:14px;"><span>Min. 20 chars</span><span id="char-cnt">0 / 500</span></div>
+                <div class="alert alert-info" style="margin:0 0 14px;"><div class="alert-icon">💾</div><div>Offline — recommendation saved to device and synced when connectivity restores.</div></div>
+                <button class="btn-primary" id="sub-btn" disabled onclick="showScreen(4)">Save Recommendation</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- S4: SYNC STATUS -->
+          <div id="s4" style="display:none;">
+            <div class="sbar"><span class="sbar-time">10:22</span><div class="sbar-right"><div class="sync-pill" id="sync-pil">SYNCING</div></div></div>
+            <div class="app-hdr"><div class="back-btn" onclick="showScreen(0)">← Queue</div><div class="app-title">Sync Status</div><div></div></div>
+            <div class="pad">
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;margin-bottom:18px;">
+                <button onclick="showSync('syncing')" id="sb-sync" style="padding:6px 2px;background:var(--amber-bg);border:1px solid var(--amber-border);color:var(--amber);font-family:var(--mono);font-size:7px;cursor:pointer;border-radius:2px;letter-spacing:.5px;">SYNCING</button>
+                <button onclick="showSync('success')" id="sb-succ" style="padding:6px 2px;background:var(--card2);border:1px solid var(--border);color:var(--t3);font-family:var(--mono);font-size:7px;cursor:pointer;border-radius:2px;letter-spacing:.5px;">SUCCESS</button>
+                <button onclick="showSync('error')" id="sb-err" style="padding:6px 2px;background:var(--card2);border:1px solid var(--border);color:var(--t3);font-family:var(--mono);font-size:7px;cursor:pointer;border-radius:2px;letter-spacing:.5px;">ERROR</button>
+                <button onclick="showSync('empty')" id="sb-emp" style="padding:6px 2px;background:var(--card2);border:1px solid var(--border);color:var(--t3);font-family:var(--mono);font-size:7px;cursor:pointer;border-radius:2px;letter-spacing:.5px;">EMPTY</button>
+              </div>
+              <!-- SYNCING -->
+              <div id="sync-syncing">
+                <div style="text-align:center;padding:20px 0 14px;">
+                  <div style="display:flex;justify-content:center;margin-bottom:16px;"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" style="animation:spin 1.5s linear infinite;"><path d="M17 8C15.7 6.1 13.5 5 11 5C7.7 5 5 7.7 5 11" stroke="#B45309" stroke-width="1.5" stroke-linecap="round"/><path d="M14.5 6.5L17 8L15.5 10.5" stroke="#B45309" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 16C8.3 17.9 10.5 19 13 19C16.3 19 19 16.3 19 13" stroke="#B45309" stroke-width="1.5" stroke-linecap="round"/><path d="M9.5 17.5L7 16L8.5 13.5" stroke="#B45309" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="1.5" fill="#B45309" opacity="0.5"/></svg></div>
+                  <div style="font-family:var(--mono);font-size:9px;color:var(--amber);letter-spacing:2px;margin-bottom:6px;">SYNCING TO SERVER</div>
+                  <div style="font-size:12px;color:var(--t2);">Uploading 1 recommendation…</div>
+                </div>
+                <div class="progress-bar"><div class="progress-fill"></div></div>
+                <div class="mcard">
+                  <div class="dr"><div class="dr-key">Application</div><div class="dr-val" style="font-size:10px;">Rokeya Fatema</div></div>
+                  <div class="dr"><div class="dr-key">Decision</div><div class="dr-val warn">Recommend Reject</div></div>
+                  <div class="dr"><div class="dr-key">Queue</div><div class="dr-val">1 / 1 pending</div></div>
+                </div>
+              </div>
+              <!-- SUCCESS -->
+              <div id="sync-success" style="display:none;">
+                <div style="display:flex;flex-direction:column;align-items:center;padding:20px 0 14px;text-align:center;">
+                  <div class="success-ring">✓</div>
+                  <div style="font-family:var(--mono);font-size:9px;color:var(--green);letter-spacing:2px;margin-bottom:8px;">SYNC COMPLETE</div>
+                  <div style="font-size:14px;font-weight:700;margin-bottom:6px;">Recommendation Submitted</div>
+                  <div style="font-size:11px;color:var(--t2);line-height:1.6;margin-bottom:18px;">Rokeya Fatema's case forwarded to Manager queue. You'll be notified when a final decision is made.</div>
+                  <div class="mcard" style="width:100%;text-align:left;">
+                    <div class="dr"><div class="dr-key">Submitted At</div><div class="dr-val" style="font-size:9px;">10:22 AM, Apr 18</div></div>
+                    <div class="dr"><div class="dr-key">Server Receipt</div><div class="dr-val good">✓ Confirmed</div></div>
+                    <div class="dr"><div class="dr-key">Manager Queue</div><div class="dr-val">#3 in queue</div></div>
+                  </div>
+                  <button class="btn-primary" style="margin-top:16px;width:100%;" onclick="showScreen(0)">Back to Queue</button>
+                </div>
+              </div>
+              <!-- ERROR -->
+              <div id="sync-error" style="display:none;">
+                <div style="text-align:center;padding:16px 0 12px;">
+                  <div style="font-family:var(--mono);font-size:8px;color:var(--red);letter-spacing:2px;margin-bottom:10px;">ERR_SYNC_TIMEOUT_003</div>
+                  <div style="font-size:36px;margin-bottom:10px;">✕</div>
+                  <div style="font-size:14px;font-weight:700;color:var(--red);margin-bottom:6px;">Sync Failed</div>
+                  <div style="font-size:11px;color:var(--t2);line-height:1.6;margin-bottom:16px;">Your recommendation is saved on this device and will sync automatically when connection restores. Next retry in 5 minutes.</div>
+                  <div class="mcard" style="text-align:left;margin-bottom:14px;">
+                    <div class="dr"><div class="dr-key">Cause</div><div class="dr-val bad">Connection timeout</div></div>
+                    <div class="dr"><div class="dr-key">Attempts</div><div class="dr-val warn">2 / 3</div></div>
+                    <div class="dr"><div class="dr-key">Data Safe</div><div class="dr-val good">✓ Saved locally</div></div>
+                  </div>
+                  <button style="background:var(--red-bg);border:1px solid var(--red-border);color:var(--red);padding:10px 20px;font-family:var(--mono);font-size:9px;cursor:pointer;border-radius:3px;letter-spacing:1px;">↺ Retry Now</button>
+                </div>
+              </div>
+              <!-- EMPTY -->
+              <div id="sync-empty" style="display:none;">
+                <div class="empty-state"><div style="font-size:44px;margin-bottom:14px;">✦</div><div style="font-size:15px;font-weight:700;margin-bottom:6px;">All caught up!</div><div style="font-size:12px;color:var(--t2);line-height:1.6;">No pending recommendations to sync.</div></div>
+              </div>
+            </div>
+            <div class="bnav">
+              <div class="bni"><div class="bni-icon">⬜</div><div class="bni-label">QUEUE</div></div>
+              <div class="bni active"><div class="bni-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="animation:spin 1.5s linear infinite;"><path d="M17 8C15.7 6.1 13.5 5 11 5C7.7 5 5 7.7 5 11" stroke="#B45309" stroke-width="1.5" stroke-linecap="round"/><path d="M14.5 6.5L17 8L15.5 10.5" stroke="#B45309" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 16C8.3 17.9 10.5 19 13 19C16.3 19 19 16.3 19 13" stroke="#B45309" stroke-width="1.5" stroke-linecap="round"/><path d="M9.5 17.5L7 16L8.5 13.5" stroke="#B45309" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="bni-label">SYNC</div></div>
+              <div class="bni"><div class="bni-icon">👤</div><div class="bni-label">PROFILE</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="home-bar"></div>
+      </div>
+      <div class="screen-dots" id="sdots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      <div class="screen-lbl" id="slbl">SCREEN 01 — DASHBOARD & QUEUE</div>
+    </div>
+
+    <!-- ANNOTATIONS -->
+    <div class="ann-panel">
+      <div class="ann-title">Design Annotations</div>
+      <div id="ann0">
+        <div class="ann-item"><div class="ann-num">01 · OFFLINE BANNER</div><div class="ann-name">Persistent Offline State</div><div class="ann-desc">Orange pill in status bar + inline contextual banner. Never hidden — FO must always know data may be stale. Last sync timestamp displayed. Prevents uninformed decisions.</div></div>
+        <div class="ann-sep"></div>
+        <div class="ann-item"><div class="ann-num">02 · RISK COUNTERS</div><div class="ann-name">Scannable Priority Summary</div><div class="ann-desc">3-column counter (High/Med/Low) lets FO assess workload at a glance. Color-coded backgrounds reinforce urgency without text. Red count creates immediate visual hierarchy.</div></div>
+        <div class="ann-sep"></div>
+        <div class="ann-item"><div class="ann-num">03 · LEFT BORDER + SHAPE</div><div class="ann-name">Dual Accessibility Signal</div><div class="ann-desc">3px left border encodes risk tier for color sighted users. Shape icon (triangle/diamond/circle) provides the same signal for color-blind users. CONFLICT and PARTIAL DATA badges visible in list without opening.</div></div>
+        <div class="ann-sep"></div>
+        <div class="ann-item"><div class="ann-num">04 · THUMB-ZONE DESIGN</div><div class="ann-name">One-Hand Operation</div><div class="ann-desc">Primary tap targets (queue items, nav bar) in bottom 60% of screen. Top reserved for context/labels. Submit CTA always full-width at scroll bottom.</div></div>
+      </div>
+      <div id="ann1" style="display:none;">
+        <div class="ann-item"><div class="ann-num">01 · AI SUMMARY BAND</div><div class="ann-name">Cognitive Load Reduction</div><div class="ann-desc">Pre-computed bullet flags replace 3 months of raw data interpretation. FO sees "what to pay attention to" instead of raw figures. Color-coded dots encode severity without words.</div></div>
+        <div class="ann-sep"></div>
+        <div class="ann-item"><div class="ann-num">02 · ELIGIBLE vs REQUESTED</div><div class="ann-name">Gap Visualization</div><div class="ann-desc">Requested in red, eligible in green. Explicit "Gap" row shows the delta. FO immediately understands the overextension without mental arithmetic.</div></div>
+        <div class="ann-sep"></div>
+        <div class="ann-item"><div class="ann-num">03 · PROGRESSIVE DISCLOSURE</div><div class="ann-name">Forced Linear Review</div><div class="ann-desc">Profile → Transactions → Recommend is a forced linear flow. Prevents FOs from skipping the transaction review step and submitting uninformed recommendations.</div></div>
+      </div>
+      <div id="ann2" style="display:none;">
+        <div class="ann-item"><div class="ann-num">01 · SPARKLINE BARS</div><div class="ann-name">Trend Over Numbers</div><div class="ann-desc">Transaction data shown as relative bar heights, not absolute figures. FO's job is to spot trends. Month labels + trend arrows (↑↓) carry the signal. Tap "PARTIAL" button to demo the partial data state.</div></div>
+        <div class="ann-sep"></div>
+        <div class="ann-item"><div class="ann-num">02 · PARTIAL DATA STATE</div><div class="ann-name">Interactive Toggle Demo</div><div class="ann-desc">Tap "PARTIAL" in header to see missing months render as hatched grey bars. Coverage counter changes to amber "1/3". This is the exact rendering for Salma Akter's case in the queue.</div></div>
+        <div class="ann-sep"></div>
+        <div class="ann-item"><div class="ann-num">03 · ANOMALY FLAG</div><div class="ann-name">System-Generated Alert</div><div class="ann-desc">Unusual patterns auto-detected and surfaced as inline alerts. FO doesn't need to "notice" anomalies — system flags them. Reduces decision noise from missed signals.</div></div>
+      </div>
+      <div id="ann3" style="display:none;">
+        <div class="ann-item"><div class="ann-num">01 · MANDATORY NOTE</div><div class="ann-name">Submit Gate</div><div class="ann-desc">Submit button disabled until: (a) decision selected AND (b) note ≥20 chars. Forces structured reasoning, giving Manager transparency into "why." Character count shown live.</div></div>
+        <div class="ann-sep"></div>
+        <div class="ann-item"><div class="ann-num">02 · CONTEXT REMINDER</div><div class="ann-name">Decision Support Band</div><div class="ann-desc">Key AI flags repeated on Recommend screen. Prevents FO from making a decision based on memory of what they reviewed 2 screens ago.</div></div>
+        <div class="ann-sep"></div>
+        <div class="ann-item"><div class="ann-num">03 · OFFLINE SAVE NOTICE</div><div class="ann-name">Trust Signal</div><div class="ann-desc">Blue info banner explicitly states recommendation saved locally. FO doesn't worry about losing work. Reduces anxiety in field. Safety-first message, then action.</div></div>
+      </div>
+      <div id="ann4" style="display:none;">
+        <div class="ann-item"><div class="ann-num">01 · FOUR STATES</div><div class="ann-name">All Sync States</div><div class="ann-desc">Toggle Syncing / Success / Error / Empty states using the buttons above the content. Each has distinct visual treatment with clear next actions.</div></div>
+        <div class="ann-sep"></div>
+        <div class="ann-item"><div class="ann-num">02 · ERROR STATE</div><div class="ann-name">No Data Loss Guarantee</div><div class="ann-desc">"Data Safe: ✓ Saved locally" shown BEFORE the retry button. Sequencing matters — safety reassurance first, then action. Specific error code aids support escalation.</div></div>
+        <div class="ann-sep"></div>
+        <div class="ann-item"><div class="ann-num">03 · SUCCESS STATE</div><div class="ann-name">Loop Closure</div><div class="ann-desc">Server receipt confirmation shown — FO knows data reached Manager queue. Queue position gives context of Manager's workload. Pulsing ring provides satisfying closure.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}</style>
+<script>
+const labels=['SCREEN 01 — DASHBOARD & QUEUE','SCREEN 02 — CUSTOMER PROFILE','SCREEN 03 — TRANSACTION TRENDS','SCREEN 04 — RECOMMENDATION','SCREEN 05 — SYNC STATUS'];
+function showScreen(n){
+  for(let i=0;i<5;i++){
+    const s=document.getElementById('s'+i);if(s)s.style.display=i===n?'block':'none';
+    const a=document.getElementById('ann'+i);if(a)a.style.display=i===n?'block':'none';
+  }
+  document.querySelectorAll('.snav').forEach((b,i)=>b.classList.toggle('active',i===n));
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===n));
+  document.getElementById('slbl').textContent=labels[n];
+}
+let rec=null;
+function selectRec(t){rec=t;document.getElementById('btn-app').classList.toggle('sel',t==='approve');document.getElementById('btn-rej').classList.toggle('sel',t==='reject');chkSubmit();}
+function chkSubmit(){const n=document.getElementById('note-inp').value;document.getElementById('char-cnt').textContent=n.length+' / 500';document.getElementById('sub-btn').disabled=!(rec&&n.length>=20);}
+let partial=false;
+function togglePartial(){
+  partial=!partial;
+  document.getElementById('partial-banner').style.display=partial?'block':'none';
+  const bars=document.querySelectorAll('#chart-bars .bar');
+  bars.forEach((b,i)=>{if(i>=3){b.className='bar '+(partial?'bmiss':(i<6?'b2':'b3'));}});
+  document.getElementById('cov-val').textContent=partial?'1 / 3':'3 / 3';
+  document.getElementById('cov-val').style.color=partial?'var(--amber)':'var(--green)';
+  document.getElementById('cov-sub').textContent=partial?'Partial history':'Full history';
+  document.getElementById('cov-sub').style.color=partial?'var(--amber)':'var(--green)';
+  document.getElementById('cov-badge').className='rpill '+(partial?'rp-med':'rp-low');
+  document.getElementById('cov-badge').textContent=partial?'1/3 MONTHS':'3/3 MONTHS';
+  document.getElementById('lbl2').textContent=partial?'MAR ◑':'MAR';
+  document.getElementById('lbl3').textContent=partial?'APR ◑':'APR';
+}
+function showSync(s){
+  ['syncing','success','error','empty'].forEach(st=>document.getElementById('sync-'+st).style.display=st===s?'block':'none');
+  const pillMap={syncing:'SYNCING',success:'SYNCED ✓',error:'SYNC FAILED',empty:'UP TO DATE'};
+  const pillColor={syncing:'var(--amber-bg)',success:'var(--green-bg)',error:'var(--red-bg)',empty:'var(--card2)'};
+  const p=document.getElementById('sync-pil');
+  p.textContent=pillMap[s];p.style.background=pillColor[s];
+}
+</script>
+<footer>
+  <div class="ft">MFS LOANFLOW OS · TASK 3: MOBILE EXPERIENCE · FIELD OFFICER · 5 SCREENS</div>
+  <div class="ft"><a href="task2-icon-spec.html" style="color:var(--amber);">← Task 2</a> · <a href="task4-web-manager.html" style="color:var(--amber);">Task 4: Web →</a></div>
+</footer>
+</body>
+</html>

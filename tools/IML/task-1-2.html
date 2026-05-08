@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MFS Loan System — Journey Map & Systems Logic</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F8FAFC;
+    --surface: #FFFFFF;
+    --card: #F1F5F9;
+    --border: #E2E8F0;
+    --text: #0F172A;
+    --text2: #475569;
+    --text3: #94A3B8;
+    --blue: #2563EB;
+    --blue-light: #EFF6FF;
+    --amber: #D97706;
+    --amber-light: #FFFBEB;
+    --green: #059669;
+    --green-light: #ECFDF5;
+    --red: #DC2626;
+    --red-light: #FEF2F2;
+    --orange: #F97316;
+    --orange-light: #FFF7ED;
+    --purple: #7C3AED;
+    --purple-light: #F5F3FF;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* HEADER */
+  .header { background: var(--text); color: white; padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; }
+  .header-left { display: flex; flex-direction: column; gap: 4px; }
+  .header-tag { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: 2px; text-transform: uppercase; }
+  .header-title { font-family: 'Space Mono', monospace; font-size: 22px; font-weight: 700; color: white; }
+  .header-right { display: flex; gap: 8px; align-items: center; }
+  .badge { font-family: 'Space Mono', monospace; font-size: 10px; padding: 4px 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); }
+
+  /* TABS */
+  .tabs { background: var(--surface); border-bottom: 2px solid var(--border); padding: 0 40px; display: flex; gap: 0; }
+  .tab { font-family: 'Space Mono', monospace; font-size: 11px; padding: 14px 20px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; color: var(--text3); transition: all 0.2s; letter-spacing: 0.5px; }
+  .tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+  .tab:hover:not(.active) { color: var(--text2); }
+
+  /* CONTENT */
+  .content { padding: 32px 40px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* SECTION LABELS */
+  .section-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* JOURNEY MAP */
+  .journey-header { display: grid; grid-template-columns: 120px 1fr 1fr 1fr 1fr 1fr; gap: 0; margin-bottom: 0; }
+  .lane-label { font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 12px 16px; background: var(--text); color: white; border-right: 1px solid rgba(255,255,255,0.1); }
+  .lane-label:first-child { background: #1E293B; }
+  .lane-label.officer { background: #1D4ED8; }
+  .lane-label.manager { background: #065F46; }
+  .lane-label.system { background: #6B21A8; }
+  .lane-label.edge { background: #9A3412; }
+
+  .journey-row { display: grid; grid-template-columns: 120px 1fr 1fr 1fr 1fr 1fr; border-bottom: 1px solid var(--border); }
+  .journey-row:hover { background: #FAFBFF; }
+  .phase-cell { padding: 16px; background: var(--card); border-right: 1px solid var(--border); display: flex; align-items: center; }
+  .phase-label { font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); }
+  .cell { padding: 14px 16px; border-right: 1px solid var(--border); min-height: 80px; display: flex; flex-direction: column; gap: 6px; }
+  .cell:last-child { border-right: none; }
+  .cell-title { font-size: 12px; font-weight: 600; color: var(--text); line-height: 1.3; }
+  .cell-desc { font-size: 11px; color: var(--text2); line-height: 1.5; }
+  .cell-kpi { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--blue); margin-top: 4px; }
+  .cell-edge { font-size: 11px; color: var(--red); line-height: 1.5; font-style: italic; }
+  .cell-system { font-size: 11px; color: var(--purple); line-height: 1.5; }
+
+  .step-badge { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700; background: var(--blue); color: white; flex-shrink: 0; }
+
+  /* FLOW DIAGRAM */
+  .flow-container { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; overflow-x: auto; }
+  .flow-row { display: flex; align-items: center; gap: 0; margin-bottom: 8px; }
+  .flow-node { min-width: 160px; padding: 12px 16px; border-radius: 8px; text-align: center; border: 2px solid transparent; position: relative; }
+  .flow-node.start { background: var(--text); color: white; border-radius: 24px; }
+  .flow-node.officer-node { background: var(--blue-light); border-color: var(--blue); }
+  .flow-node.manager-node { background: var(--green-light); border-color: var(--green); }
+  .flow-node.system-node { background: var(--purple-light); border-color: var(--purple); }
+  .flow-node.edge-node { background: var(--amber-light); border-color: var(--amber); }
+  .flow-node.end-approve { background: var(--green-light); border-color: var(--green); border-radius: 24px; }
+  .flow-node.end-reject { background: var(--red-light); border-color: var(--red); border-radius: 24px; }
+  .flow-node-title { font-size: 11px; font-weight: 600; color: var(--text); }
+  .flow-node-sub { font-size: 10px; color: var(--text2); margin-top: 2px; }
+  .flow-arrow { width: 32px; height: 2px; background: var(--border); position: relative; flex-shrink: 0; }
+  .flow-arrow::after { content: '▶'; position: absolute; right: -6px; top: -7px; font-size: 12px; color: var(--text3); }
+  .flow-arrow.down { width: 2px; height: 32px; background: var(--border); margin: 0 auto; }
+  .flow-arrow.down::after { content: '▼'; right: -5px; top: auto; bottom: -8px; }
+
+  /* DECISION DIAMOND */
+  .diamond-wrap { display: flex; align-items: center; justify-content: center; min-width: 120px; }
+  .diamond { width: 80px; height: 80px; background: var(--amber-light); border: 2px solid var(--amber); transform: rotate(45deg); display: flex; align-items: center; justify-content: center; }
+  .diamond-text { transform: rotate(-45deg); font-size: 9px; font-weight: 700; text-align: center; color: var(--amber); font-family: 'Space Mono', monospace; line-height: 1.3; }
+
+  /* KPI CARDS */
+  .kpi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 24px; }
+  .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+  .kpi-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+  .kpi-persona { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; }
+  .kpi-persona.officer { background: var(--blue-light); color: var(--blue); }
+  .kpi-persona.manager { background: var(--green-light); color: var(--green); }
+  .kpi-name { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .kpi-metric { font-family: 'Space Mono', monospace; font-size: 28px; font-weight: 700; color: var(--blue); }
+  .kpi-metric.green { color: var(--green); }
+  .kpi-desc { font-size: 13px; color: var(--text2); line-height: 1.6; margin-top: 8px; }
+  .kpi-target { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text3); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+
+  /* EDGE CASES */
+  .edge-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+  .edge-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .edge-card-type { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; padding: 3px 8px; border-radius: 3px; display: inline-block; }
+  .type-offline { background: var(--amber-light); color: var(--amber); }
+  .type-conflict { background: var(--red-light); color: var(--red); }
+  .type-partial { background: var(--orange-light); color: var(--orange); }
+  .type-stale { background: var(--purple-light); color: var(--purple); }
+  .type-overdue { background: var(--card); color: var(--text2); }
+  .type-escalate { background: var(--blue-light); color: var(--blue); }
+  .edge-title { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+  .edge-trigger { font-size: 11px; color: var(--text3); margin-bottom: 10px; font-family: 'Space Mono', monospace; }
+  .edge-steps { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .edge-steps li { font-size: 12px; color: var(--text2); display: flex; gap: 8px; align-items: flex-start; }
+  .edge-steps li::before { content: '→'; color: var(--text3); flex-shrink: 0; margin-top: 1px; }
+
+  /* FULL FLOW SVG */
+  .svg-container { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; overflow: auto; }
+
+  .phase-divider { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 20px; margin: 20px 0 8px; display: flex; align-items: center; gap: 12px; }
+  .phase-divider-label { font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text2); }
+  .phase-divider-line { flex: 1; height: 1px; background: var(--border); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  .info-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .info-card h4 { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+  .info-card ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .info-card ul li { font-size: 12px; color: var(--text2); display: flex; gap: 8px; }
+  .info-card ul li::before { content: '•'; color: var(--blue); }
+
+  .rationale-box { background: var(--blue-light); border: 1px solid #BFDBFE; border-radius: 10px; padding: 20px; margin-top: 24px; }
+  .rationale-box h4 { font-size: 13px; font-weight: 700; color: var(--blue); margin-bottom: 10px; font-family: 'Space Mono', monospace; letter-spacing: 1px; }
+  .rationale-box p { font-size: 12px; color: #1E40AF; line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <span class="header-tag">Task 01 / Deliverable</span>
+    <span class="header-title">Systems Logic & Journey Map</span>
+  </div>
+  <div class="header-right">
+    <span class="badge">MFS Loan Decisioning System</span>
+    <span class="badge">v1.0</span>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('journey')">Journey Map</div>
+  <div class="tab" onclick="showTab('flow')">System Flow</div>
+  <div class="tab" onclick="showTab('edge')">Edge Cases</div>
+  <div class="tab" onclick="showTab('kpi')">KPI Mapping</div>
+  <div class="tab" onclick="showTab('rationale')">Design Rationale</div>
+</div>
+
+<!-- JOURNEY MAP TAB -->
+<div id="tab-journey" class="tab-panel active content">
+  <div class="section-label">End-to-End User Journey</div>
+
+  <!-- Legend -->
+  <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:6px;"><div style="width:12px;height:12px;background:#2563EB;border-radius:2px;"></div><span style="font-size:11px;color:var(--text2);">Field Officer Actions</span></div>
+    <div style="display:flex;align-items:center;gap:6px;"><div style="width:12px;height:12px;background:#059669;border-radius:2px;"></div><span style="font-size:11px;color:var(--text2);">Manager Actions</span></div>
+    <div style="display:flex;align-items:center;gap:6px;"><div style="width:12px;height:12px;background:#7C3AED;border-radius:2px;"></div><span style="font-size:11px;color:var(--text2);">System/Automated</span></div>
+    <div style="display:flex;align-items:center;gap:6px;"><div style="width:12px;height:12px;background:#D97706;border-radius:2px;"></div><span style="font-size:11px;color:var(--text2);">Edge Cases</span></div>
+    <div style="display:flex;align-items:center;gap:6px;"><div style="width:12px;height:12px;background:#94A3B8;border-radius:2px;"></div><span style="font-size:11px;color:var(--text2);">Context/Trigger</span></div>
+  </div>
+
+  <div style="overflow-x:auto;">
+    <div style="min-width:900px;">
+      <!-- Header Row -->
+      <div class="journey-header">
+        <div class="lane-label">Phase</div>
+        <div class="lane-label" style="background:#64748B;">Trigger / Context</div>
+        <div class="lane-label officer">Field Officer</div>
+        <div class="lane-label system">System Logic</div>
+        <div class="lane-label manager">Manager</div>
+        <div class="lane-label edge">Edge Cases</div>
+      </div>
+
+      <!-- Phase 1: Assignment -->
+      <div class="journey-row">
+        <div class="phase-cell"><div class="phase-label" style="writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Space Mono';font-size:9px;font-weight:700;color:var(--text2);letter-spacing:1px;text-transform:uppercase;">1. Assignment</div></div>
+        <div class="cell"><div class="cell-title">Customer submits loan application via MFS app or agent</div><div class="cell-desc">Application enters system with auto-calculated eligibility & risk tier (Low/Med/High)</div></div>
+        <div class="cell"><div class="cell-title">Receives push notification</div><div class="cell-desc">New application appears in queue. Officer sees: customer name, requested amount, risk tier badge.</div><div class="cell-kpi">→ Checks queue in app</div></div>
+        <div class="cell"><div class="cell-system">Auto-assigns application to available Field Officer by zone/workload. Generates credit score + risk tier. Queues for offline pre-fetch.</div></div>
+        <div class="cell"><div class="cell-desc" style="color:var(--text3);">Not yet involved</div></div>
+        <div class="cell"><div class="cell-edge">⚡ OFFLINE: If officer is offline when assigned, app pre-fetches latest application data and queues silently for next sync window.</div></div>
+      </div>
+
+      <!-- Phase 2: Field Review -->
+      <div class="journey-row">
+        <div class="phase-cell"><div class="phase-label" style="writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Space Mono';font-size:9px;font-weight:700;color:var(--text2);letter-spacing:1px;text-transform:uppercase;">2. Field Review</div></div>
+        <div class="cell"><div class="cell-title">Officer visits customer site or reviews remotely</div><div class="cell-desc">May be in low/no connectivity zone. Must complete review fully offline if needed.</div></div>
+        <div class="cell"><div class="cell-title">Reviews full application</div><div class="cell-desc">Sees customer profile, transaction trends (3-mo), requested vs. eligible amount, and AI-generated summary flags. Offline mode active if needed.</div><div class="cell-kpi">↳ All data locally cached</div></div>
+        <div class="cell"><div class="cell-system">Cached data served from local store. "Saved Offline" icon shown. Data timestamped. Partial data flag shown if &lt;3 months of transactions available.</div></div>
+        <div class="cell"><div class="cell-desc" style="color:var(--text3);">Not yet involved</div></div>
+        <div class="cell"><div class="cell-edge">⚡ PARTIAL DATA: System shows "1 of 3 months available" banner. Officer instructed to note data gap in recommendation.<br/><br/>⚡ STALE DATA: If cached data &gt;24h old, system shows staleness warning.</div></div>
+      </div>
+
+      <!-- Phase 3: Recommendation -->
+      <div class="journey-row">
+        <div class="phase-cell"><div class="phase-label" style="writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Space Mono';font-size:9px;font-weight:700;color:var(--text2);letter-spacing:1px;text-transform:uppercase;">3. Recommendation</div></div>
+        <div class="cell"><div class="cell-title">Officer forms judgment based on review</div><div class="cell-desc">Selects Recommend Approve or Recommend Reject. Adds mandatory note if contradicting system risk score.</div></div>
+        <div class="cell"><div class="cell-title">Submits recommendation + notes</div><div class="cell-desc">Selects decision, adds qualitative note. If offline: saved locally with timestamp and queued for sync. Cannot approve — only recommend.</div><div class="cell-kpi">↳ Stored locally if offline</div></div>
+        <div class="cell"><div class="cell-system">Validates recommendation locally. Attaches sync queue ID. On connectivity: pushes to server with timestamp. Conflict-detection runs on server receipt.</div></div>
+        <div class="cell"><div class="cell-desc" style="color:var(--text3);">Not yet involved</div></div>
+        <div class="cell"><div class="cell-edge">⚡ OFFLINE SUBMIT: Recommendation stored in local queue. Sync icon shows pending. Officer sees "Will sync when connected."<br/><br/>⚡ OVERRIDE NOTE: If officer recommends Approve for a High Risk applicant, note field becomes mandatory.</div></div>
+      </div>
+
+      <!-- Phase 4: Sync & Escalation -->
+      <div class="journey-row">
+        <div class="phase-cell"><div class="phase-label" style="writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Space Mono';font-size:9px;font-weight:700;color:var(--text2);letter-spacing:1px;text-transform:uppercase;">4. Sync</div></div>
+        <div class="cell"><div class="cell-title">Data syncs to server when connectivity restored</div><div class="cell-desc">System reconciles local recommendation with latest server state.</div></div>
+        <div class="cell"><div class="cell-title">Sees sync confirmation</div><div class="cell-desc">"Sync in Progress" indicator → success/failure notification. If conflict detected, officer is notified and must review.</div></div>
+        <div class="cell"><div class="cell-system">Conflict detection: checks if application was modified server-side during offline period. If conflict → holds submission, flags for officer review. Timestamps all records. Sends notification to Manager queue.</div></div>
+        <div class="cell"><div class="cell-desc" style="color:var(--text3);">Application enters queue</div></div>
+        <div class="cell"><div class="cell-edge">⚡ SYNC CONFLICT: Server version newer than local. System presents diff to officer: "Application was updated. Review changes and re-confirm your recommendation."<br/><br/>⚡ SYNC FAIL: Retry queue with exponential backoff. Officer shown error state with retry button.</div></div>
+      </div>
+
+      <!-- Phase 5: Manager Review -->
+      <div class="journey-row">
+        <div class="phase-cell"><div class="phase-label" style="writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Space Mono';font-size:9px;font-weight:700;color:var(--text2);letter-spacing:1px;text-transform:uppercase;">5. Mgr Review</div></div>
+        <div class="cell"><div class="cell-title">Manager processes application queue at HQ</div><div class="cell-desc">Web portal. High throughput: may handle 100s of applications per day.</div></div>
+        <div class="cell"><div class="cell-desc" style="color:var(--text3);">Not involved</div></div>
+        <div class="cell"><div class="cell-system">Sorts applications by urgency, risk tier, amount. Surfaces red flags: High Risk + Approve Rec, partial data, overdue applications, conflict markers.</div></div>
+        <div class="cell"><div class="cell-title">Reviews application + Officer recommendation</div><div class="cell-desc">Sees officer's recommendation, notes, risk tier, transaction summary, and conflict flags. Can view full data or trust officer summary.</div><div class="cell-kpi">↳ Throughput optimized</div></div>
+        <div class="cell"><div class="cell-edge">⚡ BATCH PROCESSING: Manager selects multiple Low Risk / Recommend Approve applications for batch approval with single confirmation.<br/><br/>⚡ FLAG FOR ESCALATION: Manager can escalate to senior review if uncertain.</div></div>
+      </div>
+
+      <!-- Phase 6: Final Decision -->
+      <div class="journey-row">
+        <div class="phase-cell"><div class="phase-label" style="writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Space Mono';font-size:9px;font-weight:700;color:var(--text2);letter-spacing:1px;text-transform:uppercase;">6. Decision</div></div>
+        <div class="cell"><div class="cell-title">Manager makes final approval/rejection decision</div><div class="cell-desc">Binding action. Triggers customer notification and disbursement workflow.</div></div>
+        <div class="cell"><div class="cell-desc" style="color:var(--text3);">Not involved in decision</div></div>
+        <div class="cell"><div class="cell-system">Records decision with manager ID, timestamp, decision rationale code. Triggers downstream: customer SMS notification, disbursement queue (if approved), audit log entry.</div></div>
+        <div class="cell"><div class="cell-title">Approves or Rejects</div><div class="cell-desc">Selects approve/reject, adds mandatory reason code for rejections. Batch decisions processed with single confirmation. Audit trail auto-generated.</div></div>
+        <div class="cell"><div class="cell-edge">⚡ OVERDUE: Applications pending &gt;48h flagged red. Manager alerted.<br/><br/>⚡ REJECT OVERRIDE: Manager rejects an "Approve Rec" → system prompts for reason code. Fed back to officer for calibration.</div></div>
+      </div>
+
+      <!-- Phase 7: Notification -->
+      <div class="journey-row">
+        <div class="phase-cell"><div class="phase-label" style="writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Space Mono';font-size:9px;font-weight:700;color:var(--text2);letter-spacing:1px;text-transform:uppercase;">7. Notify</div></div>
+        <div class="cell"><div class="cell-title">All parties notified of outcome</div><div class="cell-desc">Closes the loop on the application lifecycle.</div></div>
+        <div class="cell"><div class="cell-title">Receives outcome notification</div><div class="cell-desc">Sees final decision in app. If rejected (after Approve Rec), sees manager's reason code for calibration learning.</div></div>
+        <div class="cell"><div class="cell-system">Sends: Customer SMS (approved/rejected), Field Officer push notification with outcome + manager notes, Manager confirmation receipt. Updates application status to Closed.</div></div>
+        <div class="cell"><div class="cell-title">Sees confirmation</div><div class="cell-desc">Queue updated. Decision logged. Batch decisions confirmed with summary count.</div></div>
+        <div class="cell"><div class="cell-edge">⚡ FAILED NOTIFICATION: If SMS gateway fails, retry 3x. Log failure. Flag for manual outreach.</div></div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- SYSTEM FLOW TAB -->
+<div id="tab-flow" class="tab-panel content">
+  <div class="section-label">System Architecture Flow</div>
+  <div class="svg-container">
+    <svg viewBox="0 0 1000 680" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:1000px;display:block;margin:0 auto;">
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#94A3B8"/>
+        </marker>
+        <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#2563EB"/>
+        </marker>
+        <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#059669"/>
+        </marker>
+        <marker id="arrow-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#DC2626"/>
+        </marker>
+        <marker id="arrow-amber" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#D97706"/>
+        </marker>
+      </defs>
+
+      <!-- Lane backgrounds -->
+      <rect x="0" y="40" width="330" height="640" fill="#EFF6FF" rx="0" opacity="0.5"/>
+      <rect x="340" y="40" width="320" height="640" fill="#F5F3FF" rx="0" opacity="0.5"/>
+      <rect x="670" y="40" width="330" height="640" fill="#ECFDF5" rx="0" opacity="0.5"/>
+
+      <!-- Lane labels -->
+      <text x="165" y="25" text-anchor="middle" font-family="Space Mono" font-size="10" fill="#2563EB" font-weight="700" letter-spacing="2">FIELD OFFICER (MOBILE)</text>
+      <text x="500" y="25" text-anchor="middle" font-family="Space Mono" font-size="10" fill="#7C3AED" font-weight="700" letter-spacing="2">SYSTEM / BACKEND</text>
+      <text x="835" y="25" text-anchor="middle" font-family="Space Mono" font-size="10" fill="#059669" font-weight="700" letter-spacing="2">MANAGER (WEB)</text>
+
+      <!-- START -->
+      <rect x="350" y="55" width="200" height="36" rx="18" fill="#0F172A"/>
+      <text x="450" y="78" text-anchor="middle" font-family="DM Sans" font-size="12" fill="white" font-weight="600">Customer Submits Application</text>
+
+      <!-- Arrow down to system -->
+      <line x1="450" y1="91" x2="450" y2="115" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+      <!-- System: Auto-score -->
+      <rect x="340" y="116" width="220" height="44" rx="6" fill="white" stroke="#7C3AED" stroke-width="1.5"/>
+      <text x="450" y="133" text-anchor="middle" font-family="DM Sans" font-size="11" fill="#7C3AED" font-weight="600">Auto Credit Score + Risk Tier</text>
+      <text x="450" y="149" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#6B21A8">Low / Medium / High</text>
+
+      <!-- Arrow: System to Officer queue -->
+      <line x1="340" y1="138" x2="250" y2="138" stroke="#2563EB" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+
+      <!-- Officer: App Queue -->
+      <rect x="60" y="116" width="180" height="44" rx="6" fill="white" stroke="#2563EB" stroke-width="1.5"/>
+      <text x="150" y="133" text-anchor="middle" font-family="DM Sans" font-size="11" fill="#1D4ED8" font-weight="600">Application Queue</text>
+      <text x="150" y="149" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#3B82F6">Push notification received</text>
+
+      <!-- Arrow down -->
+      <line x1="150" y1="160" x2="150" y2="185" stroke="#2563EB" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+
+      <!-- Officer: Review App -->
+      <rect x="60" y="186" width="180" height="44" rx="6" fill="white" stroke="#2563EB" stroke-width="1.5"/>
+      <text x="150" y="203" text-anchor="middle" font-family="DM Sans" font-size="11" fill="#1D4ED8" font-weight="600">Review Application</text>
+      <text x="150" y="219" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#3B82F6">Profile + Transactions + Loan</text>
+
+      <!-- Offline branch -->
+      <line x1="60" y1="208" x2="20" y2="208" stroke="#D97706" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <rect x="-5" y="195" width="26" height="26" rx="4" fill="#FEF9C3" stroke="#D97706" stroke-width="1"/>
+      <text x="8" y="207" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#D97706" font-weight="700">OFF</text>
+      <text x="8" y="217" text-anchor="middle" font-family="DM Sans" font-size="8" fill="#D97706">LINE</text>
+
+      <!-- Offline note -->
+      <rect x="-20" y="228" width="80" height="36" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+      <text x="20" y="242" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#92400E">Cached data</text>
+      <text x="20" y="254" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#92400E">served locally</text>
+
+      <!-- Arrow down -->
+      <line x1="150" y1="230" x2="150" y2="260" stroke="#2563EB" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+
+      <!-- Decision: Connectivity? -->
+      <polygon points="150,260 210,290 150,320 90,290" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+      <text x="150" y="286" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#D97706" font-weight="700">Online?</text>
+      <text x="150" y="298" text-anchor="middle" font-family="Space Mono" font-size="8" fill="#D97706">Connectivity</text>
+
+      <!-- NO branch - offline queue -->
+      <line x1="90" y1="290" x2="20" y2="290" stroke="#D97706" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-amber)"/>
+      <rect x="-70" y="270" width="88" height="40" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+      <text x="-26" y="287" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#92400E" font-weight="600">Queue Locally</text>
+      <text x="-26" y="300" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#B45309">Timestamped</text>
+      <text x="50" y="286" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#D97706">NO</text>
+
+      <!-- YES arrow down from diamond -->
+      <line x1="150" y1="320" x2="150" y2="352" stroke="#2563EB" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+      <text x="160" y="337" font-family="DM Sans" font-size="9" fill="#059669">YES</text>
+
+      <!-- Officer: Submit Recommendation -->
+      <rect x="60" y="353" width="180" height="44" rx="6" fill="white" stroke="#2563EB" stroke-width="1.5"/>
+      <text x="150" y="370" text-anchor="middle" font-family="DM Sans" font-size="11" fill="#1D4ED8" font-weight="600">Submit Recommendation</text>
+      <text x="150" y="386" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#3B82F6">Approve / Reject + Notes</text>
+
+      <!-- Arrow from offline queue to here (sync restored) -->
+      <path d="M-26,310 L-26,375 L60,375" stroke="#D97706" stroke-width="1.5" stroke-dasharray="4,3" fill="none" marker-end="url(#arrow-amber)"/>
+      <text x="-55" y="345" font-family="DM Sans" font-size="9" fill="#D97706">Sync</text>
+      <text x="-55" y="357" font-family="DM Sans" font-size="9" fill="#D97706">restored</text>
+
+      <!-- Arrow: Officer to System (sync) -->
+      <line x1="240" y1="375" x2="340" y2="390" stroke="#2563EB" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+
+      <!-- System: Conflict Detection -->
+      <rect x="340" y="368" width="220" height="44" rx="6" fill="white" stroke="#7C3AED" stroke-width="1.5"/>
+      <text x="450" y="385" text-anchor="middle" font-family="DM Sans" font-size="11" fill="#6B21A8" font-weight="600">Sync + Conflict Detection</text>
+      <text x="450" y="401" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#7C3AED">Timestamp reconciliation</text>
+
+      <!-- Conflict branch -->
+      <line x1="450" y1="368" x2="450" y2="345" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <rect x="360" y="310" width="180" height="34" rx="6" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+      <text x="450" y="323" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#DC2626" font-weight="600">⚡ Conflict Detected</text>
+      <text x="450" y="337" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#B91C1C">Officer re-reviews diff</text>
+
+      <!-- Arrow: System to Manager -->
+      <line x1="560" y1="390" x2="670" y2="390" stroke="#059669" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+      <!-- Manager: Dashboard Queue -->
+      <rect x="670" y="368" width="190" height="44" rx="6" fill="white" stroke="#059669" stroke-width="1.5"/>
+      <text x="765" y="385" text-anchor="middle" font-family="DM Sans" font-size="11" fill="#065F46" font-weight="600">Application Queue</text>
+      <text x="765" y="401" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#059669">Sorted by risk + urgency</text>
+
+      <!-- Arrow down -->
+      <line x1="765" y1="412" x2="765" y2="440" stroke="#059669" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+      <!-- Manager: Review Detail -->
+      <rect x="670" y="441" width="190" height="44" rx="6" fill="white" stroke="#059669" stroke-width="1.5"/>
+      <text x="765" y="458" text-anchor="middle" font-family="DM Sans" font-size="11" fill="#065F46" font-weight="600">Review Detail</text>
+      <text x="765" y="474" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#059669">Officer rec + notes + flags</text>
+
+      <!-- Arrow down -->
+      <line x1="765" y1="485" x2="765" y2="513" stroke="#059669" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+      <!-- Decision diamond: Manager -->
+      <polygon points="765,513 830,548 765,583 700,548" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+      <text x="765" y="544" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#059669" font-weight="700">Approve?</text>
+      <text x="765" y="556" text-anchor="middle" font-family="Space Mono" font-size="8" fill="#059669">Final Dec.</text>
+
+      <!-- YES -> Approve -->
+      <line x1="830" y1="548" x2="890" y2="548" stroke="#059669" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      <rect x="892" y="527" width="90" height="42" rx="21" fill="#ECFDF5" stroke="#059669" stroke-width="2"/>
+      <text x="937" y="543" text-anchor="middle" font-family="DM Sans" font-size="11" fill="#065F46" font-weight="700">APPROVED</text>
+      <text x="937" y="558" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#059669">Disbursement</text>
+      <text x="858" y="538" font-family="DM Sans" font-size="9" fill="#059669">YES</text>
+
+      <!-- NO -> Reject -->
+      <line x1="765" y1="583" x2="765" y2="615" stroke="#DC2626" stroke-width="1.5" marker-end="url(#arrow-red)"/>
+      <rect x="700" y="617" width="130" height="40" rx="20" fill="#FEF2F2" stroke="#DC2626" stroke-width="2"/>
+      <text x="765" y="632" text-anchor="middle" font-family="DM Sans" font-size="11" fill="#991B1B" font-weight="700">REJECTED</text>
+      <text x="765" y="646" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#DC2626">Reason code required</text>
+      <text x="752" y="597" font-family="DM Sans" font-size="9" fill="#DC2626">NO</text>
+
+      <!-- Batch processing note -->
+      <rect x="670" y="595" width="20" height="20" rx="4" fill="#DBEAFE" stroke="#2563EB" stroke-width="1"/>
+      <text x="680" y="608" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#2563EB" font-weight="700">B</text>
+      <text x="618" y="603" font-family="DM Sans" font-size="9" fill="#2563EB">Batch</text>
+      <text x="618" y="614" font-family="DM Sans" font-size="9" fill="#2563EB">mode</text>
+
+      <!-- System: Notifications -->
+      <rect x="340" y="510" width="220" height="44" rx="6" fill="white" stroke="#7C3AED" stroke-width="1.5"/>
+      <text x="450" y="527" text-anchor="middle" font-family="DM Sans" font-size="11" fill="#6B21A8" font-weight="600">Notifications + Audit Log</text>
+      <text x="450" y="543" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#7C3AED">SMS → Customer, Push → Officer</text>
+
+      <!-- Manager to System notify -->
+      <line x1="700" y1="548" x2="560" y2="532" stroke="#7C3AED" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+
+      <!-- Officer receives notification -->
+      <rect x="60" y="490" width="180" height="40" rx="6" fill="white" stroke="#2563EB" stroke-width="1.5"/>
+      <text x="150" y="505" text-anchor="middle" font-family="DM Sans" font-size="11" fill="#1D4ED8" font-weight="600">Outcome Notification</text>
+      <text x="150" y="520" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#3B82F6">Decision + Manager notes</text>
+
+      <!-- System to Officer notification -->
+      <line x1="340" y1="532" x2="240" y2="510" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-blue)"/>
+    </svg>
+  </div>
+</div>
+
+<!-- EDGE CASES TAB -->
+<div id="tab-edge" class="tab-panel content">
+  <div class="section-label">Edge Cases & Resolution Logic</div>
+  <div class="edge-grid">
+
+    <div class="edge-card">
+      <div class="edge-card-type type-offline">Offline Data</div>
+      <div class="edge-title">Full Offline Mode</div>
+      <div class="edge-trigger">TRIGGER: No network connectivity</div>
+      <ul class="edge-steps">
+        <li>App serves all cached application data from local SQLite store</li>
+        <li>"Saved Offline" icon displayed prominently on every screen</li>
+        <li>Data freshness timestamp shown ("Last synced 2h ago")</li>
+        <li>All officer interactions (notes, recommendation) saved locally with timestamp</li>
+        <li>Sync queue accumulates actions with sequence IDs</li>
+        <li>On connectivity restore: automatic background sync with progress indicator</li>
+      </ul>
+    </div>
+
+    <div class="edge-card">
+      <div class="edge-card-type type-conflict">Sync Conflict</div>
+      <div class="edge-title">Data Conflict on Sync</div>
+      <div class="edge-trigger">TRIGGER: Server data changed while officer was offline</div>
+      <ul class="edge-steps">
+        <li>Server detects timestamp conflict on receipt of offline data</li>
+        <li>System holds the submission — does NOT auto-resolve</li>
+        <li>Officer receives notification: "Application updated while offline"</li>
+        <li>Diff view presented: officer's local version vs. server version</li>
+        <li>Officer must explicitly re-confirm or modify recommendation</li>
+        <li>Both versions logged in audit trail with resolution note</li>
+      </ul>
+    </div>
+
+    <div class="edge-card">
+      <div class="edge-card-type type-partial">Partial Data</div>
+      <div class="edge-title">Incomplete Transaction History</div>
+      <div class="edge-trigger">TRIGGER: &lt;3 months of transaction data available</div>
+      <ul class="edge-steps">
+        <li>Yellow banner shown on Transaction screen: "1 of 3 months available"</li>
+        <li>Available months displayed normally; missing months shown as gray placeholders</li>
+        <li>Risk tier shown with asterisk (*) indicating data limitation</li>
+        <li>Officer's note field pre-populated with partial data flag prompt</li>
+        <li>Manager sees same partial data flag in review detail</li>
+        <li>System may reduce auto-eligible amount for partial data applicants</li>
+      </ul>
+    </div>
+
+    <div class="edge-card">
+      <div class="edge-card-type type-stale">Stale Data</div>
+      <div class="edge-title">Data Freshness Warning</div>
+      <div class="edge-trigger">TRIGGER: Cached data &gt;24 hours old</div>
+      <ul class="edge-steps">
+        <li>Orange banner: "Data last updated 26h ago. Verify before recommending."</li>
+        <li>Officer can force-refresh if connectivity exists</li>
+        <li>If offline, officer must acknowledge staleness before proceeding</li>
+        <li>Staleness flag included in recommendation metadata sent to Manager</li>
+        <li>Manager sees staleness indicator in application detail</li>
+      </ul>
+    </div>
+
+    <div class="edge-card">
+      <div class="edge-card-type type-overdue">Overdue Application</div>
+      <div class="edge-title">SLA Breach Risk</div>
+      <div class="edge-trigger">TRIGGER: Application pending &gt;48 hours without decision</div>
+      <ul class="edge-steps">
+        <li>Application highlighted in red in Manager queue</li>
+        <li>Clock countdown shown: "Due in 2h"</li>
+        <li>Manager and their supervisor both notified via push</li>
+        <li>Application auto-elevated to top of Manager's queue</li>
+        <li>If breached: system logs SLA violation for performance tracking</li>
+      </ul>
+    </div>
+
+    <div class="edge-card">
+      <div class="edge-card-type type-escalate">Risk Override</div>
+      <div class="edge-title">High Risk + Approve Recommendation</div>
+      <div class="edge-trigger">TRIGGER: Officer recommends Approve for High Risk applicant</div>
+      <ul class="edge-steps">
+        <li>Officer note field becomes MANDATORY (cannot submit without explanation)</li>
+        <li>Warning modal: "This applicant is High Risk. Your note will be reviewed."</li>
+        <li>Manager sees ⚠️ flag: "Officer overrode risk score — see notes"</li>
+        <li>Manager cannot batch-approve these; must review individually</li>
+        <li>If Manager approves: both officer and manager IDs logged in audit</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div style="margin-top:24px;">
+    <div class="section-label">Sync Failed — Error Resolution</div>
+    <div class="grid-2">
+      <div class="info-card">
+        <h4>Sync Failure Recovery (Officer)</h4>
+        <ul>
+          <li>Error state shown: "Sync failed. Your data is saved locally."</li>
+          <li>Retry button available. Exponential backoff (1s, 2s, 4s, 8s)</li>
+          <li>Officer can continue working — all offline saves are durable</li>
+          <li>After 3 failed retries: "Contact support if issue persists" + error code</li>
+          <li>Local data NEVER deleted until server confirms receipt</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Sync Failure Recovery (System)</h4>
+        <ul>
+          <li>Dead-letter queue for failed sync attempts</li>
+          <li>Operations team alerted if queue depth exceeds threshold</li>
+          <li>All local actions have unique idempotency keys — safe to retry</li>
+          <li>Server rejects duplicate submissions gracefully</li>
+          <li>Full sync log available in admin panel for audit</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KPI TAB -->
+<div id="tab-kpi" class="tab-panel content">
+  <div class="section-label">Primary KPI Mapping</div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-card-header">
+        <div>
+          <div class="kpi-persona officer">Field Officer</div>
+          <div class="kpi-name" style="margin-top:12px;">Recommendation Acceptance Rate</div>
+        </div>
+        <div class="kpi-metric">RAR</div>
+      </div>
+      <div class="kpi-desc">
+        Measures the percentage of a Field Officer's recommendations (Approve or Reject) that are <strong>agreed with</strong> by the Manager without override. A high RAR indicates the officer's judgment is well-calibrated with risk criteria — reducing decision noise and Manager cognitive load.
+        <br/><br/>
+        This KPI directly addresses the "Decision Noise" pain point. The design improves RAR by: (1) surfacing clear AI-generated transaction summaries that replace raw data interpretation, (2) providing structured note fields that force officers to articulate their reasoning, and (3) feeding Manager overrides back to officers as calibration signals.
+      </div>
+      <div class="kpi-target">
+        TARGET → RAR ≥ 75% (baseline typically ~50-55% for unassisted officers)<br/>
+        MEASURED → Weekly rolling average per officer
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-card-header">
+        <div>
+          <div class="kpi-persona manager">Manager</div>
+          <div class="kpi-name" style="margin-top:12px;">Average Decision Time per Application</div>
+        </div>
+        <div class="kpi-metric green">ADT</div>
+      </div>
+      <div class="kpi-desc">
+        Measures the average time (in minutes) from when a Manager opens an application to when they submit a final decision. Lower ADT means higher throughput — critical when managers handle 100s of applications daily.
+        <br/><br/>
+        This KPI directly addresses the "Transparency Gap" pain point. The design improves ADT by: (1) surfacing Officer recommendation + structured notes on first load (no sub-menus), (2) visual risk flags that let managers instantly identify high-priority cases, (3) batch processing for clear-cut Low Risk / Approve Rec cases, and (4) skeleton UI that eliminates perceived wait time.
+      </div>
+      <div class="kpi-target">
+        TARGET → ADT ≤ 3 minutes (vs. typical 8-12 min without structured recommendations)<br/>
+        MEASURED → Median + P90 across all decisions per day
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px;">
+    <div class="section-label">Supporting Metrics</div>
+    <div class="grid-3">
+      <div class="info-card">
+        <h4>Offline Sync Success Rate</h4>
+        <ul>
+          <li>% of offline-queued recommendations that sync without conflict</li>
+          <li>Target: ≥95%</li>
+          <li>Addresses: Technical Constraints pain point</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Application SLA Compliance</h4>
+        <ul>
+          <li>% of applications decided within 48-hour SLA window</li>
+          <li>Target: ≥98%</li>
+          <li>Addresses: Throughput at Manager level</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Recommendation Note Quality</h4>
+        <ul>
+          <li>% of recommendations with meaningful notes (&gt;20 chars)</li>
+          <li>Target: 100% for High Risk overrides</li>
+          <li>Addresses: Transparency Gap for Managers</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RATIONALE TAB -->
+<div id="tab-rationale" class="tab-panel content">
+  <div class="section-label">Design Rationale</div>
+  <div class="grid-2">
+    <div>
+      <div class="info-card" style="margin-bottom:16px;">
+        <h4 style="color:var(--blue);">Why separate Recommend / Approve roles?</h4>
+        <ul>
+          <li>Field Officers have ground-truth context (customer behavior) but limited risk modeling capability</li>
+          <li>Managers have risk framework context but no field visibility</li>
+          <li>Separation creates checks-and-balances: reduces fraud risk, meets regulatory separation-of-duties requirements</li>
+          <li>Design honors this by: making "Recommend" visually distinct from approval language on mobile</li>
+        </ul>
+      </div>
+      <div class="info-card" style="margin-bottom:16px;">
+        <h4 style="color:var(--green);">Why mandatory notes for Risk Overrides?</h4>
+        <ul>
+          <li>High Risk + Approve Rec is the highest fraud/bad debt vector</li>
+          <li>Forced articulation makes officer's reasoning auditable</li>
+          <li>Manager can spot collusion patterns in override notes over time</li>
+          <li>Creates accountability without blocking the flow</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4 style="color:var(--purple);">Why local-first offline architecture?</h4>
+        <ul>
+          <li>Field connectivity is unreliable — any server-dependent action risks data loss</li>
+          <li>Local-first means officers never lose work, regardless of connectivity</li>
+          <li>Idempotency keys prevent duplicate submissions on retry</li>
+          <li>Trade-off: adds conflict detection complexity, but this is non-negotiable given field conditions</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="info-card" style="margin-bottom:16px;">
+        <h4 style="color:var(--amber);">Why AI-generated transaction summaries?</h4>
+        <ul>
+          <li>3 months of raw transaction data = cognitive overload for field officers</li>
+          <li>Officers need pattern signals, not data points: "spending stable," "cash-out spike in month 2"</li>
+          <li>Summaries standardize the inputs to Officer decisions → reduces recommendation variance</li>
+          <li>Risk: over-reliance on AI summary. Mitigation: full raw data always accessible below the fold</li>
+        </ul>
+      </div>
+      <div class="info-card" style="margin-bottom:16px;">
+        <h4 style="color:var(--red);">Why Officer override feedback?</h4>
+        <ul>
+          <li>When a Manager overrides an Officer recommendation, the Officer never learns why — this is the current "calibration blindspot"</li>
+          <li>Feeding manager's reason code back to officer creates a learning loop</li>
+          <li>Over time: officers with high RAR = candidates for promotion/trust expansion</li>
+          <li>System becomes self-improving, not just a workflow tool</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4 style="color:var(--text);">Why batch processing for Managers?</h4>
+        <ul>
+          <li>100+ applications/day with individual review = unsustainable</li>
+          <li>Low Risk + Approve Rec cases are high-confidence — batch approval is rational</li>
+          <li>Constraint: batch NEVER includes High Risk or conflict-flagged cases</li>
+          <li>Audit trail maintains individual decision records even for batch approvals</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="rationale-box">
+    <h4>Core Design Philosophy: Trust with Verification</h4>
+    <p>The entire system is designed around the principle that Field Officers are trusted professionals, not data entry clerks. The mobile experience amplifies their judgment (surfacing summaries, flags, and guided notes) rather than replacing it. The Manager experience is designed for <em>verification speed</em>, not detailed re-review — because a good recommendation with clear notes should take the Manager 60 seconds, not 10 minutes. The system earns trust by being transparent: every flag, every override, every note is shown, never hidden. This creates a decisioning layer that is both fast AND auditable.</p>
+  </div>
+</div>
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

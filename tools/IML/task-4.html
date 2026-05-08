@@ -1,0 +1,2199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MFS Loan Decisioning — Web Experience (Manager)</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F8FAFC;
+    --surface: #FFFFFF;
+    --card: #F1F5F9;
+    --border: #E2E8F0;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-tertiary: #94A3B8;
+    --blue: #2563EB;
+    --blue-light: #DBEAFE;
+    --amber: #D97706;
+    --amber-light: #FEF3C7;
+    --green: #059669;
+    --green-light: #D1FAE5;
+    --red: #DC2626;
+    --red-light: #FEE2E2;
+    --orange: #F97316;
+    --orange-light: #FFEDD5;
+    --purple: #7C3AED;
+    --purple-light: #EDE9FE;
+    --mono: 'Space Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0F172A;
+    font-family: var(--sans);
+    color: var(--text-primary);
+  }
+
+  /* ─── PAGE CHROME ─── */
+  .page-header {
+    background: var(--text-primary);
+    color: white;
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--green);
+  }
+  .page-header-badge {
+    background: var(--green);
+    color: white;
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 4px 10px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-right: 16px;
+  }
+  .page-header h1 {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: inline;
+  }
+  .page-header-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-tertiary);
+    text-align: right;
+  }
+
+  .page-footer {
+    background: var(--text-primary);
+    color: var(--text-secondary);
+    padding: 16px 48px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* ─── SCREENS LAYOUT ─── */
+  .screens-outer {
+    padding: 40px 40px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  .screen-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .screen-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .screen-num {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #64748B;
+  }
+
+  .screen-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+  }
+
+  .state-pill {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 2px;
+  }
+
+  .screen-annotation {
+    font-size: 11px;
+    color: #64748B;
+    line-height: 1.5;
+    max-width: 700px;
+  }
+
+  /* ─── BROWSER CHROME ─── */
+  .browser-frame {
+    background: #1E293B;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+  }
+
+  .browser-bar {
+    background: #1E293B;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #334155;
+  }
+
+  .browser-dots {
+    display: flex;
+    gap: 5px;
+  }
+
+  .browser-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .browser-url {
+    flex: 1;
+    background: #0F172A;
+    border-radius: 4px;
+    padding: 5px 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: #64748B;
+    letter-spacing: 0.03em;
+  }
+
+  .browser-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .browser-action {
+    width: 24px;
+    height: 24px;
+    background: #334155;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #64748B;
+    cursor: pointer;
+  }
+
+  /* ─── APP SHELL ─── */
+  .app-shell {
+    display: flex;
+    height: 640px;
+    background: var(--bg);
+    overflow: hidden;
+  }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    width: 200px;
+    background: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
+
+  .sidebar-logo {
+    padding: 16px;
+    border-bottom: 1px solid #1E293B;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sidebar-logo-mark {
+    width: 28px;
+    height: 28px;
+    background: var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  .sidebar-logo-text {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: white;
+    line-height: 1.3;
+  }
+
+  .sidebar-section {
+    padding: 12px 8px;
+    border-bottom: 1px solid #1E293B;
+  }
+
+  .sidebar-section-label {
+    font-family: var(--mono);
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #334155;
+    padding: 0 8px 6px;
+  }
+
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #64748B;
+    cursor: pointer;
+    transition: all 0.1s;
+    margin-bottom: 2px;
+  }
+
+  .sidebar-item:hover { background: #1E293B; color: white; }
+
+  .sidebar-item.active {
+    background: var(--blue);
+    color: white;
+  }
+
+  .sidebar-item-icon { font-size: 12px; width: 16px; text-align: center; flex-shrink: 0; }
+
+  .sidebar-badge {
+    margin-left: auto;
+    background: var(--orange);
+    color: white;
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 10px;
+    min-width: 16px;
+    text-align: center;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 12px;
+    border-top: 1px solid #1E293B;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sidebar-avatar {
+    width: 28px;
+    height: 28px;
+    background: var(--blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .sidebar-user-name { font-size: 10px; font-weight: 600; color: white; }
+  .sidebar-user-role { font-size: 8px; color: #64748B; }
+
+  /* ─── MAIN CONTENT ─── */
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ─── TOP BAR ─── */
+  .topbar {
+    background: var(--surface);
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .topbar-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .topbar-subtitle {
+    font-size: 10px;
+    color: var(--text-secondary);
+    margin-top: 1px;
+  }
+
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .btn-primary { background: var(--blue); color: white; }
+  .btn-secondary { background: var(--surface); color: var(--text-primary); border: 1px solid var(--border); }
+  .btn-danger { background: var(--red); color: white; }
+  .btn-success { background: var(--green); color: white; }
+  .btn-ghost { background: transparent; color: var(--text-secondary); border: 1px solid var(--border); }
+
+  /* ─── CONTENT BODY ─── */
+  .content-body {
+    flex: 1;
+    overflow: auto;
+    padding: 16px 20px;
+    background: var(--bg);
+  }
+
+  /* ─── STAT CARDS ─── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .stat-value {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+  }
+
+  .stat-delta {
+    font-size: 10px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  /* ─── TABLE ─── */
+  .section-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .table-filters {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    background: var(--card);
+  }
+
+  .filter-chip {
+    padding: 4px 10px;
+    border-radius: 2px;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .filter-chip.active {
+    background: var(--text-primary);
+    color: white;
+    border-color: var(--text-primary);
+  }
+
+  .search-input {
+    margin-left: auto;
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font-size: 10px;
+    font-family: var(--sans);
+    color: var(--text-secondary);
+    background: var(--surface);
+    width: 160px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+  }
+
+  thead th {
+    background: var(--card);
+    padding: 8px 12px;
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  thead th:hover { color: var(--text-primary); }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--blue-light); }
+  tbody tr.selected { background: #EFF6FF; }
+
+  tbody td {
+    padding: 10px 12px;
+    color: var(--text-primary);
+    vertical-align: middle;
+  }
+
+  .checkbox-cell {
+    width: 32px;
+    padding: 10px 8px 10px 14px !important;
+  }
+
+  .cb {
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    background: var(--surface);
+  }
+
+  .cb.checked {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: white;
+    font-size: 9px;
+  }
+
+  .risk-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 7px;
+    font-size: 9px;
+    font-weight: 700;
+    border-radius: 2px;
+    font-family: var(--mono);
+    white-space: nowrap;
+  }
+
+  .risk-tag.high { background: var(--red-light); color: var(--red); }
+  .risk-tag.medium { background: var(--amber-light); color: var(--amber); }
+  .risk-tag.low { background: var(--green-light); color: var(--green); }
+
+  .rec-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 7px;
+    font-size: 9px;
+    font-weight: 700;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .rec-tag.approve { background: var(--green-light); color: var(--green); }
+  .rec-tag.reject { background: var(--red-light); color: var(--red); }
+  .rec-tag.pending { background: var(--card); color: var(--text-tertiary); }
+
+  .amount-cell {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .overshoot {
+    font-size: 8px;
+    color: var(--red);
+    font-weight: 600;
+    display: block;
+  }
+
+  .fo-cell {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .fo-avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .wait-badge {
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    color: var(--text-tertiary);
+  }
+
+  .wait-badge.urgent { color: var(--red); }
+
+  .action-link {
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* ─── SKELETON ─── */
+  .skeleton {
+    background: linear-gradient(90deg, #E2E8F0 25%, #F1F5F9 50%, #E2E8F0 75%);
+    background-size: 400% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 3px;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* ─── DETAIL PANEL ─── */
+  .detail-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 12px;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .detail-main { overflow: auto; }
+  .detail-side {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .detail-hero {
+    background: var(--text-primary);
+    padding: 16px 20px;
+    color: white;
+    margin: -16px -20px 16px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .detail-name {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .detail-id {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: #64748B;
+    margin-bottom: 10px;
+  }
+
+  .detail-stats-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  .detail-stat {
+    background: rgba(255,255,255,0.06);
+    padding: 8px 12px;
+    border-radius: 3px;
+    text-align: center;
+    min-width: 70px;
+  }
+
+  .detail-stat-val {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+  }
+
+  .detail-stat-label {
+    font-size: 8px;
+    color: #64748B;
+    margin-top: 2px;
+  }
+
+  .info-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .info-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .info-panel-header {
+    padding: 7px 12px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .info-panel-body { padding: 10px 12px; }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 10px;
+  }
+
+  .info-row:last-child { border-bottom: none; }
+  .info-key { color: var(--text-secondary); }
+  .info-val { font-weight: 600; }
+
+  /* Loan bar */
+  .loan-bar-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 12px 14px;
+    margin-bottom: 12px;
+  }
+
+  .loan-bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .loan-track {
+    height: 8px;
+    background: var(--card);
+    border-radius: 4px;
+    overflow: visible;
+    margin-bottom: 4px;
+    position: relative;
+  }
+
+  .loan-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: var(--green);
+    position: relative;
+  }
+
+  .loan-marker {
+    position: absolute;
+    top: -4px;
+    width: 3px;
+    height: 16px;
+    background: var(--red);
+    border-radius: 1px;
+  }
+
+  /* Tx chart */
+  .tx-chart-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+
+  .tx-chart-header {
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--border);
+    background: var(--card);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .tx-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+  }
+
+  .tx-metric {
+    padding: 10px 12px;
+    border-right: 1px solid var(--border);
+  }
+
+  .tx-metric:last-child { border-right: none; }
+
+  .tx-metric-label {
+    font-size: 9px;
+    color: var(--text-tertiary);
+    margin-bottom: 4px;
+  }
+
+  .tx-metric-val {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .tx-mini-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 24px;
+  }
+
+  .tx-bar {
+    flex: 1;
+    border-radius: 1px 1px 0 0;
+    background: var(--blue-light);
+    border-top: 2px solid var(--blue);
+  }
+
+  .tx-trend-tag {
+    font-size: 8px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 2px;
+    font-family: var(--mono);
+  }
+
+  /* FO Recommendation side panel */
+  .side-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .side-panel-header {
+    padding: 10px 14px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .side-panel-body { padding: 12px 14px; }
+
+  .fo-rec-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    border: 1.5px solid;
+  }
+
+  .fo-rec-approve {
+    background: var(--green-light);
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  .fo-rec-reject {
+    background: var(--red-light);
+    border-color: var(--red);
+    color: var(--red);
+  }
+
+  .fo-rec-text {
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .fo-notes-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    border-radius: 3px;
+    font-size: 10px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+
+  .fo-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 9px;
+    color: var(--text-tertiary);
+    margin-bottom: 6px;
+  }
+
+  /* Decision buttons */
+  .decision-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .decision-panel-header {
+    padding: 10px 14px;
+    background: var(--text-primary);
+    border-bottom: 1px solid #1E293B;
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #64748B;
+  }
+
+  .decision-panel-body { padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+
+  .btn-full {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .flag-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 2px;
+    font-family: var(--mono);
+  }
+
+  .flag-tag.warn { background: var(--amber-light); color: var(--amber); }
+  .flag-tag.danger { background: var(--red-light); color: var(--red); }
+  .flag-tag.info { background: var(--blue-light); color: var(--blue); }
+
+  /* ─── BATCH SCREEN ─── */
+  .batch-banner {
+    background: var(--text-primary);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 2px solid var(--blue);
+    flex-shrink: 0;
+  }
+
+  .batch-count {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+  }
+
+  .batch-summary {
+    font-size: 11px;
+    color: #64748B;
+  }
+
+  /* ─── CONFIRM MODAL ─── */
+  .modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15,23,42,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    backdrop-filter: blur(2px);
+  }
+
+  .modal-box {
+    background: var(--surface);
+    width: 400px;
+    border-top: 3px solid var(--green);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .modal-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .modal-title {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .modal-close {
+    width: 24px;
+    height: 24px;
+    background: var(--card);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    cursor: pointer;
+    color: var(--text-secondary);
+  }
+
+  .modal-body { padding: 20px; }
+
+  .modal-confirm-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--green-light);
+    border: 1.5px solid var(--green);
+    padding: 12px 16px;
+    border-radius: 3px;
+    margin-bottom: 16px;
+  }
+
+  .modal-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  .modal-confirm-text { font-size: 12px; font-weight: 500; color: var(--text-primary); line-height: 1.5; }
+  .modal-confirm-amount { font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--green); }
+
+  .modal-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .modal-detail {
+    background: var(--card);
+    padding: 8px 10px;
+    border-radius: 3px;
+  }
+
+  .modal-detail-label { font-size: 9px; color: var(--text-tertiary); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
+  .modal-detail-val { font-size: 12px; font-weight: 600; }
+
+  .modal-reason {
+    margin-bottom: 16px;
+  }
+
+  .modal-reason-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 6px;
+  }
+
+  .modal-reason-select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font-size: 11px;
+    font-family: var(--sans);
+    color: var(--text-primary);
+    background: var(--surface);
+    margin-bottom: 6px;
+    cursor: pointer;
+  }
+
+  .modal-footer {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  /* ─── HISTORY / AUDIT ─── */
+  .history-filters {
+    display: flex;
+    gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    background: var(--card);
+    align-items: center;
+  }
+
+  .date-input {
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font-size: 10px;
+    font-family: var(--mono);
+    color: var(--text-secondary);
+    background: var(--surface);
+    cursor: pointer;
+  }
+
+  /* Empty State */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .empty-icon {
+    width: 56px;
+    height: 56px;
+    background: var(--card);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--text-tertiary);
+  }
+
+  .empty-title { font-size: 14px; font-weight: 600; color: var(--text-secondary); }
+  .empty-desc { font-size: 11px; color: var(--text-tertiary); max-width: 260px; line-height: 1.6; }
+
+  /* Error State */
+  .error-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .error-icon {
+    width: 56px;
+    height: 56px;
+    background: var(--red-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+
+  /* Audit table */
+  .audit-row-approved td:first-child { border-left: 3px solid var(--green); }
+  .audit-row-rejected td:first-child { border-left: 3px solid var(--red); }
+
+  .decision-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-size: 9px;
+    font-weight: 700;
+    font-family: var(--mono);
+  }
+
+  .decision-badge.approved { background: var(--green-light); color: var(--green); }
+  .decision-badge.rejected { background: var(--red-light); color: var(--red); }
+
+  .override-flag {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 8px;
+    font-weight: 700;
+    color: var(--amber);
+    font-family: var(--mono);
+    margin-left: 4px;
+  }
+
+  /* Partial data indicator in web table */
+  .partial-flag {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 8px;
+    font-weight: 700;
+    color: var(--amber);
+    font-family: var(--mono);
+    vertical-align: middle;
+    margin-left: 4px;
+  }
+
+  /* Conflict flag */
+  .conflict-flag {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 8px;
+    font-weight: 700;
+    color: var(--purple);
+    font-family: var(--mono);
+    vertical-align: middle;
+    margin-left: 4px;
+    background: var(--purple-light);
+    padding: 1px 4px;
+    border-radius: 2px;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <span class="page-header-badge">TASK 04</span>
+    <h1>Web Experience — Manager Dashboard</h1>
+  </div>
+  <div class="page-header-meta">
+    5 SCREENS · HIGH FIDELITY WIREFRAMES<br>
+    1280PX WIDTH · ALL DATA STATES COVERED
+  </div>
+</div>
+
+<div class="screens-outer">
+
+  <!-- ══════════════════════════════════════════════════════
+       SCREEN 1 — MANAGER DASHBOARD (APPLICATION QUEUE)
+       Loading: Skeleton UI state
+  ══════════════════════════════════════════════════════ -->
+  <div class="screen-wrapper">
+    <div class="screen-meta">
+      <span class="screen-num">SCREEN 01</span>
+      <span class="screen-title">Manager Dashboard — Application Queue</span>
+      <span class="state-pill" style="background:var(--purple-light);color:#7C3AED;">⟳ SKELETON LOADING STATE</span>
+    </div>
+    <div class="screen-annotation">Dashboard loads with skeleton shimmer across KPI cards and table rows. Sidebar and topbar render immediately (static). Table headers appear, data rows animate in after data resolves.</div>
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <div class="browser-dots">
+          <div class="browser-dot" style="background:#EF4444;"></div>
+          <div class="browser-dot" style="background:#F59E0B;"></div>
+          <div class="browser-dot" style="background:#10B981;"></div>
+        </div>
+        <div class="browser-url">mfs-loans.internal/manager/queue</div>
+        <div class="browser-actions">
+          <div class="browser-action">⟳</div>
+          <div class="browser-action">⋯</div>
+        </div>
+      </div>
+      <div class="app-shell">
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <div class="sidebar-logo">
+            <div class="sidebar-logo-mark">MFS</div>
+            <div class="sidebar-logo-text">LOAN<br>MANAGER</div>
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-section-label">Applications</div>
+            <div class="sidebar-item active">
+              <span class="sidebar-item-icon">⬛</span> Queue
+              <span class="sidebar-badge">12</span>
+            </div>
+            <div class="sidebar-item">
+              <span class="sidebar-item-icon">◉</span> Batch Process
+            </div>
+            <div class="sidebar-item">
+              <span class="sidebar-item-icon">☰</span> History
+            </div>
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-section-label">Reports</div>
+            <div class="sidebar-item"><span class="sidebar-item-icon">▦</span> Analytics</div>
+            <div class="sidebar-item"><span class="sidebar-item-icon">⚑</span> FO Performance</div>
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-section-label">Admin</div>
+            <div class="sidebar-item"><span class="sidebar-item-icon">⚙</span> Settings</div>
+          </div>
+          <div class="sidebar-footer">
+            <div class="sidebar-avatar">SM</div>
+            <div>
+              <div class="sidebar-user-name">Salma Rahman</div>
+              <div class="sidebar-user-role">Senior Manager</div>
+            </div>
+          </div>
+        </div>
+        <!-- Main -->
+        <div class="main-content">
+          <div class="topbar">
+            <div>
+              <div class="topbar-title">Application Queue</div>
+              <div class="topbar-subtitle">Pending review — sorted by risk priority</div>
+            </div>
+            <div class="topbar-actions">
+              <button class="btn btn-secondary">⇓ Export</button>
+              <button class="btn btn-primary">⬡ Batch Process</button>
+            </div>
+          </div>
+          <div class="content-body">
+            <!-- Skeleton KPI cards -->
+            <div class="stat-row">
+              <div class="stat-card">
+                <div class="stat-label">Pending Review</div>
+                <div class="skeleton" style="height:28px;width:60px;margin:4px 0;"></div>
+                <div class="skeleton" style="height:10px;width:80px;"></div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Approved Today</div>
+                <div class="skeleton" style="height:28px;width:50px;margin:4px 0;"></div>
+                <div class="skeleton" style="height:10px;width:90px;"></div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Avg. Decision Time</div>
+                <div class="skeleton" style="height:28px;width:70px;margin:4px 0;"></div>
+                <div class="skeleton" style="height:10px;width:70px;"></div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">High Risk Pending</div>
+                <div class="skeleton" style="height:28px;width:40px;margin:4px 0;"></div>
+                <div class="skeleton" style="height:10px;width:100px;"></div>
+              </div>
+            </div>
+            <!-- Skeleton table -->
+            <div class="table-wrap">
+              <div class="table-filters">
+                <div class="skeleton" style="height:26px;width:60px;border-radius:2px;"></div>
+                <div class="skeleton" style="height:26px;width:80px;border-radius:2px;"></div>
+                <div class="skeleton" style="height:26px;width:70px;border-radius:2px;"></div>
+                <div class="skeleton" style="height:26px;width:90px;border-radius:2px;margin-left:auto;"></div>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th class="checkbox-cell"></th>
+                    <th>APPLICANT ↕</th>
+                    <th>RISK ↕</th>
+                    <th>AMOUNT ↕</th>
+                    <th>FO REC.</th>
+                    <th>FIELD OFFICER</th>
+                    <th>WAITING ↕</th>
+                    <th>FLAGS</th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Skeleton rows -->
+                  <tr><td colspan="9" style="padding:10px 12px;">
+                    <div style="display:flex;gap:12px;align-items:center;">
+                      <div class="skeleton" style="width:14px;height:14px;border-radius:2px;flex-shrink:0;"></div>
+                      <div class="skeleton" style="flex:2;height:12px;"></div>
+                      <div class="skeleton" style="width:70px;height:18px;border-radius:2px;"></div>
+                      <div class="skeleton" style="width:80px;height:12px;"></div>
+                      <div class="skeleton" style="width:80px;height:18px;border-radius:2px;"></div>
+                      <div class="skeleton" style="width:90px;height:12px;"></div>
+                      <div class="skeleton" style="width:50px;height:12px;"></div>
+                      <div class="skeleton" style="width:60px;height:18px;border-radius:2px;"></div>
+                      <div class="skeleton" style="width:50px;height:12px;"></div>
+                    </div>
+                  </td></tr>
+                  <tr><td colspan="9" style="padding:10px 12px;">
+                    <div style="display:flex;gap:12px;align-items:center;">
+                      <div class="skeleton" style="width:14px;height:14px;border-radius:2px;flex-shrink:0;"></div>
+                      <div class="skeleton" style="flex:2;height:12px;"></div>
+                      <div class="skeleton" style="width:70px;height:18px;border-radius:2px;"></div>
+                      <div class="skeleton" style="width:80px;height:12px;"></div>
+                      <div class="skeleton" style="width:80px;height:18px;border-radius:2px;"></div>
+                      <div class="skeleton" style="width:90px;height:12px;"></div>
+                      <div class="skeleton" style="width:50px;height:12px;"></div>
+                      <div class="skeleton" style="width:60px;height:18px;border-radius:2px;"></div>
+                      <div class="skeleton" style="width:50px;height:12px;"></div>
+                    </div>
+                  </td></tr>
+                  <tr><td colspan="9" style="padding:10px 12px;">
+                    <div style="display:flex;gap:12px;align-items:center;">
+                      <div class="skeleton" style="width:14px;height:14px;border-radius:2px;flex-shrink:0;"></div>
+                      <div class="skeleton" style="flex:2;height:12px;"></div>
+                      <div class="skeleton" style="width:70px;height:18px;border-radius:2px;"></div>
+                      <div class="skeleton" style="width:80px;height:12px;"></div>
+                      <div class="skeleton" style="width:80px;height:18px;border-radius:2px;"></div>
+                      <div class="skeleton" style="width:90px;height:12px;"></div>
+                      <div class="skeleton" style="width:50px;height:12px;"></div>
+                      <div class="skeleton" style="width:60px;height:18px;border-radius:2px;"></div>
+                      <div class="skeleton" style="width:50px;height:12px;"></div>
+                    </div>
+                  </td></tr>
+                  <tr><td colspan="9" style="padding:10px 12px;">
+                    <div style="display:flex;gap:12px;align-items:center;">
+                      <div class="skeleton" style="width:14px;height:14px;border-radius:2px;flex-shrink:0;"></div>
+                      <div class="skeleton" style="flex:2;height:12px;"></div>
+                      <div class="skeleton" style="width:70px;height:18px;border-radius:2px;"></div>
+                      <div class="skeleton" style="width:80px;height:12px;"></div>
+                      <div class="skeleton" style="width:80px;height:18px;border-radius:2px;"></div>
+                      <div class="skeleton" style="width:90px;height:12px;"></div>
+                      <div class="skeleton" style="width:50px;height:12px;"></div>
+                      <div class="skeleton" style="width:60px;height:18px;border-radius:2px;"></div>
+                      <div class="skeleton" style="width:50px;height:12px;"></div>
+                    </div>
+                  </td></tr>
+                  <tr><td colspan="9" style="padding:10px 12px;">
+                    <div style="display:flex;gap:12px;align-items:center;">
+                      <div class="skeleton" style="width:14px;height:14px;border-radius:2px;flex-shrink:0;"></div>
+                      <div class="skeleton" style="flex:2;height:12px;"></div>
+                      <div class="skeleton" style="width:70px;height:18px;border-radius:2px;"></div>
+                      <div class="skeleton" style="width:80px;height:12px;"></div>
+                      <div class="skeleton" style="width:80px;height:18px;border-radius:2px;"></div>
+                      <div class="skeleton" style="width:90px;height:12px;"></div>
+                      <div class="skeleton" style="width:50px;height:12px;"></div>
+                      <div class="skeleton" style="width:60px;height:18px;border-radius:2px;"></div>
+                      <div class="skeleton" style="width:50px;height:12px;"></div>
+                    </div>
+                  </td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       SCREEN 2 — APPLICATION DETAIL
+       Loaded state with FO Recommendation
+  ══════════════════════════════════════════════════════ -->
+  <div class="screen-wrapper">
+    <div class="screen-meta">
+      <span class="screen-num">SCREEN 02</span>
+      <span class="screen-title">Application Detail — with FO Recommendation</span>
+      <span class="state-pill" style="background:var(--green-light);color:var(--green);">✓ LOADED — PARTIAL DATA FLAG</span>
+    </div>
+    <div class="screen-annotation">Full application detail with FO recommendation panel on the right. System flags are surfaced prominently. Partial data warning is inherited from the FO's review. Quick decision panel at bottom of sidebar.</div>
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <div class="browser-dots">
+          <div class="browser-dot" style="background:#EF4444;"></div>
+          <div class="browser-dot" style="background:#F59E0B;"></div>
+          <div class="browser-dot" style="background:#10B981;"></div>
+        </div>
+        <div class="browser-url">mfs-loans.internal/manager/application/APP-2025-08471</div>
+        <div class="browser-actions">
+          <div class="browser-action">⟳</div>
+          <div class="browser-action">⋯</div>
+        </div>
+      </div>
+      <div class="app-shell">
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <div class="sidebar-logo">
+            <div class="sidebar-logo-mark">MFS</div>
+            <div class="sidebar-logo-text">LOAN<br>MANAGER</div>
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-section-label">Applications</div>
+            <div class="sidebar-item active"><span class="sidebar-item-icon">⬛</span> Queue <span class="sidebar-badge">12</span></div>
+            <div class="sidebar-item"><span class="sidebar-item-icon">◉</span> Batch Process</div>
+            <div class="sidebar-item"><span class="sidebar-item-icon">☰</span> History</div>
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-section-label">Reports</div>
+            <div class="sidebar-item"><span class="sidebar-item-icon">▦</span> Analytics</div>
+            <div class="sidebar-item"><span class="sidebar-item-icon">⚑</span> FO Performance</div>
+          </div>
+          <div class="sidebar-footer">
+            <div class="sidebar-avatar">SM</div>
+            <div>
+              <div class="sidebar-user-name">Salma Rahman</div>
+              <div class="sidebar-user-role">Senior Manager</div>
+            </div>
+          </div>
+        </div>
+        <!-- Main -->
+        <div class="main-content">
+          <div class="topbar" style="background:var(--card);">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span style="color:var(--blue);font-size:11px;font-weight:600;cursor:pointer;">← Back to Queue</span>
+              <span style="color:var(--border);">|</span>
+              <div>
+                <div class="topbar-title">Fatema Begum <span style="font-family:var(--mono);font-size:10px;color:var(--text-tertiary);font-weight:400;">#APP-2025-08471</span></div>
+                <div class="topbar-subtitle">Opened 1m ago · 11 remaining in queue</div>
+              </div>
+            </div>
+            <div class="topbar-actions">
+              <span style="font-size:10px;color:var(--text-tertiary);">Prev</span>
+              <span style="font-size:10px;color:var(--blue);font-weight:600;cursor:pointer;">Next →</span>
+            </div>
+          </div>
+          <div class="content-body" style="padding:0;overflow:hidden;">
+            <div class="detail-layout" style="padding:16px;gap:12px;">
+              <!-- LEFT: main detail -->
+              <div class="detail-main">
+                <!-- Hero -->
+                <div class="detail-hero" style="margin:-16px -16px 14px -0px;padding:14px 16px;">
+                  <div>
+                    <div class="detail-name">Fatema Begum</div>
+                    <div class="detail-id">APP-2025-08471 · Applied May 6, 2025 · Retail Trade</div>
+                    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                      <div class="risk-tag high">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M12 3C12 3 8 7 8 11C8 11 6 10 6 8C6 8 3 10 3 14C3 17.3 6.1 20 10 20.9V22H14V20.9C17.9 20 21 17.3 21 14C21 10 18 8 18 8C18 10 16 11 16 11C16 7 12 3 12 3Z" fill="#DC2626"/></svg>
+                        HIGH RISK
+                      </div>
+                      <span class="flag-tag warn">⚠ PARTIAL DATA (1/3 MO)</span>
+                      <span class="flag-tag danger">⚠ EXCEEDS ELIGIBLE</span>
+                      <span class="flag-tag info">ℹ 1 ACTIVE LOAN</span>
+                    </div>
+                  </div>
+                  <div class="detail-stats-row">
+                    <div class="detail-stat">
+                      <div class="detail-stat-val">৳50K</div>
+                      <div class="detail-stat-label">Requested</div>
+                    </div>
+                    <div class="detail-stat">
+                      <div class="detail-stat-val" style="color:#FCA5A5;">৳35K</div>
+                      <div class="detail-stat-label">Eligible</div>
+                    </div>
+                    <div class="detail-stat">
+                      <div class="detail-stat-val">24mo</div>
+                      <div class="detail-stat-label">Tenure</div>
+                    </div>
+                    <div class="detail-stat">
+                      <div class="detail-stat-val">18%</div>
+                      <div class="detail-stat-label">Rate p.a.</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Loan bar -->
+                <div class="loan-bar-wrap">
+                  <div style="font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:8px;">REQUESTED vs ELIGIBLE AMOUNT</div>
+                  <div class="loan-bar-labels">
+                    <span style="color:var(--green);">Eligible: ৳35,000</span>
+                    <span style="color:var(--red);font-weight:700;">Requested: ৳50,000 (+43%)</span>
+                  </div>
+                  <div class="loan-track">
+                    <div class="loan-fill" style="width:70%;">
+                      <div class="loan-marker" style="left:calc(100% + 2px);"></div>
+                    </div>
+                  </div>
+                  <div style="font-size:9px;color:var(--red);font-weight:600;margin-top:4px;">Request exceeds eligible limit by ৳15,000 — approve at ৳35,000 if proceeding</div>
+                </div>
+
+                <!-- Customer + Loan info -->
+                <div class="info-grid-2">
+                  <div class="info-panel">
+                    <div class="info-panel-header">CUSTOMER PROFILE</div>
+                    <div class="info-panel-body">
+                      <div class="info-row"><span class="info-key">Risk Tier</span><span class="info-val"><span class="risk-tag high" style="font-size:8px;">HIGH</span></span></div>
+                      <div class="info-row"><span class="info-key">Account Age</span><span class="info-val">4 yrs 2 mo</span></div>
+                      <div class="info-row"><span class="info-key">Previous Apps</span><span class="info-val">3 (2 approved)</span></div>
+                      <div class="info-row"><span class="info-key">Active Loans</span><span class="info-val" style="color:var(--amber);">1 Ongoing</span></div>
+                      <div class="info-row"><span class="info-key">Repayment Rate</span><span class="info-val" style="color:var(--green);">87% on-time</span></div>
+                    </div>
+                  </div>
+                  <div class="info-panel">
+                    <div class="info-panel-header">LOAN TERMS</div>
+                    <div class="info-panel-body">
+                      <div class="info-row"><span class="info-key">Requested</span><span class="info-val" style="color:var(--red);">৳ 50,000</span></div>
+                      <div class="info-row"><span class="info-key">Eligible Amount</span><span class="info-val" style="color:var(--green);">৳ 35,000</span></div>
+                      <div class="info-row"><span class="info-key">Tenure</span><span class="info-val">24 months</span></div>
+                      <div class="info-row"><span class="info-key">Interest Rate</span><span class="info-val">18% p.a. flat</span></div>
+                      <div class="info-row"><span class="info-key">Monthly EMI</span><span class="info-val">৳ 2,458</span></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Transaction Indicators -->
+                <div class="tx-chart-wrap">
+                  <div class="tx-chart-header">
+                    <span>3-MONTH TRANSACTION INDICATORS</span>
+                    <span class="flag-tag warn" style="font-size:8px;">⚠ PARTIAL: 1/3 MONTHS</span>
+                  </div>
+                  <div class="tx-grid">
+                    <div class="tx-metric">
+                      <div class="tx-metric-label">Total Payments</div>
+                      <div class="tx-metric-val" style="color:var(--blue);">৳ 18,400</div>
+                      <div class="tx-mini-bars">
+                        <div class="tx-bar" style="height:40%;background:var(--card);border-color:var(--border);"></div>
+                        <div class="tx-bar" style="height:40%;background:var(--card);border-color:var(--border);"></div>
+                        <div class="tx-bar" style="height:90%;"></div>
+                      </div>
+                      <span class="tx-trend-tag" style="background:var(--amber-light);color:var(--amber);margin-top:4px;display:inline-block;">1 mo only</span>
+                    </div>
+                    <div class="tx-metric">
+                      <div class="tx-metric-label">Bill Payments</div>
+                      <div class="tx-metric-val" style="color:var(--green);">৳ 5,200</div>
+                      <div class="tx-mini-bars">
+                        <div class="tx-bar" style="height:40%;background:var(--card);border-color:var(--border);"></div>
+                        <div class="tx-bar" style="height:40%;background:var(--card);border-color:var(--border);"></div>
+                        <div class="tx-bar" style="height:55%;background:var(--green-light);border-color:var(--green);"></div>
+                      </div>
+                      <span class="tx-trend-tag" style="background:var(--amber-light);color:var(--amber);margin-top:4px;display:inline-block;">1 mo only</span>
+                    </div>
+                    <div class="tx-metric">
+                      <div class="tx-metric-label">P2P Transfers</div>
+                      <div class="tx-metric-val" style="color:var(--red);">৳ 1,800</div>
+                      <div class="tx-mini-bars">
+                        <div class="tx-bar" style="height:40%;background:var(--card);border-color:var(--border);"></div>
+                        <div class="tx-bar" style="height:40%;background:var(--card);border-color:var(--border);"></div>
+                        <div class="tx-bar" style="height:20%;background:var(--red-light);border-color:var(--red);"></div>
+                      </div>
+                      <span class="tx-trend-tag" style="background:var(--amber-light);color:var(--amber);margin-top:4px;display:inline-block;">1 mo only</span>
+                    </div>
+                    <div class="tx-metric">
+                      <div class="tx-metric-label">Mobile Recharge</div>
+                      <div class="tx-metric-val" style="color:var(--text-primary);">৳ 3,200</div>
+                      <div class="tx-mini-bars">
+                        <div class="tx-bar" style="height:40%;background:var(--card);border-color:var(--border);"></div>
+                        <div class="tx-bar" style="height:40%;background:var(--card);border-color:var(--border);"></div>
+                        <div class="tx-bar" style="height:70%;"></div>
+                      </div>
+                      <span class="tx-trend-tag" style="background:var(--amber-light);color:var(--amber);margin-top:4px;display:inline-block;">1 mo only</span>
+                    </div>
+                    <div class="tx-metric">
+                      <div class="tx-metric-label">Cash In/Out</div>
+                      <div class="tx-metric-val" style="color:var(--text-primary);">৳ 42,100</div>
+                      <div class="tx-mini-bars">
+                        <div class="tx-bar" style="height:40%;background:var(--card);border-color:var(--border);"></div>
+                        <div class="tx-bar" style="height:40%;background:var(--card);border-color:var(--border);"></div>
+                        <div class="tx-bar" style="height:100%;"></div>
+                      </div>
+                      <span class="tx-trend-tag" style="background:var(--amber-light);color:var(--amber);margin-top:4px;display:inline-block;">1 mo only</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- RIGHT: FO rec + decision -->
+              <div class="detail-side">
+                <!-- FO Recommendation -->
+                <div class="side-panel">
+                  <div class="side-panel-header">FIELD OFFICER RECOMMENDATION</div>
+                  <div class="side-panel-body">
+                    <div class="fo-rec-badge fo-rec-approve">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 6V12C3 16.5 7 20.7 12 22C17 20.7 21 16.5 21 12V6L12 2Z" fill="#059669"/><path d="M8 12L11 15L16 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <span class="fo-rec-text">Recommend: APPROVE</span>
+                    </div>
+                    <div class="fo-meta-row">
+                      <div class="fo-avatar" style="width:22px;height:22px;font-size:8px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;flex-shrink:0;">RM</div>
+                      <span>Reza Mahmoud · Field Officer</span>
+                    </div>
+                    <div class="fo-meta-row">⏱ Submitted May 8 · 10:04 AM</div>
+                    <div class="fo-meta-row">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M18 10H16.74C16.37 7.73 14.41 6 12 6C10.37 6 8.93 6.8 8.05 8.05C5.77 8.32 4 10.26 4 12.5C4 14.99 6.01 17 8.5 17H18C19.66 17 21 15.66 21 14C21 12.34 19.66 11 18 11L18 10Z" fill="#475569"/><path d="M12 21V14M9 18L12 21L15 18" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      Submitted offline · synced 10:07 AM
+                    </div>
+                    <div class="fo-meta-row" style="color:var(--amber);">⚠ Stale data acknowledged (3h 22m old)</div>
+                    <div style="font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:6px;">FIELD NOTES</div>
+                    <div class="fo-notes-box">"Customer runs a small grocery shop in Mirpur. Business appeared active during visit. Recommend approving at eligible amount (৳35,000). Cash flow is high but history is limited."</div>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                      <span class="flag-tag warn">⚠ FO: Approve at ৳35K</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- System Flags -->
+                <div class="side-panel">
+                  <div class="side-panel-header" style="background:var(--amber-light);color:var(--amber);">⚠ SYSTEM FLAGS (3)</div>
+                  <div class="side-panel-body" style="display:flex;flex-direction:column;gap:6px;">
+                    <div style="background:var(--red-light);border-left:2px solid var(--red);padding:7px 10px;font-size:10px;font-weight:500;color:var(--red);">Requested ৳50K exceeds eligible ৳35K by 43%</div>
+                    <div style="background:var(--amber-light);border-left:2px solid var(--amber);padding:7px 10px;font-size:10px;font-weight:500;color:var(--amber);">Only 1 month of transaction data available</div>
+                    <div style="background:var(--amber-light);border-left:2px solid var(--amber);padding:7px 10px;font-size:10px;font-weight:500;color:var(--amber);">1 active loan currently in repayment</div>
+                  </div>
+                </div>
+
+                <!-- Decision Panel -->
+                <div class="decision-panel">
+                  <div class="decision-panel-header">FINAL DECISION</div>
+                  <div class="decision-panel-body">
+                    <button class="btn-full" style="background:var(--green);color:white;">✓ Approve Application</button>
+                    <button class="btn-full" style="background:var(--surface);color:var(--red);border:2px solid var(--red);">✗ Reject Application</button>
+                    <button class="btn-full" style="background:var(--surface);color:var(--text-secondary);border:1px solid var(--border);">⌛ Request More Info</button>
+                    <div style="font-size:9px;color:var(--text-tertiary);text-align:center;padding-top:4px;">Decision is binding and triggers customer notification</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       SCREEN 3 — BATCH PROCESSING
+  ══════════════════════════════════════════════════════ -->
+  <div class="screen-wrapper">
+    <div class="screen-meta">
+      <span class="screen-num">SCREEN 03</span>
+      <span class="screen-title">Batch Processing — Multi-Select &amp; Bulk Decision</span>
+      <span class="state-pill" style="background:var(--blue-light);color:var(--blue);">✓ 4 APPS SELECTED</span>
+    </div>
+    <div class="screen-annotation">Manager has selected 4 low-risk applications all recommended "Approve" by FOs. Batch action banner appears at top. Checkboxes visible across all rows. Conflict/partial data flags still visible per row so Manager can spot exceptions before committing.</div>
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <div class="browser-dots">
+          <div class="browser-dot" style="background:#EF4444;"></div>
+          <div class="browser-dot" style="background:#F59E0B;"></div>
+          <div class="browser-dot" style="background:#10B981;"></div>
+        </div>
+        <div class="browser-url">mfs-loans.internal/manager/queue?mode=batch</div>
+        <div class="browser-actions">
+          <div class="browser-action">⟳</div>
+        </div>
+      </div>
+      <div class="app-shell">
+        <div class="sidebar">
+          <div class="sidebar-logo">
+            <div class="sidebar-logo-mark">MFS</div>
+            <div class="sidebar-logo-text">LOAN<br>MANAGER</div>
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-section-label">Applications</div>
+            <div class="sidebar-item active"><span class="sidebar-item-icon">⬛</span> Queue <span class="sidebar-badge">12</span></div>
+            <div class="sidebar-item"><span class="sidebar-item-icon">◉</span> Batch Process</div>
+            <div class="sidebar-item"><span class="sidebar-item-icon">☰</span> History</div>
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-section-label">Reports</div>
+            <div class="sidebar-item"><span class="sidebar-item-icon">▦</span> Analytics</div>
+            <div class="sidebar-item"><span class="sidebar-item-icon">⚑</span> FO Performance</div>
+          </div>
+          <div class="sidebar-footer">
+            <div class="sidebar-avatar">SM</div>
+            <div>
+              <div class="sidebar-user-name">Salma Rahman</div>
+              <div class="sidebar-user-role">Senior Manager</div>
+            </div>
+          </div>
+        </div>
+        <div class="main-content">
+          <!-- Batch action banner -->
+          <div class="batch-banner">
+            <div class="cb checked" style="width:18px;height:18px;border-radius:2px;">✓</div>
+            <span class="batch-count">4 Applications Selected</span>
+            <span class="batch-summary">Total: ৳1,28,000 · All FO: Recommend Approve · All Low Risk</span>
+            <div style="margin-left:auto;display:flex;gap:8px;">
+              <button class="btn btn-success">✓ Batch Approve (4)</button>
+              <button class="btn btn-danger">✗ Batch Reject (4)</button>
+              <button class="btn btn-ghost" style="color:white;border-color:#334155;">✕ Deselect All</button>
+            </div>
+          </div>
+          <div class="topbar">
+            <div>
+              <div class="topbar-title">Application Queue <span style="font-size:11px;color:var(--text-tertiary);font-weight:400;">— Batch Mode Active</span></div>
+              <div class="topbar-subtitle">12 pending · select rows to batch process · max 50 per batch</div>
+            </div>
+            <div class="topbar-actions">
+              <button class="btn btn-secondary">⇓ Export</button>
+            </div>
+          </div>
+          <div class="content-body">
+            <!-- KPI row -->
+            <div class="stat-row" style="margin-bottom:12px;">
+              <div class="stat-card">
+                <div class="stat-label">Pending Review</div>
+                <div class="stat-value" style="font-size:22px;">12</div>
+                <div class="stat-delta" style="color:var(--orange);">↑ 3 since yesterday</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Approved Today</div>
+                <div class="stat-value" style="font-size:22px;">28</div>
+                <div class="stat-delta" style="color:var(--green);">↑ 6 vs avg</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Avg. Decision Time</div>
+                <div class="stat-value" style="font-size:22px;">3.8<span style="font-size:13px;font-weight:400;">m</span></div>
+                <div class="stat-delta" style="color:var(--green);">✓ Below 4m target</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">High Risk Pending</div>
+                <div class="stat-value" style="font-size:22px;color:var(--red);">4</div>
+                <div class="stat-delta" style="color:var(--red);">Requires individual review</div>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <div class="table-filters">
+                <div class="filter-chip active">All (12)</div>
+                <div class="filter-chip">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M12 3C12 3 8 7 8 11C8 11 6 10 6 8C6 8 3 10 3 14C3 17.3 6.1 20 10 20.9V22H14V20.9C17.9 20 21 17.3 21 14C21 10 18 8 18 8C18 10 16 11 16 11C16 7 12 3 12 3Z" fill="#DC2626"/></svg>
+                  High Risk (4)
+                </div>
+                <div class="filter-chip">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 6V12C3 16.5 7 20.7 12 22C17 20.7 21 16.5 21 12V6L12 2Z" fill="#059669"/><path d="M8 12L11 15L16 9" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Low Risk (5)
+                </div>
+                <div class="filter-chip">FO: Approve (8)</div>
+                <div class="filter-chip">FO: Reject (3)</div>
+                <input class="search-input" value="Search applicant..." readonly>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th class="checkbox-cell"><div class="cb checked">✓</div></th>
+                    <th>APPLICANT ↕</th>
+                    <th>RISK ↕</th>
+                    <th>AMOUNT ↕</th>
+                    <th>FO REC. ↕</th>
+                    <th>FIELD OFFICER</th>
+                    <th>WAITING ↕</th>
+                    <th>FLAGS</th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Selected rows (4) -->
+                  <tr class="selected">
+                    <td class="checkbox-cell"><div class="cb checked">✓</div></td>
+                    <td><div style="font-weight:600;">Kamal Hossain</div><div style="font-size:9px;color:var(--text-tertiary);">APP-2025-08210</div></td>
+                    <td><span class="risk-tag low"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 6V12C3 16.5 7 20.7 12 22C17 20.7 21 16.5 21 12V6L12 2Z" fill="#059669"/></svg>LOW</span></td>
+                    <td><div class="amount-cell" style="color:var(--green);">৳ 30,000</div><div style="font-size:8px;color:var(--green);">Within eligible</div></td>
+                    <td><span class="rec-tag approve">✓ APPROVE</span></td>
+                    <td><div class="fo-cell"><div class="fo-avatar" style="background:#7C3AED;">SA</div>Shirin Ahmed</div></td>
+                    <td><span class="wait-badge">4h 22m</span></td>
+                    <td>—</td>
+                    <td><span class="action-link">Review</span></td>
+                  </tr>
+                  <tr class="selected">
+                    <td class="checkbox-cell"><div class="cb checked">✓</div></td>
+                    <td><div style="font-weight:600;">Nasrin Sultana</div><div style="font-size:9px;color:var(--text-tertiary);">APP-2025-08301</div></td>
+                    <td><span class="risk-tag low"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 6V12C3 16.5 7 20.7 12 22C17 20.7 21 16.5 21 12V6L12 2Z" fill="#059669"/></svg>LOW</span></td>
+                    <td><div class="amount-cell" style="color:var(--green);">৳ 20,000</div><div style="font-size:8px;color:var(--green);">Within eligible</div></td>
+                    <td><span class="rec-tag approve">✓ APPROVE</span></td>
+                    <td><div class="fo-cell"><div class="fo-avatar" style="background:#059669;">MH</div>Md. Hasan</div></td>
+                    <td><span class="wait-badge">6h 01m</span></td>
+                    <td>—</td>
+                    <td><span class="action-link">Review</span></td>
+                  </tr>
+                  <tr class="selected">
+                    <td class="checkbox-cell"><div class="cb checked">✓</div></td>
+                    <td><div style="font-weight:600;">Rafiqul Islam</div><div style="font-size:9px;color:var(--text-tertiary);">APP-2025-08355</div></td>
+                    <td><span class="risk-tag low"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 6V12C3 16.5 7 20.7 12 22C17 20.7 21 16.5 21 12V6L12 2Z" fill="#059669"/></svg>LOW</span></td>
+                    <td><div class="amount-cell" style="color:var(--green);">৳ 48,000</div><div style="font-size:8px;color:var(--green);">Within eligible</div></td>
+                    <td><span class="rec-tag approve">✓ APPROVE</span></td>
+                    <td><div class="fo-cell"><div class="fo-avatar" style="background:#D97706;">FK</div>Farhan Khan</div></td>
+                    <td><span class="wait-badge">7h 44m</span></td>
+                    <td>—</td>
+                    <td><span class="action-link">Review</span></td>
+                  </tr>
+                  <tr class="selected">
+                    <td class="checkbox-cell"><div class="cb checked">✓</div></td>
+                    <td><div style="font-weight:600;">Amina Khatun</div><div style="font-size:9px;color:var(--text-tertiary);">APP-2025-08390</div></td>
+                    <td><span class="risk-tag low"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 6V12C3 16.5 7 20.7 12 22C17 20.7 21 16.5 21 12V6L12 2Z" fill="#059669"/></svg>LOW</span></td>
+                    <td><div class="amount-cell" style="color:var(--green);">৳ 30,000</div><div style="font-size:8px;color:var(--green);">Within eligible</div></td>
+                    <td><span class="rec-tag approve">✓ APPROVE</span></td>
+                    <td><div class="fo-cell"><div class="fo-avatar" style="background:#2563EB;">RM</div>Reza Mahmoud</div></td>
+                    <td><span class="wait-badge">8h 12m</span></td>
+                    <td>—</td>
+                    <td><span class="action-link">Review</span></td>
+                  </tr>
+                  <!-- Unselected rows (high risk — blocked from batch) -->
+                  <tr>
+                    <td class="checkbox-cell"><div class="cb" style="opacity:0.4;" title="Individual review required"></div></td>
+                    <td><div style="font-weight:600;">Fatema Begum</div><div style="font-size:9px;color:var(--text-tertiary);">APP-2025-08471</div></td>
+                    <td><span class="risk-tag high"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M12 3C12 3 8 7 8 11C8 11 6 10 6 8C6 8 3 10 3 14C3 17.3 6.1 20 10 20.9V22H14V20.9C17.9 20 21 17.3 21 14C21 10 18 8 18 8C18 10 16 11 16 11C16 7 12 3 12 3Z" fill="#DC2626"/></svg>HIGH</span></td>
+                    <td><div class="amount-cell" style="color:var(--red);">৳ 50,000</div><span class="overshoot">+43% over eligible</span></td>
+                    <td><span class="rec-tag approve">✓ APPROVE</span></td>
+                    <td><div class="fo-cell"><div class="fo-avatar" style="background:#2563EB;">RM</div>Reza Mahmoud</div></td>
+                    <td><span class="wait-badge urgent">1d 2h !</span></td>
+                    <td><span class="flag-tag danger">EXCEEDS</span><span class="partial-flag">⚠1/3</span></td>
+                    <td><span class="action-link">Review</span></td>
+                  </tr>
+                  <tr>
+                    <td class="checkbox-cell"><div class="cb" style="opacity:0.4;"></div></td>
+                    <td><div style="font-weight:600;">Karim Uddin</div><div style="font-size:9px;color:var(--text-tertiary);">APP-2025-08490</div></td>
+                    <td><span class="risk-tag medium"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 20H22L12 2Z" fill="#D97706"/></svg>MED</span></td>
+                    <td><div class="amount-cell">৳ 25,000</div></td>
+                    <td><span class="rec-tag reject">✗ REJECT</span></td>
+                    <td><div class="fo-cell"><div class="fo-avatar" style="background:#2563EB;">RM</div>Reza Mahmoud</div></td>
+                    <td><span class="wait-badge">22h 05m</span></td>
+                    <td><span class="conflict-flag">⚡ CONFLICT</span></td>
+                    <td><span class="action-link">Review</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       SCREEN 4 — APPROVAL CONFIRMATION MODAL
+  ══════════════════════════════════════════════════════ -->
+  <div class="screen-wrapper">
+    <div class="screen-meta">
+      <span class="screen-num">SCREEN 04</span>
+      <span class="screen-title">Decision Confirmation Modal — Approve</span>
+      <span class="state-pill" style="background:var(--green-light);color:var(--green);">✓ APPROVAL CONFIRMATION</span>
+    </div>
+    <div class="screen-annotation">Modal overlays the detail view when Manager clicks Approve. Shows the exact approved amount (capped at eligible), tenure, EMI, and requires the Manager to confirm. A rejection reason dropdown appears for reject flows instead.</div>
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <div class="browser-dots">
+          <div class="browser-dot" style="background:#EF4444;"></div>
+          <div class="browser-dot" style="background:#F59E0B;"></div>
+          <div class="browser-dot" style="background:#10B981;"></div>
+        </div>
+        <div class="browser-url">mfs-loans.internal/manager/application/APP-2025-08471</div>
+      </div>
+      <div class="app-shell" style="position:relative;">
+        <!-- Background (blurred detail view) -->
+        <div class="sidebar" style="filter:blur(1px);opacity:0.5;">
+          <div class="sidebar-logo"><div class="sidebar-logo-mark">MFS</div><div class="sidebar-logo-text">LOAN<br>MANAGER</div></div>
+          <div class="sidebar-section"><div class="sidebar-item active"><span class="sidebar-item-icon">⬛</span> Queue</div></div>
+          <div class="sidebar-footer"><div class="sidebar-avatar">SM</div><div><div class="sidebar-user-name">Salma Rahman</div></div></div>
+        </div>
+        <div class="main-content" style="filter:blur(1px);opacity:0.4;">
+          <div class="topbar"><div><div class="topbar-title">Fatema Begum</div></div></div>
+          <div class="content-body" style="background:var(--bg);"></div>
+        </div>
+        <!-- Modal overlay -->
+        <div class="modal-overlay">
+          <div class="modal-box">
+            <div class="modal-header">
+              <div class="modal-title">Confirm Approval</div>
+              <div class="modal-close">✕</div>
+            </div>
+            <div class="modal-body">
+              <div class="modal-confirm-row">
+                <div class="modal-icon">✓</div>
+                <div>
+                  <div class="modal-confirm-text">You are approving this application at the eligible amount.</div>
+                  <div class="modal-confirm-amount">৳ 35,000 — Approved Amount</div>
+                  <div style="font-size:9px;color:var(--green);opacity:0.8;margin-top:2px;">Requested ৳50,000 capped at system-eligible limit</div>
+                </div>
+              </div>
+              <div class="modal-details">
+                <div class="modal-detail">
+                  <div class="modal-detail-label">Applicant</div>
+                  <div class="modal-detail-val">Fatema Begum</div>
+                </div>
+                <div class="modal-detail">
+                  <div class="modal-detail-label">App. ID</div>
+                  <div class="modal-detail-val" style="font-family:var(--mono);font-size:11px;">APP-2025-08471</div>
+                </div>
+                <div class="modal-detail">
+                  <div class="modal-detail-label">Approved Amount</div>
+                  <div class="modal-detail-val" style="color:var(--green);">৳ 35,000</div>
+                </div>
+                <div class="modal-detail">
+                  <div class="modal-detail-label">Tenure</div>
+                  <div class="modal-detail-val">24 months</div>
+                </div>
+                <div class="modal-detail">
+                  <div class="modal-detail-label">Monthly EMI</div>
+                  <div class="modal-detail-val">৳ 2,458</div>
+                </div>
+                <div class="modal-detail">
+                  <div class="modal-detail-label">FO Recommendation</div>
+                  <div class="modal-detail-val" style="color:var(--green);">✓ Approve</div>
+                </div>
+              </div>
+              <div class="modal-reason">
+                <div class="modal-reason-label">Approval Note (optional)</div>
+                <select class="modal-reason-select">
+                  <option>Approved at eligible limit — within risk appetite</option>
+                  <option>Strong repayment history — amount adjusted</option>
+                  <option>Other...</option>
+                </select>
+              </div>
+              <div style="background:var(--blue-light);border:1px solid var(--blue);padding:8px 12px;border-radius:3px;font-size:10px;color:var(--blue);">
+                ⚡ This action will trigger immediate SMS &amp; in-app notification to the customer and notify Field Officer Reza Mahmoud.
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary">Cancel</button>
+              <button class="btn btn-success" style="padding:8px 20px;font-size:13px;">Confirm Approval →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       SCREEN 5 — DECISION HISTORY / AUDIT TRAIL
+       Empty State + Error State tabs
+  ══════════════════════════════════════════════════════ -->
+  <div class="screen-wrapper">
+    <div class="screen-meta">
+      <span class="screen-num">SCREEN 05</span>
+      <span class="screen-title">Decision History &amp; Audit Trail</span>
+      <span class="state-pill" style="background:var(--red-light);color:var(--red);">✗ ERROR STATE — DATA LOAD FAILED</span>
+      <span class="state-pill" style="background:var(--card);color:var(--text-tertiary);">+ EMPTY STATE TAB</span>
+    </div>
+    <div class="screen-annotation">History screen shows both error state (server failed to load history) and an empty state (no data for selected filter). Audit data is immutable — regulatory audit handled outside the platform, but history is accessible here. Tabs switch between states.</div>
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <div class="browser-dots">
+          <div class="browser-dot" style="background:#EF4444;"></div>
+          <div class="browser-dot" style="background:#F59E0B;"></div>
+          <div class="browser-dot" style="background:#10B981;"></div>
+        </div>
+        <div class="browser-url">mfs-loans.internal/manager/history</div>
+      </div>
+      <div class="app-shell">
+        <div class="sidebar">
+          <div class="sidebar-logo"><div class="sidebar-logo-mark">MFS</div><div class="sidebar-logo-text">LOAN<br>MANAGER</div></div>
+          <div class="sidebar-section">
+            <div class="sidebar-section-label">Applications</div>
+            <div class="sidebar-item"><span class="sidebar-item-icon">⬛</span> Queue <span class="sidebar-badge">8</span></div>
+            <div class="sidebar-item"><span class="sidebar-item-icon">◉</span> Batch Process</div>
+            <div class="sidebar-item active"><span class="sidebar-item-icon">☰</span> History</div>
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-section-label">Reports</div>
+            <div class="sidebar-item"><span class="sidebar-item-icon">▦</span> Analytics</div>
+            <div class="sidebar-item"><span class="sidebar-item-icon">⚑</span> FO Performance</div>
+          </div>
+          <div class="sidebar-footer">
+            <div class="sidebar-avatar">SM</div>
+            <div><div class="sidebar-user-name">Salma Rahman</div><div class="sidebar-user-role">Senior Manager</div></div>
+          </div>
+        </div>
+        <div class="main-content">
+          <div class="topbar">
+            <div>
+              <div class="topbar-title">Decision History &amp; Audit Trail</div>
+              <div class="topbar-subtitle">Immutable record of all finalized decisions · Regulatory audit handled externally</div>
+            </div>
+            <div class="topbar-actions">
+              <button class="btn btn-secondary">⇓ Export CSV</button>
+            </div>
+          </div>
+          <div class="content-body" style="padding:0;overflow:hidden;display:flex;flex-direction:column;">
+            <!-- State tabs selector (visual toggle) -->
+            <div style="display:flex;border-bottom:2px solid var(--border);background:var(--surface);flex-shrink:0;">
+              <div style="padding:10px 20px;font-size:11px;font-weight:600;color:var(--red);border-bottom:2px solid var(--red);cursor:pointer;">Error State (Today)</div>
+              <div style="padding:10px 20px;font-size:11px;font-weight:600;color:var(--text-tertiary);cursor:pointer;">Empty State (Filtered)</div>
+              <div style="padding:10px 20px;font-size:11px;font-weight:600;color:var(--text-tertiary);cursor:pointer;">Loaded State (This Week)</div>
+            </div>
+
+            <!-- Filters -->
+            <div class="history-filters" style="flex-shrink:0;">
+              <input class="date-input" value="May 8, 2025" readonly>
+              <span style="font-size:11px;color:var(--text-tertiary);">to</span>
+              <input class="date-input" value="May 8, 2025" readonly>
+              <div class="filter-chip active">All</div>
+              <div class="filter-chip">Approved</div>
+              <div class="filter-chip">Rejected</div>
+              <div class="filter-chip">⚠ Overrides</div>
+              <input class="search-input" value="Search applicant or FO..." style="margin-left:auto;" readonly>
+            </div>
+
+            <!-- ERROR STATE -->
+            <div style="flex:1;overflow:auto;padding:16px;">
+              <!-- Error banner -->
+              <div style="background:var(--red-light);border:1.5px solid var(--red);padding:14px 18px;margin-bottom:20px;display:flex;align-items:flex-start;gap:14px;">
+                <div style="width:36px;height:36px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;color:white;flex-shrink:0;">✗</div>
+                <div style="flex:1;">
+                  <div style="font-size:13px;font-weight:700;color:var(--red);margin-bottom:4px;">Unable to Load Decision History</div>
+                  <div style="font-size:11px;color:var(--red);opacity:0.85;line-height:1.6;margin-bottom:10px;">The server returned an error (503 Service Unavailable) while fetching today's decision history. Your previous decisions are safely stored and will be visible once the connection is restored. No data has been lost.</div>
+                  <div style="display:flex;gap:8px;">
+                    <button class="btn btn-danger" style="font-size:11px;">↺ Retry Loading</button>
+                    <button class="btn btn-secondary" style="font-size:11px;">Contact IT Support</button>
+                    <button class="btn btn-ghost" style="font-size:11px;">View Cached Data</button>
+                  </div>
+                </div>
+                <div style="font-family:var(--mono);font-size:8px;color:var(--red);opacity:0.7;text-align:right;white-space:nowrap;">
+                  ERROR 503<br>10:41:22 AM<br>Retry 3/3 failed
+                </div>
+              </div>
+
+              <!-- Partial cached data shown below error -->
+              <div style="opacity:0.5;pointer-events:none;">
+                <div class="section-header-row" style="margin-bottom:8px;">
+                  <span class="section-label">CACHED DATA (LAST SUCCESSFUL LOAD: MAY 7, 2025)</span>
+                  <span style="font-size:9px;font-family:var(--mono);color:var(--amber);">⚠ MAY BE INCOMPLETE</span>
+                </div>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style="width:20px;"></th>
+                        <th>APPLICANT</th>
+                        <th>DECISION</th>
+                        <th>AMOUNT</th>
+                        <th>FO REC.</th>
+                        <th>FIELD OFFICER</th>
+                        <th>DECIDED BY</th>
+                        <th>TIMESTAMP</th>
+                        <th>NOTES</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="audit-row-approved">
+                        <td style="padding:8px 6px 8px 14px;"><div style="width:6px;height:6px;border-radius:50%;background:var(--green);"></div></td>
+                        <td><div style="font-weight:600;font-size:11px;">Kamal Hossain</div><div style="font-size:8px;color:var(--text-tertiary);">APP-2025-08210</div></td>
+                        <td><span class="decision-badge approved">✓ APPROVED</span></td>
+                        <td><div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--green);">৳ 30,000</div></td>
+                        <td><span class="rec-tag approve" style="font-size:8px;">✓ APPROVE</span></td>
+                        <td><div style="font-size:10px;">Shirin Ahmed</div></td>
+                        <td><div style="font-size:10px;">Salma Rahman</div></td>
+                        <td><div style="font-family:var(--mono);font-size:9px;color:var(--text-tertiary);">May 7 · 3:42 PM</div></td>
+                        <td><div style="font-size:9px;color:var(--text-secondary);">Approved at eligible amount</div></td>
+                      </tr>
+                      <tr class="audit-row-rejected">
+                        <td style="padding:8px 6px 8px 14px;"><div style="width:6px;height:6px;border-radius:50%;background:var(--red);"></div></td>
+                        <td><div style="font-weight:600;font-size:11px;">Mizanur Rahman</div><div style="font-size:8px;color:var(--text-tertiary);">APP-2025-08105</div></td>
+                        <td><span class="decision-badge rejected">✗ REJECTED</span></td>
+                        <td><div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--red);">৳ 80,000</div></td>
+                        <td><span class="rec-tag reject" style="font-size:8px;">✗ REJECT</span></td>
+                        <td><div style="font-size:10px;">Farhan Khan</div></td>
+                        <td><div style="font-size:10px;">Salma Rahman</div></td>
+                        <td><div style="font-family:var(--mono);font-size:9px;color:var(--text-tertiary);">May 7 · 2:18 PM</div></td>
+                        <td><div style="font-size:9px;color:var(--text-secondary);">Exceeds eligible, high risk tier</div></td>
+                      </tr>
+                      <tr class="audit-row-approved">
+                        <td style="padding:8px 6px 8px 14px;"><div style="width:6px;height:6px;border-radius:50%;background:var(--green);"></div></td>
+                        <td>
+                          <div style="font-weight:600;font-size:11px;">Jobeda Khatun <span class="override-flag">⚡ OVERRIDE</span></div>
+                          <div style="font-size:8px;color:var(--text-tertiary);">APP-2025-07998</div>
+                        </td>
+                        <td><span class="decision-badge approved">✓ APPROVED</span></td>
+                        <td><div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--green);">৳ 45,000</div></td>
+                        <td><span class="rec-tag reject" style="font-size:8px;">✗ REJECT</span><span class="override-flag">overridden</span></td>
+                        <td><div style="font-size:10px;">Reza Mahmoud</div></td>
+                        <td><div style="font-size:10px;">Salma Rahman</div></td>
+                        <td><div style="font-family:var(--mono);font-size:9px;color:var(--text-tertiary);">May 7 · 11:05 AM</div></td>
+                        <td><div style="font-size:9px;color:var(--amber);">Manager override — additional context verified</div></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Empty state section (for "Filtered: No results") -->
+              <div style="margin-top:24px;background:var(--surface);border:1px solid var(--border);padding:0;overflow:hidden;">
+                <div style="padding:8px 14px;background:var(--card);border-bottom:1px solid var(--border);font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-secondary);">EMPTY STATE — When filter returns no results</div>
+                <div class="empty-state">
+                  <div class="empty-icon">○</div>
+                  <div class="empty-title">No Decisions Found</div>
+                  <div class="empty-desc">No applications match the current filter (High Risk · Rejected · May 1–7). Try adjusting the date range or removing filters to see results.</div>
+                  <button class="btn btn-secondary" style="margin-top:4px;">Clear All Filters</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="page-footer">
+  <span>MFS LOAN DECISIONING SYSTEM · TASK 04 · WEB EXPERIENCE (MANAGER)</span>
+  <span>5 SCREENS · SKELETON · BATCH PROCESSING · APPROVAL MODAL · ERROR + EMPTY STATES</span>
+</div>
+
+</body>
+</html>

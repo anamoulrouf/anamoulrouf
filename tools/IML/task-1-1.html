@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Task 1 — Journey Map & Systems Logic · MFS LoanFlow</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#F8FAFC;--surface:#FFFFFF;--card:#F8FAFC;--card2:#F1F5F9;
+  --border:#E2E8F0;--border2:#CBD5E1;
+  --amber:#B45309;--amber-bg:#FEF3C7;--amber-b:#FCD34D;
+  --green:#047857;--green-bg:#D1FAE5;--green-b:#6EE7B7;
+  --red:#B91C1C;--red-bg:#FEE2E2;--red-b:#FCA5A5;
+  --blue:#1D4ED8;--blue-bg:#DBEAFE;--blue-b:#93C5FD;
+  --orange:#C2410C;--orange-bg:#FFEDD5;--orange-b:#FDBA74;
+  --purple:#6D28D9;--purple-bg:#EDE9FE;--purple-b:#C4B5FD;
+  --t1:#0F172A;--t2:#334155;--t3:#64748B;--t4:#94A3B8;
+  --mono:'IBM Plex Mono',monospace;--sans:'DM Sans',sans-serif;
+}
+body{background:var(--bg);color:var(--t1);font-family:var(--sans);}
+a{color:var(--amber);text-decoration:none;}
+
+/* NAV */
+header{background:var(--surface);border-bottom:2px solid var(--border);padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.logo{font-family:var(--mono);font-size:13px;color:var(--amber);letter-spacing:3px;font-weight:600;}
+.logo-sub{font-family:var(--mono);font-size:9px;color:var(--t4);letter-spacing:2px;margin-top:2px;}
+.nav-links{display:flex;gap:2px;}
+.nav-link{font-family:var(--mono);font-size:10px;color:var(--t3);padding:8px 14px;border:1px solid transparent;letter-spacing:1px;text-decoration:none;transition:all .18s;border-radius:3px;}
+.nav-link:hover{background:var(--amber-bg);border-color:var(--amber-b);color:var(--amber);}
+.nav-link.active{background:var(--amber-bg);border-color:var(--amber-b);color:var(--amber);}
+.badge{background:var(--amber-bg);border:1px solid var(--amber-b);color:var(--amber);font-family:var(--mono);font-size:10px;padding:5px 12px;letter-spacing:1px;border-radius:3px;}
+
+/* LAYOUT */
+.wrap{max-width:1400px;margin:0 auto;padding:60px 48px;}
+.sec-label{font-family:var(--mono);font-size:9px;color:var(--amber);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;font-weight:600;}
+.sec-title{font-size:28px;font-weight:700;color:var(--t1);margin-bottom:8px;line-height:1.2;}
+.sec-sub{font-size:14px;color:var(--t2);line-height:1.75;max-width:760px;margin-bottom:48px;}
+.divider{height:1px;background:var(--border);margin:56px 0;}
+
+/* ══ SWIM LANE ══ */
+.swim-outer{border:1px solid var(--border2);border-radius:6px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:16px;}
+.swim-head{display:grid;grid-template-columns:88px repeat(6,1fr);background:var(--card2);border-bottom:2px solid var(--border);}
+.sh-corner{border-right:1px solid var(--border);}
+.sh-col{padding:10px 12px;border-right:1px solid var(--border);}
+.sh-col:last-child{border-right:none;}
+.sh-num{font-family:var(--mono);font-size:8px;color:var(--t4);letter-spacing:2px;margin-bottom:2px;}
+.sh-name{font-size:12px;font-weight:700;color:var(--t1);}
+.swim-row{display:grid;grid-template-columns:88px repeat(6,1fr);border-top:1px solid var(--border);}
+.lane-lbl{display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;border-right:1px solid var(--border);padding:16px 0;font-weight:600;}
+.lane-lbl.fo{color:var(--blue);background:#EFF6FF;}
+.lane-lbl.sys{color:var(--purple);background:#F5F3FF;}
+.lane-lbl.mgr{color:var(--green);background:#F0FDF4;}
+.swim-cell{padding:10px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:7px;min-height:150px;}
+.swim-cell:last-child{border-right:none;}
+
+/* NODES */
+.node{background:var(--surface);border:1px solid var(--border2);padding:10px 11px;border-radius:4px;transition:box-shadow .15s,transform .15s;}
+.node:hover{box-shadow:0 3px 12px rgba(0,0,0,.1);transform:translateY(-1px);}
+.node-id{font-family:var(--mono);font-size:7px;color:var(--t4);margin-bottom:3px;font-weight:600;letter-spacing:.5px;}
+.node-title{font-size:11px;font-weight:700;color:var(--t1);margin-bottom:3px;line-height:1.3;}
+.node-desc{font-size:10px;color:var(--t2);line-height:1.5;}
+.node.n-offline{border-color:var(--orange-b);background:var(--orange-bg);}
+.node.n-offline .node-id{color:var(--orange);}
+.node.n-decision{border-color:var(--amber-b);background:var(--amber-bg);}
+.node.n-decision .node-id{color:var(--amber);}
+.node.n-sys{border-color:var(--purple-b);background:var(--purple-bg);}
+.node.n-sys .node-id{color:var(--purple);}
+.node.n-success{border-color:var(--green-b);background:var(--green-bg);}
+.node.n-success .node-id{color:var(--green);}
+.node.n-danger{border-color:var(--red-b);background:var(--red-bg);}
+.node.n-danger .node-id{color:var(--red);}
+.node.n-muted{background:var(--card2);border-color:var(--border);opacity:.5;}
+
+/* LEGEND */
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:48px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:4px;}
+.leg-item{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--t2);}
+.leg-dot{width:10px;height:10px;border-radius:2px;border:1px solid;}
+
+/* ══ EDGE CASES ══ */
+.edge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.edge-card{background:var(--surface);padding:28px;}
+.edge-hd{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;}
+.edge-ico{font-size:26px;line-height:1;flex-shrink:0;}
+.edge-tag{font-family:var(--mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;font-weight:600;}
+.edge-title{font-size:16px;font-weight:700;color:var(--t1);}
+.edge-body{font-size:12px;color:var(--t2);line-height:1.65;margin-bottom:14px;}
+.steps{display:flex;flex-direction:column;gap:6px;}
+.step{display:flex;gap:8px;font-size:11px;color:var(--t2);line-height:1.5;}
+.step-n{font-family:var(--mono);font-size:8px;color:var(--amber);flex-shrink:0;margin-top:2px;font-weight:700;}
+
+/* ══ KPI ══ */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.kpi-card{background:var(--surface);padding:36px 40px;}
+.kpi-persona{font-family:var(--mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border);font-weight:600;}
+.kpi-name{font-size:20px;font-weight:700;margin-bottom:10px;line-height:1.2;}
+.kpi-def{font-size:13px;color:var(--t2);line-height:1.75;margin-bottom:20px;}
+.kpi-formula{background:var(--amber-bg);border:1px solid var(--amber-b);border-left:3px solid var(--amber);padding:12px 16px;font-family:var(--mono);font-size:11px;color:var(--amber);line-height:1.6;}
+.kpi-target{margin-top:14px;font-size:12px;color:var(--t3);line-height:1.6;}
+.kpi-target strong{color:var(--green);font-weight:700;}
+.kpi-note{margin-top:8px;font-size:11px;color:var(--t4);}
+
+/* ══ STATES ══ */
+.states-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.state-card{background:var(--surface);padding:24px;}
+.state-top{height:3px;margin:-24px -24px 20px;border-radius:0;}
+.state-ico{font-size:28px;margin-bottom:12px;}
+.state-name{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;font-weight:600;}
+.state-desc{font-size:12px;color:var(--t2);line-height:1.65;}
+
+/* ══ RATIONALE ══ */
+.rationale{background:var(--amber-bg);border:1px solid var(--amber-b);border-left:4px solid var(--amber);padding:26px 32px;border-radius:0 4px 4px 0;}
+.rat-label{font-family:var(--mono);font-size:9px;color:var(--amber);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;font-weight:600;}
+.rat-body{font-size:14px;color:var(--t2);line-height:1.8;}
+.rat-body strong{color:var(--t1);font-weight:600;}
+
+/* FOOTER */
+footer{background:var(--surface);border-top:1px solid var(--border);padding:22px 48px;display:flex;justify-content:space-between;align-items:center;}
+.ft{font-family:var(--mono);font-size:9px;color:var(--t4);letter-spacing:1px;}
+</style>
+</head>
+<body>
+<header>
+  <div><div class="logo">MFS · LOANFLOW OS</div><div class="logo-sub">TASK 01 · SYSTEMS LOGIC & JOURNEY MAP</div></div>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <nav class="nav-links">
+      <a class="nav-link active" href="task1-journey-map.html">01 Journey</a>
+      <a class="nav-link" href="task2-icon-spec.html">02 Icons</a>
+      <a class="nav-link" href="task3-mobile-officer.html">03 Mobile</a>
+      <a class="nav-link" href="task4-web-manager.html">04 Web</a>
+      <a class="nav-link" href="index.html">↩ Home</a>
+    </nav>
+    <div class="badge">TASK 1 OF 4</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="sec-label">Design Deliverable 01</div>
+  <div class="sec-title">End-to-End Journey Map &<br>Systems Logic</div>
+  <p class="sec-sub">Full swim-lane flow mapping the journey from Field Officer receiving a new application to Manager's final notification. Covers the happy path, offline scenarios, conflict resolution, partial data, and all edge cases. Designed to make system responsibilities explicit and prevent transparency gaps between personas.</p>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:#EFF6FF;border-color:#93C5FD;"></div>Field Officer action</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#F5F3FF;border-color:#C4B5FD;"></div>System action</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#F0FDF4;border-color:#A7F3D0;"></div>Manager action</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--orange-bg);border-color:var(--orange-b);"></div>Offline / Connectivity event</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--amber-bg);border-color:var(--amber-b);"></div>Decision point</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--green-bg);border-color:var(--green-b);"></div>Success / Completion</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--red-bg);border-color:var(--red-b);"></div>Rejection / Error</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--card2);border-color:var(--border);"></div>Not involved (muted)</div>
+  </div>
+
+  <!-- SWIM LANE -->
+  <div class="sec-label" style="margin-bottom:10px;">Full Swim-Lane Flow</div>
+  <div class="swim-outer">
+    <div class="swim-head">
+      <div class="sh-corner"></div>
+      <div class="sh-col"><div class="sh-num">PHASE 01</div><div class="sh-name">Discovery</div></div>
+      <div class="sh-col"><div class="sh-num">PHASE 02</div><div class="sh-name">Assessment</div></div>
+      <div class="sh-col"><div class="sh-num">PHASE 03</div><div class="sh-name">Recommendation</div></div>
+      <div class="sh-col"><div class="sh-num">PHASE 04</div><div class="sh-name">Sync & Submit</div></div>
+      <div class="sh-col"><div class="sh-num">PHASE 05</div><div class="sh-name">Manager Review</div></div>
+      <div class="sh-col"><div class="sh-num">PHASE 06</div><div class="sh-name">Final Decision</div></div>
+    </div>
+
+    <!-- FO ROW -->
+    <div class="swim-row">
+      <div class="lane-lbl fo">Field Officer</div>
+      <div class="swim-cell">
+        <div class="node"><div class="node-id">FO-01 · ONLINE</div><div class="node-title">Receives New Application</div><div class="node-desc">Push notification on device. Opens queued application. Data pre-fetched if connectivity was available when application arrived.</div></div>
+        <div class="node n-offline"><div class="node-id">FO-01b · OFFLINE</div><div class="node-title">Opens in Offline Mode</div><div class="node-desc">Last-synced data (&lt;24h) shown with "OFFLINE" badge. If &gt;24h old, stale data warning displayed prominently.</div></div>
+      </div>
+      <div class="swim-cell">
+        <div class="node"><div class="node-id">FO-02</div><div class="node-title">Reviews Customer Profile</div><div class="node-desc">Views: risk tier, application history, active loans, identity flags. AI-generated summary reduces raw data interpretation burden.</div></div>
+        <div class="node"><div class="node-id">FO-03</div><div class="node-title">Reviews Transaction Trends</div><div class="node-desc">3-month sparkline data. Partial data shown with warning banner. Simplified trend indicators — not raw number tables.</div></div>
+      </div>
+      <div class="swim-cell">
+        <div class="node n-decision"><div class="node-id">FO-04 · DECISION POINT</div><div class="node-title">Enters Recommendation</div><div class="node-desc">Selects RECOMMEND APPROVE or RECOMMEND REJECT. Mandatory reasoning note required (≥20 characters). Cannot submit without both.</div></div>
+        <div class="node"><div class="node-id">FO-05</div><div class="node-title">Submits Recommendation</div><div class="node-desc">App validates all required fields. Confirmation screen shown. Draft saved locally if connectivity drops mid-submission.</div></div>
+      </div>
+      <div class="swim-cell">
+        <div class="node n-offline"><div class="node-id">FO-06 · QUEUED</div><div class="node-title">Recommendation Queued for Sync</div><div class="node-desc">Stored in encrypted local queue. Exponential backoff retry (1→5→15 min). Officer sees "Pending Sync" status. Work is never lost.</div></div>
+        <div class="node n-success"><div class="node-id">FO-07 · CONFIRMED</div><div class="node-title">Sync Confirmed</div><div class="node-desc">Device receives server acknowledgment. Status updates to "Submitted." FO moves to next case in queue.</div></div>
+      </div>
+      <div class="swim-cell">
+        <div class="node n-muted"><div class="node-id">FO-08 · PASSIVE</div><div class="node-title">No Further Action Required</div><div class="node-desc">FO receives push notification when Manager makes a final decision. Read-only view available. No input needed.</div></div>
+      </div>
+      <div class="swim-cell">
+        <div class="node n-success"><div class="node-id">FO-09 · OUTCOME</div><div class="node-title">Outcome Notification</div><div class="node-desc">Sees final Approved / Rejected status. If Manager overrode FO recommendation, override note is displayed. Loop closes here.</div></div>
+      </div>
+    </div>
+
+    <!-- SYSTEM ROW -->
+    <div class="swim-row">
+      <div class="lane-lbl sys">System</div>
+      <div class="swim-cell">
+        <div class="node n-sys"><div class="node-id">SYS-01</div><div class="node-title">Pre-fetches Application Bundle</div><div class="node-desc">On connectivity detected: pushes encrypted data package to device. Includes: customer profile, eligibility score, 3-month transaction summary, risk tier.</div></div>
+      </div>
+      <div class="swim-cell">
+        <div class="node n-sys"><div class="node-id">SYS-02</div><div class="node-title">Computes Risk Score & AI Summary</div><div class="node-desc">Auto-generates: risk tier, eligible amount, trend flags, anomaly detection (e.g. sudden cash-in spike, irregular P2P). Reduces FO interpretation burden significantly.</div></div>
+      </div>
+      <div class="swim-cell">
+        <div class="node n-sys"><div class="node-id">SYS-03</div><div class="node-title">Validates Recommendation Fields</div><div class="node-desc">Checks completeness: decision made, note ≥20 chars, no contradictory fields. Blocks empty or incomplete submissions at the client level.</div></div>
+      </div>
+      <div class="swim-cell">
+        <div class="node n-sys"><div class="node-id">SYS-04 · CONFLICT CHECK</div><div class="node-title">Offline Conflict Resolution</div><div class="node-desc">On sync: compares offline draft timestamp vs. server data version hash. If server has newer customer data → "DATA CONFLICT" flag added to bundle.</div></div>
+      </div>
+      <div class="swim-cell">
+        <div class="node n-sys"><div class="node-id">SYS-05</div><div class="node-title">Routes to Manager Queue</div><div class="node-desc">Priority order: High-risk first → loan amount descending → conflict flag present. Enriched bundle (with FO note, conflict diff) delivered to Manager portal.</div></div>
+      </div>
+      <div class="swim-cell">
+        <div class="node n-sys"><div class="node-id">SYS-06</div><div class="node-title">Records Decision & Notifies</div><div class="node-desc">Writes immutable audit log entry. Triggers push notification to FO device. Updates customer status. Flags disbursement pipeline if Approved.</div></div>
+      </div>
+    </div>
+
+    <!-- MANAGER ROW -->
+    <div class="swim-row">
+      <div class="lane-lbl mgr">Manager</div>
+      <div class="swim-cell"><div class="node n-muted"><div class="node-id">MGR-01</div><div class="node-title">Not yet involved</div><div class="node-desc">Intentional separation of concerns. Manager has zero visibility into pre-submission stages.</div></div></div>
+      <div class="swim-cell"><div class="node n-muted"><div class="node-id">MGR-02</div><div class="node-title">Not yet involved</div><div class="node-desc">—</div></div></div>
+      <div class="swim-cell"><div class="node n-muted"><div class="node-id">MGR-03</div><div class="node-title">Not yet involved</div><div class="node-desc">—</div></div></div>
+      <div class="swim-cell"><div class="node n-muted"><div class="node-id">MGR-04</div><div class="node-title">Awaiting sync confirmation</div><div class="node-desc">—</div></div></div>
+      <div class="swim-cell">
+        <div class="node"><div class="node-id">MGR-05</div><div class="node-title">Reviews Application Bundle</div><div class="node-desc">Sees structured summary: risk tier, FO recommendation & note, conflict diff panel, partial data flag. Can drill down into raw data if needed.</div></div>
+        <div class="node n-decision"><div class="node-id">MGR-06 · DECISION POINT</div><div class="node-title">Batch or Individual Review</div><div class="node-desc">Batch approve available for Low-risk + FO-Approved cases (no flags). Individual review required for High-risk, conflicts, or partial data cases.</div></div>
+      </div>
+      <div class="swim-cell">
+        <div class="node n-success"><div class="node-id">MGR-07a · APPROVE</div><div class="node-title">Approves Loan</div><div class="node-desc">Can override FO recommendation with mandatory override note. Final status: APPROVED. Disbursement initiated by SYS-06.</div></div>
+        <div class="node n-danger"><div class="node-id">MGR-07b · REJECT</div><div class="node-title">Rejects Loan</div><div class="node-desc">Mandatory rejection reason required. Customer notified via SMS. Case archived. Rejection reason shown to FO on their device.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- EDGE CASES -->
+  <div class="sec-label" style="margin-bottom:6px;">Edge Case Handling</div>
+  <div class="sec-title" style="font-size:22px;margin-bottom:8px;">3 Critical Edge Cases — Explicitly Mapped</div>
+  <p class="sec-sub" style="margin-bottom:28px;">Each edge case has a defined trigger condition, visual treatment, resolution path, and a clear owner. No silent failures.</p>
+
+  <div class="edge-grid" style="margin-bottom:56px;">
+    <div class="edge-card" style="border-top:4px solid var(--orange);">
+      <div class="edge-hd">
+        <div class="edge-ico">📶</div>
+        <div><div class="edge-tag" style="color:var(--orange);">Edge Case 01 · High Priority</div><div class="edge-title">Offline Data Conflict</div></div>
+      </div>
+      <div class="edge-body">FO completes a review offline. By the time they sync, the customer's transaction data has been updated server-side — e.g., a large cash-in transaction occurred after the FO's review.</div>
+      <div class="steps">
+        <div class="step"><div class="step-n">01</div><div>System compares offline draft timestamp vs. server data version hash at sync time.</div></div>
+        <div class="step"><div class="step-n">02</div><div>If server data is newer: "DATA CONFLICT" flag is added to the application bundle in Manager's queue.</div></div>
+        <div class="step"><div class="step-n">03</div><div>FO's recommendation is preserved but flagged. Manager receives a visual warning that FO reviewed stale data.</div></div>
+        <div class="step"><div class="step-n">04</div><div>Manager sees a side-by-side panel: data at time of FO review vs. current server data. Must acknowledge before deciding.</div></div>
+        <div class="step"><div class="step-n">05</div><div>Manager can proceed with conflict acknowledged or (rare path) request FO re-review before deciding.</div></div>
+      </div>
+    </div>
+    <div class="edge-card" style="border-top:4px solid var(--red);">
+      <div class="edge-hd">
+        <div class="edge-ico">⚠️</div>
+        <div><div class="edge-tag" style="color:var(--red);">Edge Case 02 · Medium Priority</div><div class="edge-title">Sync Failure / Data Loss Risk</div></div>
+      </div>
+      <div class="edge-body">Sync fails repeatedly — network drops, server timeout, or device goes back offline. FO recommendation is stuck in local queue and may never reach the Manager queue.</div>
+      <div class="steps">
+        <div class="step"><div class="step-n">01</div><div>Recommendation stored in encrypted local queue with exponential backoff retry: 1 min → 5 min → 15 min.</div></div>
+        <div class="step"><div class="step-n">02</div><div>After 3 failed attempts: FO sees "Sync Failed" error state with specific error code, cause, and manual retry button.</div></div>
+        <div class="step"><div class="step-n">03</div><div>After 6 hours without successful sync: System proactively alerts Manager that a pending recommendation may be delayed.</div></div>
+        <div class="step"><div class="step-n">04</div><div>FO data is never deleted from device until confirmed server receipt. Max local storage: 30 applications.</div></div>
+        <div class="step"><div class="step-n">05</div><div>On sync restore: queued items upload in sequence with server-side de-duplication check to prevent double submissions.</div></div>
+      </div>
+    </div>
+    <div class="edge-card" style="border-top:4px solid var(--blue);">
+      <div class="edge-hd">
+        <div class="edge-ico">📊</div>
+        <div><div class="edge-tag" style="color:var(--blue);">Edge Case 03 · Low Priority</div><div class="edge-title">Partial Transaction Data (&lt;3 months)</div></div>
+      </div>
+      <div class="edge-body">New customer or a data gap in the MFS ledger means only 1–2 months of transaction history is available instead of the standard 3-month window used for risk scoring.</div>
+      <div class="steps">
+        <div class="step"><div class="step-n">01</div><div>System detects data completeness at fetch time. Flags the application: "1 of 3 months available."</div></div>
+        <div class="step"><div class="step-n">02</div><div>Transaction chart rendered with explicit grey/hatched fill for missing months. No extrapolation or estimated fills.</div></div>
+        <div class="step"><div class="step-n">03</div><div>Risk score shown with a lower confidence qualifier: "Based on limited data (1 month)." Eligibility uses conservative estimate.</div></div>
+        <div class="step"><div class="step-n">04</div><div>FO note field shows optional prompt: "Limited history available — please add additional context from your field visit."</div></div>
+        <div class="step"><div class="step-n">05</div><div>Manager sees "PARTIAL DATA" badge. Auto-batch-approve eligibility is restricted — partial-data cases must be reviewed individually.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI -->
+  <div class="sec-label" style="margin-bottom:6px;">KPI Design</div>
+  <div class="sec-title" style="font-size:22px;margin-bottom:8px;">One Primary KPI Per Persona</div>
+  <p class="sec-sub" style="margin-bottom:28px;">KPIs were selected to directly address the stated pain points, not vanity metrics. Each has a formula, baseline, and design lever.</p>
+
+  <div class="kpi-grid" style="margin-bottom:56px;">
+    <div class="kpi-card">
+      <div class="kpi-persona" style="color:var(--blue);">▣ Field Officer · Primary KPI</div>
+      <div class="kpi-name">Recommendation Alignment Rate (RAR)</div>
+      <div class="kpi-def">The percentage of Field Officer recommendations that match the Manager's final decision (approve-match + reject-match). A high RAR means the FO is correctly reading risk signals and submitting quality recommendations — directly addressing the "Decision Noise" pain point where inconsistent recommendations lead to high rejection rates at the Manager level.</div>
+      <div class="kpi-formula">RAR = (Matched Decisions ÷ Total Submitted Recommendations) × 100</div>
+      <div class="kpi-target">Target: <strong>≥ 78%</strong> within 90 days of system launch.</div>
+      <div class="kpi-target">Estimated baseline: ~51% (inferred from current high Manager rejection rate).</div>
+      <div class="kpi-note" style="margin-top:10px;">Design lever: Pre-computed AI summaries + simplified trend indicators replace raw 3-month data interpretation. Mandatory field notes force FOs to articulate their reasoning, which self-corrects decisions before submission.</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-persona" style="color:var(--green);">▣ Manager · Primary KPI</div>
+      <div class="kpi-name">Decision Throughput Rate (DTR)</div>
+      <div class="kpi-def">The number of final decisions (approve + reject) processed per manager per day, without increasing the override rate beyond threshold. A Manager approving 200 applications/day with a 40% FO override rate is not performing well — they're compensating for poor FO recommendations rather than genuinely processing faster. DTR adjusts for quality.</div>
+      <div class="kpi-formula">DTR = Total Decisions Per Day ÷ Active Manager Count (adjusted: FO override rate ≤ 15%)</div>
+      <div class="kpi-target">Target: <strong>+35% increase</strong> in decisions/day vs. current baseline.</div>
+      <div class="kpi-target">Estimated baseline: ~80–100 decisions/manager/day under current fragmented process.</div>
+      <div class="kpi-note" style="margin-top:10px;">Design lever: Batch processing for Low-risk + FO-Approved cases. Risk-tier sorting in queue (most urgent first). Structured FO rationale reduces Manager's need to dig into every sub-menu.</div>
+    </div>
+  </div>
+
+  <!-- UI STATES -->
+  <div class="sec-label" style="margin-bottom:6px;">UI State Definitions</div>
+  <div class="sec-title" style="font-size:22px;margin-bottom:8px;">Required System States</div>
+  <p class="sec-sub" style="margin-bottom:28px;">Each state has a defined trigger, visual treatment, and recovery path. No state is a dead end.</p>
+
+  <div class="states-grid" style="margin-bottom:56px;">
+    <div class="state-card">
+      <div class="state-top" style="background:var(--blue);"></div>
+      <div class="state-ico">⬜</div>
+      <div class="state-name" style="color:var(--blue);">Loading / Skeleton</div>
+      <div class="state-desc">Triggered on data fetch. Skeleton screens (not spinners) maintain layout continuity so FOs and Managers aren't disoriented. Content loads progressively: profile first → transactions → risk score. Shimmer animation signals activity without blocking the UI.</div>
+    </div>
+    <div class="state-card">
+      <div class="state-top" style="background:var(--t4);"></div>
+      <div class="state-ico">◻</div>
+      <div class="state-name" style="color:var(--t3);">Empty State</div>
+      <div class="state-desc">Triggered when all applications in queue are processed or on first login. Never shows a blank screen. FO empty state: "All caught up!" — Manager empty state: "Queue cleared — great work." Both include a next-action prompt and a refresh hint to check for new submissions.</div>
+    </div>
+    <div class="state-card">
+      <div class="state-top" style="background:var(--red);"></div>
+      <div class="state-ico">✕</div>
+      <div class="state-name" style="color:var(--red);">Error / Sync Failed</div>
+      <div class="state-desc">Triggered on network failure, server timeout, or data corruption. Shows specific error code + human-readable cause. Provides: manual retry, contact support, and "data is safe" confirmation. Error persists until explicitly dismissed or resolved — never auto-dismissed. FO work is never lost.</div>
+    </div>
+    <div class="state-card">
+      <div class="state-top" style="background:var(--orange);"></div>
+      <div class="state-ico">◑</div>
+      <div class="state-name" style="color:var(--orange);">Partial Data</div>
+      <div class="state-desc">Only 1–2 months of transaction data available. Persistent amber banner above data section. Missing months displayed as grey/hatched fills in charts — no extrapolation. Risk score shown with confidence interval qualifier. Both FO and Manager see the identical flag. Never silently treated as complete.</div>
+    </div>
+  </div>
+
+  <!-- RATIONALE -->
+  <div class="sec-label" style="margin-bottom:10px;">Design Rationale</div>
+  <div class="rationale">
+    <div class="rat-label">Journey Architecture Rationale</div>
+    <div class="rat-body">
+      The journey was structured around a <strong>data fidelity principle</strong>: the system must never silently fail or make assumptions. Every edge case (offline conflict, sync failure, partial data) has an explicit visual flag, a defined resolution path, and a clear owner. This prevents the transparency gap where Managers make uninformed decisions because FO context was lost in transit.<br><br>
+      The <strong>offline-first architecture</strong> was chosen because field connectivity cannot be guaranteed. Rather than blocking FOs when offline, the system accepts the trade-off of potential data staleness and surfaces it explicitly to the Manager — who is the final decision-maker and can absorb that complexity. This preserves FO productivity without sacrificing Manager confidence.<br><br>
+      The <strong>swim-lane format</strong> was chosen to explicitly separate system responsibilities. A common failure in multi-actor design is ambiguity about who owns which step. The Manager being "absent" from Phases 01–04 is intentional design communication — it tells engineers and stakeholders that FO autonomy in the recommendation phase is a feature, not a gap in the workflow.<br><br>
+      The <strong>KPIs were selected as lagging indicators</strong> of the UX interventions, not leading ones. RAR (Recommendation Alignment Rate) will only improve if FOs are making better-informed decisions — which is the direct outcome of the AI summary, progressive disclosure flow, and mandatory note mechanism. DTR (Decision Throughput Rate) will only improve if Managers can trust FO recommendations enough to batch-approve — which requires RAR to improve first. The two KPIs are causally linked.
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="ft">MFS LOANFLOW OS · TASK 1: JOURNEY MAP & SYSTEMS LOGIC</div>
+  <div class="ft"><a href="index.html">↩ Back to Index</a> &nbsp;·&nbsp; <a href="task2-icon-spec.html">Task 2: Icons →</a></div>
+</footer>
+</body>
+</html>
