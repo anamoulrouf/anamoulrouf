@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MFS Loan Decisioning — Icon Asset Spec</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F8FAFC;
+    --surface: #FFFFFF;
+    --card: #F1F5F9;
+    --border: #E2E8F0;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-tertiary: #94A3B8;
+    --blue: #2563EB;
+    --blue-light: #DBEAFE;
+    --amber: #D97706;
+    --amber-light: #FEF3C7;
+    --green: #059669;
+    --green-light: #D1FAE5;
+    --red: #DC2626;
+    --red-light: #FEE2E2;
+    --orange: #F97316;
+    --orange-light: #FFEDD5;
+    --mono: 'Space Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    font-family: var(--sans);
+    color: var(--text-primary);
+    min-height: 100vh;
+  }
+
+  .header {
+    background: var(--text-primary);
+    color: white;
+    padding: 24px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--amber);
+  }
+  .header-badge {
+    background: var(--amber);
+    color: var(--text-primary);
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 4px 10px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-right: 16px;
+  }
+  .header h1 {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: inline;
+  }
+  .header-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-tertiary);
+    text-align: right;
+  }
+
+  .container { padding: 40px 48px; max-width: 1400px; margin: 0 auto; }
+
+  .section-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Icon spec grid */
+  .icon-spec-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+
+  .icon-spec-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .icon-showcase {
+    padding: 40px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    background: #FAFAFA;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  /* Grid overlay */
+  .icon-showcase::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(148,163,184,0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148,163,184,0.15) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+  }
+
+  .icon-sizes {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .icon-size-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .icon-size-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    color: var(--text-tertiary);
+    font-weight: 700;
+  }
+
+  .icon-card-body {
+    padding: 16px 20px;
+  }
+
+  .icon-name {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .icon-metaphor {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+  }
+
+  .icon-spec-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+    margin-top: 6px;
+  }
+
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+  }
+  .spec-key { color: var(--text-tertiary); font-family: var(--mono); }
+  .spec-val { color: var(--text-primary); font-weight: 500; }
+
+  .accessibility-note {
+    background: var(--blue-light);
+    border: 1px solid var(--blue);
+    padding: 12px;
+    margin-top: 12px;
+    font-size: 10px;
+    color: var(--blue);
+    line-height: 1.5;
+    font-weight: 500;
+  }
+  .accessibility-note strong {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
+  /* Color-blind test section */
+  .cb-test-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+    margin-bottom: 40px;
+  }
+
+  .cb-test-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 20px;
+  }
+
+  .cb-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .cb-card {
+    padding: 16px;
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .cb-card-title {
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 12px;
+  }
+
+  .cb-icons-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .usage-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+    margin-bottom: 40px;
+  }
+
+  .usage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 16px;
+  }
+
+  .usage-context {
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .usage-context-header {
+    background: var(--card);
+    padding: 10px 16px;
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .usage-context-body {
+    padding: 16px;
+  }
+
+  .usage-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .usage-row:last-child { border-bottom: none; }
+
+  .usage-label { font-weight: 500; flex: 1; }
+  .usage-desc { font-size: 10px; color: var(--text-secondary); flex: 2; }
+
+  /* Tag component demo */
+  .tag-demo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 2px;
+  }
+
+  .footer {
+    background: var(--text-primary);
+    color: var(--text-secondary);
+    padding: 20px 48px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <span class="header-badge">TASK 02</span>
+    <h1>Icon Asset Spec — MFS Loan Decisioning</h1>
+  </div>
+  <div class="header-meta">
+    24PX BASE GRID · 5 CUSTOM ICONS<br>
+    WCAG AA COMPLIANT · SHAPE-FIRST DESIGN
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section-title">§ 01 — DESIGN RATIONALE</div>
+  <div style="background:var(--surface); border:1px solid var(--border); padding:20px 24px; margin-bottom:32px; border-left:3px solid var(--amber);">
+    <div style="font-size:13px; font-weight:500; margin-bottom:8px;">Shape-First Accessibility Principle</div>
+    <div style="font-size:12px; color:var(--text-secondary); line-height:1.7; max-width:900px;">
+      All Risk Tier icons are designed to be <strong>distinguishable by shape and metaphor alone</strong> — not relying on color as the primary differentiator. 
+      This ensures full accessibility for users with deuteranopia, protanopia, and other color vision deficiencies. 
+      Color is used as a <em>secondary reinforcement layer</em>, not the sole encoding method. 
+      Each icon uses a distinct geometric metaphor: a <strong>shield</strong> for Low Risk (protection), a <strong>warning triangle</strong> for Medium Risk (caution), and a <strong>flame</strong> shape for High Risk (danger). 
+      Sync states use universally understood iconography — a cloud with arrow for save, and rotating arrows for progress.
+    </div>
+  </div>
+
+  <!-- Main Icons -->
+  <div class="section-title">§ 02 — ICON SPECIFICATIONS</div>
+  <div class="icon-spec-grid">
+
+    <!-- High Risk Icon -->
+    <div class="icon-spec-card">
+      <div class="icon-showcase">
+        <div class="icon-sizes">
+          <div class="icon-size-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3C12 3 8 7 8 11C8 11 6 10 6 8C6 8 3 10 3 14C3 17.3 6.1 20 10 20.9V22H14V20.9C17.9 20 21 17.3 21 14C21 10 18 8 18 8C18 10 16 11 16 11C16 7 12 3 12 3Z" fill="#DC2626" stroke="#DC2626" stroke-width="0.5"/>
+              <path d="M12 13C12 13 10 14.5 10 16C10 17.1 10.9 18 12 18C13.1 18 14 17.1 14 16C14 14.5 12 13 12 13Z" fill="white" opacity="0.7"/>
+            </svg>
+            <span class="icon-size-label">16px</span>
+          </div>
+          <div class="icon-size-item">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3C12 3 8 7 8 11C8 11 6 10 6 8C6 8 3 10 3 14C3 17.3 6.1 20 10 20.9V22H14V20.9C17.9 20 21 17.3 21 14C21 10 18 8 18 8C18 10 16 11 16 11C16 7 12 3 12 3Z" fill="#DC2626" stroke="#DC2626" stroke-width="0.5"/>
+              <path d="M12 13C12 13 10 14.5 10 16C10 17.1 10.9 18 12 18C13.1 18 14 17.1 14 16C14 14.5 12 13 12 13Z" fill="white" opacity="0.8"/>
+            </svg>
+            <span class="icon-size-label">24px</span>
+          </div>
+          <div class="icon-size-item">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3C12 3 8 7 8 11C8 11 6 10 6 8C6 8 3 10 3 14C3 17.3 6.1 20 10 20.9V22H14V20.9C17.9 20 21 17.3 21 14C21 10 18 8 18 8C18 10 16 11 16 11C16 7 12 3 12 3Z" fill="#DC2626" stroke="#DC2626" stroke-width="0.5"/>
+              <path d="M12 13C12 13 10 14.5 10 16C10 17.1 10.9 18 12 18C13.1 18 14 17.1 14 16C14 14.5 12 13 12 13Z" fill="white" opacity="0.8"/>
+            </svg>
+            <span class="icon-size-label">32px</span>
+          </div>
+        </div>
+      </div>
+      <div class="icon-card-body">
+        <div class="icon-name">HIGH RISK</div>
+        <div class="icon-metaphor">Metaphor: Flame / Fire</div>
+        <div class="accessibility-note">
+          <strong>♿ Shape rationale</strong>
+          Organic flame shape is universally associated with danger. Inner "core" teardrop reinforces intensity without color dependency.
+        </div>
+        <div class="icon-spec-list">
+          <div class="spec-row"><span class="spec-key">Grid</span><span class="spec-val">24×24px</span></div>
+          <div class="spec-row"><span class="spec-key">Stroke</span><span class="spec-val">0.5pt fill-dominant</span></div>
+          <div class="spec-row"><span class="spec-key">Fill</span><span class="spec-val">#DC2626 primary</span></div>
+          <div class="spec-row"><span class="spec-key">Shape tag</span><span class="spec-val">Flame silhouette</span></div>
+          <div class="spec-row"><span class="spec-key">Usage</span><span class="spec-val">Risk tier badge, list rows</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Medium Risk Icon -->
+    <div class="icon-spec-card">
+      <div class="icon-showcase">
+        <div class="icon-sizes">
+          <div class="icon-size-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L2 20H22L12 2Z" fill="#D97706" stroke="none"/>
+              <rect x="11" y="9" width="2" height="6" rx="1" fill="white"/>
+              <rect x="11" y="16.5" width="2" height="2" rx="1" fill="white"/>
+            </svg>
+            <span class="icon-size-label">16px</span>
+          </div>
+          <div class="icon-size-item">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L2 20H22L12 2Z" fill="#D97706" stroke="none"/>
+              <rect x="11" y="9" width="2" height="6" rx="1" fill="white"/>
+              <rect x="11" y="16.5" width="2" height="2" rx="1" fill="white"/>
+            </svg>
+            <span class="icon-size-label">24px</span>
+          </div>
+          <div class="icon-size-item">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L2 20H22L12 2Z" fill="#D97706" stroke="none"/>
+              <rect x="11" y="9" width="2" height="6" rx="1" fill="white"/>
+              <rect x="11" y="16.5" width="2" height="2" rx="1" fill="white"/>
+            </svg>
+            <span class="icon-size-label">32px</span>
+          </div>
+        </div>
+      </div>
+      <div class="icon-card-body">
+        <div class="icon-name">MEDIUM RISK</div>
+        <div class="icon-metaphor">Metaphor: Warning Triangle</div>
+        <div class="accessibility-note">
+          <strong>♿ Shape rationale</strong>
+          Caution triangle is globally standardized (ISO 3864). The exclamation mark interior provides dual encoding — shape + symbol.
+        </div>
+        <div class="icon-spec-list">
+          <div class="spec-row"><span class="spec-key">Grid</span><span class="spec-val">24×24px</span></div>
+          <div class="spec-row"><span class="spec-key">Stroke</span><span class="spec-val">Fill-dominant</span></div>
+          <div class="spec-row"><span class="spec-key">Fill</span><span class="spec-val">#D97706 primary</span></div>
+          <div class="spec-row"><span class="spec-key">Shape tag</span><span class="spec-val">Equilateral triangle</span></div>
+          <div class="spec-row"><span class="spec-key">Usage</span><span class="spec-val">Risk tier badge, list rows</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Low Risk Icon -->
+    <div class="icon-spec-card">
+      <div class="icon-showcase">
+        <div class="icon-sizes">
+          <div class="icon-size-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L3 6V12C3 16.5 7 20.7 12 22C17 20.7 21 16.5 21 12V6L12 2Z" fill="#059669"/>
+              <path d="M8 12L11 15L16 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="icon-size-label">16px</span>
+          </div>
+          <div class="icon-size-item">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L3 6V12C3 16.5 7 20.7 12 22C17 20.7 21 16.5 21 12V6L12 2Z" fill="#059669"/>
+              <path d="M8 12L11 15L16 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="icon-size-label">24px</span>
+          </div>
+          <div class="icon-size-item">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L3 6V12C3 16.5 7 20.7 12 22C17 20.7 21 16.5 21 12V6L12 2Z" fill="#059669"/>
+              <path d="M8 12L11 15L16 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="icon-size-label">32px</span>
+          </div>
+        </div>
+      </div>
+      <div class="icon-card-body">
+        <div class="icon-name">LOW RISK</div>
+        <div class="icon-metaphor">Metaphor: Shield / Protection</div>
+        <div class="accessibility-note">
+          <strong>♿ Shape rationale</strong>
+          Shield silhouette implies safety and protection. Checkmark interior reinforces "verified safe" — readable at 16px minimum.
+        </div>
+        <div class="icon-spec-list">
+          <div class="spec-row"><span class="spec-key">Grid</span><span class="spec-val">24×24px</span></div>
+          <div class="spec-row"><span class="spec-key">Stroke</span><span class="spec-val">2pt interior mark</span></div>
+          <div class="spec-row"><span class="spec-key">Fill</span><span class="spec-val">#059669 primary</span></div>
+          <div class="spec-row"><span class="spec-key">Shape tag</span><span class="spec-val">Pentagon shield</span></div>
+          <div class="spec-row"><span class="spec-key">Usage</span><span class="spec-val">Risk tier badge, list rows</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Saved Offline Icon -->
+    <div class="icon-spec-card">
+      <div class="icon-showcase">
+        <div class="icon-sizes">
+          <div class="icon-size-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 10H16.74C16.37 7.73 14.41 6 12 6C10.37 6 8.93 6.8 8.05 8.05C5.77 8.32 4 10.26 4 12.5C4 14.99 6.01 17 8.5 17H18C19.66 17 21 15.66 21 14C21 12.34 19.66 11 18 11L18 10Z" fill="#475569"/>
+              <path d="M12 19V12M9 16L12 19L15 16" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="8" y="19" width="8" height="2" rx="1" fill="#2563EB"/>
+            </svg>
+            <span class="icon-size-label">16px</span>
+          </div>
+          <div class="icon-size-item">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 10H16.74C16.37 7.73 14.41 6 12 6C10.37 6 8.93 6.8 8.05 8.05C5.77 8.32 4 10.26 4 12.5C4 14.99 6.01 17 8.5 17H18C19.66 17 21 15.66 21 14C21 12.34 19.66 11 18 11L18 10Z" fill="#475569"/>
+              <path d="M12 21V14M9 18L12 21L15 18" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="icon-size-label">24px</span>
+          </div>
+          <div class="icon-size-item">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 10H16.74C16.37 7.73 14.41 6 12 6C10.37 6 8.93 6.8 8.05 8.05C5.77 8.32 4 10.26 4 12.5C4 14.99 6.01 17 8.5 17H18C19.66 17 21 15.66 21 14C21 12.34 19.66 11 18 11L18 10Z" fill="#475569"/>
+              <path d="M12 21V14M9 18L12 21L15 18" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="icon-size-label">32px</span>
+          </div>
+        </div>
+      </div>
+      <div class="icon-card-body">
+        <div class="icon-name">SAVED OFFLINE</div>
+        <div class="icon-metaphor">Metaphor: Cloud with Arrow Down</div>
+        <div class="accessibility-note">
+          <strong>♿ Accessibility note</strong>
+          Cloud shape + downward arrow conveys "downloaded/saved locally." Neutral gray cloud signals offline state; blue arrow indicates active local save.
+        </div>
+        <div class="icon-spec-list">
+          <div class="spec-row"><span class="spec-key">Grid</span><span class="spec-val">24×24px</span></div>
+          <div class="spec-row"><span class="spec-key">Stroke</span><span class="spec-val">2pt arrow</span></div>
+          <div class="spec-row"><span class="spec-key">Fill</span><span class="spec-val">#475569 cloud, #2563EB arrow</span></div>
+          <div class="spec-row"><span class="spec-key">Shape tag</span><span class="spec-val">Cloud + downward arrow</span></div>
+          <div class="spec-row"><span class="spec-key">Usage</span><span class="spec-val">Offline status bar, app header</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sync in Progress Icon -->
+    <div class="icon-spec-card">
+      <div class="icon-showcase">
+        <div class="icon-sizes">
+          <div class="icon-size-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="animation:spin 1.5s linear infinite;">
+              <path d="M4 12C4 7.58 7.58 4 12 4C14.35 4 16.5 4.96 18.07 6.5L16 8.5H22V2.5L19.9 4.6C17.89 2.62 15.09 1.5 12 1.5C5.93 1.5 1 6.43 1 12.5H4V12Z" fill="#2563EB"/>
+              <path d="M20 12C20 16.42 16.42 20 12 20C9.65 20 7.5 19.04 5.93 17.5L8 15.5H2V21.5L4.1 19.4C6.11 21.38 8.91 22.5 12 22.5C18.07 22.5 23 17.57 23 11.5H20V12Z" fill="#2563EB" opacity="0.4"/>
+            </svg>
+            <span class="icon-size-label">16px</span>
+          </div>
+          <div class="icon-size-item">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="animation:spin 1.5s linear infinite;">
+              <path d="M4 12C4 7.58 7.58 4 12 4C14.35 4 16.5 4.96 18.07 6.5L16 8.5H22V2.5L19.9 4.6C17.89 2.62 15.09 1.5 12 1.5C5.93 1.5 1 6.43 1 12.5H4V12Z" fill="#2563EB"/>
+              <path d="M20 12C20 16.42 16.42 20 12 20C9.65 20 7.5 19.04 5.93 17.5L8 15.5H2V21.5L4.1 19.4C6.11 21.38 8.91 22.5 12 22.5C18.07 22.5 23 17.57 23 11.5H20V12Z" fill="#2563EB" opacity="0.4"/>
+            </svg>
+            <span class="icon-size-label">24px</span>
+          </div>
+          <div class="icon-size-item">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="animation:spin 1.5s linear infinite;">
+              <path d="M4 12C4 7.58 7.58 4 12 4C14.35 4 16.5 4.96 18.07 6.5L16 8.5H22V2.5L19.9 4.6C17.89 2.62 15.09 1.5 12 1.5C5.93 1.5 1 6.43 1 12.5H4V12Z" fill="#2563EB"/>
+              <path d="M20 12C20 16.42 16.42 20 12 20C9.65 20 7.5 19.04 5.93 17.5L8 15.5H2V21.5L4.1 19.4C6.11 21.38 8.91 22.5 12 22.5C18.07 22.5 23 17.57 23 11.5H20V12Z" fill="#2563EB" opacity="0.4"/>
+            </svg>
+            <span class="icon-size-label">32px</span>
+          </div>
+        </div>
+      </div>
+      <div class="icon-card-body">
+        <div class="icon-name">SYNC IN PROGRESS</div>
+        <div class="icon-metaphor">Metaphor: Circular Arrows</div>
+        <div class="accessibility-note">
+          <strong>♿ Accessibility note</strong>
+          Rotating circular arrows universally signify "refresh/sync in progress." Opacity fade on second arrow creates visual directionality. Animated in context.
+        </div>
+        <div class="icon-spec-list">
+          <div class="spec-row"><span class="spec-key">Grid</span><span class="spec-val">24×24px</span></div>
+          <div class="spec-row"><span class="spec-key">Stroke</span><span class="spec-val">Fill-dominant paths</span></div>
+          <div class="spec-row"><span class="spec-key">Fill</span><span class="spec-val">#2563EB + 40% opacity</span></div>
+          <div class="spec-row"><span class="spec-key">Animation</span><span class="spec-val">360° rotation 1.5s linear</span></div>
+          <div class="spec-row"><span class="spec-key">Usage</span><span class="spec-val">Sync status bar, notifications</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Color-Blind Test -->
+  <div class="section-title">§ 03 — ACCESSIBILITY SIMULATION</div>
+  <div class="cb-test-section">
+    <div class="cb-test-title">Color Vision Deficiency Test — Risk Icons must be distinguishable in ALL simulated conditions</div>
+    <div class="cb-grid">
+      <div class="cb-card">
+        <div class="cb-card-title">Normal Vision</div>
+        <div class="cb-icons-row">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 6V12C3 16.5 7 20.7 12 22C17 20.7 21 16.5 21 12V6L12 2Z" fill="#059669"/><path d="M8 12L11 15L16 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span style="font-size:9px;font-family:var(--mono);color:var(--text-tertiary);">LOW</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 20H22L12 2Z" fill="#D97706"/><rect x="11" y="9" width="2" height="6" rx="1" fill="white"/><rect x="11" y="16.5" width="2" height="2" rx="1" fill="white"/></svg>
+            <span style="font-size:9px;font-family:var(--mono);color:var(--text-tertiary);">MED</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 3C12 3 8 7 8 11C8 11 6 10 6 8C6 8 3 10 3 14C3 17.3 6.1 20 10 20.9V22H14V20.9C17.9 20 21 17.3 21 14C21 10 18 8 18 8C18 10 16 11 16 11C16 7 12 3 12 3Z" fill="#DC2626"/><path d="M12 13C12 13 10 14.5 10 16C10 17.1 10.9 18 12 18C13.1 18 14 17.1 14 16C14 14.5 12 13 12 13Z" fill="white" opacity="0.8"/></svg>
+            <span style="font-size:9px;font-family:var(--mono);color:var(--text-tertiary);">HIGH</span>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:9px;color:var(--green);font-weight:600;">✓ Distinct shapes + colors</div>
+      </div>
+
+      <div class="cb-card" style="filter:saturate(0.1) hue-rotate(180deg);">
+        <div class="cb-card-title" style="filter:none;color:var(--text-secondary);">Deuteranopia Simulation</div>
+        <div class="cb-icons-row">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 6V12C3 16.5 7 20.7 12 22C17 20.7 21 16.5 21 12V6L12 2Z" fill="#059669"/><path d="M8 12L11 15L16 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span style="font-size:9px;font-family:var(--mono);color:var(--text-tertiary);">LOW</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 20H22L12 2Z" fill="#D97706"/><rect x="11" y="9" width="2" height="6" rx="1" fill="white"/><rect x="11" y="16.5" width="2" height="2" rx="1" fill="white"/></svg>
+            <span style="font-size:9px;font-family:var(--mono);color:var(--text-tertiary);">MED</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 3C12 3 8 7 8 11C8 11 6 10 6 8C6 8 3 10 3 14C3 17.3 6.1 20 10 20.9V22H14V20.9C17.9 20 21 17.3 21 14C21 10 18 8 18 8C18 10 16 11 16 11C16 7 12 3 12 3Z" fill="#DC2626"/><path d="M12 13C12 13 10 14.5 10 16C10 17.1 10.9 18 12 18C13.1 18 14 17.1 14 16C14 14.5 12 13 12 13Z" fill="white" opacity="0.8"/></svg>
+            <span style="font-size:9px;font-family:var(--mono);color:var(--text-tertiary);">HIGH</span>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:9px;color:var(--green);font-weight:600;filter:none;">✓ Shapes still distinct</div>
+      </div>
+
+      <div class="cb-card" style="filter:grayscale(1);">
+        <div class="cb-card-title" style="filter:none;color:var(--text-secondary);">Grayscale / Monochrome</div>
+        <div class="cb-icons-row">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 6V12C3 16.5 7 20.7 12 22C17 20.7 21 16.5 21 12V6L12 2Z" fill="#059669"/><path d="M8 12L11 15L16 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span style="font-size:9px;font-family:var(--mono);color:var(--text-tertiary);">LOW</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 20H22L12 2Z" fill="#D97706"/><rect x="11" y="9" width="2" height="6" rx="1" fill="white"/><rect x="11" y="16.5" width="2" height="2" rx="1" fill="white"/></svg>
+            <span style="font-size:9px;font-family:var(--mono);color:var(--text-tertiary);">MED</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 3C12 3 8 7 8 11C8 11 6 10 6 8C6 8 3 10 3 14C3 17.3 6.1 20 10 20.9V22H14V20.9C17.9 20 21 17.3 21 14C21 10 18 8 18 8C18 10 16 11 16 11C16 7 12 3 12 3Z" fill="#DC2626"/><path d="M12 13C12 13 10 14.5 10 16C10 17.1 10.9 18 12 18C13.1 18 14 17.1 14 16C14 14.5 12 13 12 13Z" fill="white" opacity="0.8"/></svg>
+            <span style="font-size:9px;font-family:var(--mono);color:var(--text-tertiary);">HIGH</span>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:9px;color:var(--green);font-weight:600;filter:none;">✓ Pentagon vs Triangle vs Flame</div>
+      </div>
+
+      <div class="cb-card">
+        <div class="cb-card-title">Tag Component — In Context</div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start;">
+          <div class="tag-demo" style="background:var(--green-light); color:var(--green);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 6V12C3 16.5 7 20.7 12 22C17 20.7 21 16.5 21 12V6L12 2Z" fill="#059669"/><path d="M8 12L11 15L16 9" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Low Risk
+          </div>
+          <div class="tag-demo" style="background:var(--amber-light); color:var(--amber);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 20H22L12 2Z" fill="#D97706"/><rect x="11" y="9" width="2" height="6" rx="1" fill="white"/><rect x="11" y="16.5" width="2" height="2" rx="1" fill="white"/></svg>
+            Medium Risk
+          </div>
+          <div class="tag-demo" style="background:var(--red-light); color:var(--red);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3C12 3 8 7 8 11C8 11 6 10 6 8C6 8 3 10 3 14C3 17.3 6.1 20 10 20.9V22H14V20.9C17.9 20 21 17.3 21 14C21 10 18 8 18 8C18 10 16 11 16 11C16 7 12 3 12 3Z" fill="#DC2626"/></svg>
+            High Risk
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Usage Context -->
+  <div class="section-title">§ 04 — USAGE CONTEXT GUIDE</div>
+  <div class="usage-section">
+    <div class="usage-grid">
+      <div class="usage-context">
+        <div class="usage-context-header">Mobile (Field Officer) — Contexts</div>
+        <div class="usage-context-body">
+          <div class="usage-row">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 6V12C3 16.5 7 20.7 12 22C17 20.7 21 16.5 21 12V6L12 2Z" fill="#059669"/><path d="M8 12L11 15L16 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="usage-label">Application Queue Rows</div>
+            <div class="usage-desc">16px icon beside customer name in list, with text label</div>
+          </div>
+          <div class="usage-row">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 20H22L12 2Z" fill="#D97706"/><rect x="11" y="9" width="2" height="6" rx="1" fill="white"/><rect x="11" y="16.5" width="2" height="2" rx="1" fill="white"/></svg>
+            <div class="usage-label">Customer Profile Header</div>
+            <div class="usage-desc">24px icon in risk tier badge, prominent placement</div>
+          </div>
+          <div class="usage-row">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18 10H16.74C16.37 7.73 14.41 6 12 6C10.37 6 8.93 6.8 8.05 8.05C5.77 8.32 4 10.26 4 12.5C4 14.99 6.01 17 8.5 17H18C19.66 17 21 15.66 21 14C21 12.34 19.66 11 18 11L18 10Z" fill="#475569"/><path d="M12 21V14M9 18L12 21L15 18" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="usage-label">Status Bar (top of screen)</div>
+            <div class="usage-desc">20px icon in header bar, tappable for sync status detail</div>
+          </div>
+          <div class="usage-row">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="animation:spin 1.5s linear infinite;"><path d="M4 12C4 7.58 7.58 4 12 4C14.35 4 16.5 4.96 18.07 6.5L16 8.5H22V2.5L19.9 4.6C17.89 2.62 15.09 1.5 12 1.5C5.93 1.5 1 6.43 1 12.5H4V12Z" fill="#2563EB"/><path d="M20 12C20 16.42 16.42 20 12 20C9.65 20 7.5 19.04 5.93 17.5L8 15.5H2V21.5L4.1 19.4C6.11 21.38 8.91 22.5 12 22.5C18.07 22.5 23 17.57 23 11.5H20V12Z" fill="#2563EB" opacity="0.4"/></svg>
+            <div class="usage-label">Sync Progress Notification</div>
+            <div class="usage-desc">Animated 20px in toast notification, auto-dismisses on complete</div>
+          </div>
+        </div>
+      </div>
+      <div class="usage-context">
+        <div class="usage-context-header">Web Dashboard (Manager) — Contexts</div>
+        <div class="usage-context-body">
+          <div class="usage-row">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3C12 3 8 7 8 11C8 11 6 10 6 8C6 8 3 10 3 14C3 17.3 6.1 20 10 20.9V22H14V20.9C17.9 20 21 17.3 21 14C21 10 18 8 18 8C18 10 16 11 16 11C16 7 12 3 12 3Z" fill="#DC2626"/></svg>
+            <div class="usage-label">Application Table Column</div>
+            <div class="usage-desc">16px icon + text label in "Risk" column, sortable</div>
+          </div>
+          <div class="usage-row">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 6V12C3 16.5 7 20.7 12 22C17 20.7 21 16.5 21 12V6L12 2Z" fill="#059669"/><path d="M8 12L11 15L16 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="usage-label">Filter Chips / Sidebar</div>
+            <div class="usage-desc">16px in filter tabs for "High Risk Only" / "Low Risk" filters</div>
+          </div>
+          <div class="usage-row">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 20H22L12 2Z" fill="#D97706"/><rect x="11" y="9" width="2" height="6" rx="1" fill="white"/><rect x="11" y="16.5" width="2" height="2" rx="1" fill="white"/></svg>
+            <div class="usage-label">Application Detail Header</div>
+            <div class="usage-desc">32px in hero area of application detail view</div>
+          </div>
+          <div class="usage-row">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18 10H16.74C16.37 7.73 14.41 6 12 6C10.37 6 8.93 6.8 8.05 8.05C5.77 8.32 4 10.26 4 12.5C4 14.99 6.01 17 8.5 17H18C19.66 17 21 15.66 21 14C21 12.34 19.66 11 18 11L18 10Z" fill="#475569"/><path d="M12 21V14M9 18L12 21L15 18" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="usage-label">Audit Trail — FO Status Column</div>
+            <div class="usage-desc">14px in compact audit table "offline/synced" column</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<style>
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+</style>
+
+<div class="footer">
+  <span>MFS LOAN DECISIONING SYSTEM · TASK 02 · ICON ASSET SPEC</span>
+  <span>24PX BASE GRID · SHAPE-FIRST ACCESSIBILITY · WCAG AA MINIMUM</span>
+</div>
+
+</body>
+</html>

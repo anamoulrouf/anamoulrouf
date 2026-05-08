@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Core DS — Sequoia (desktop demo)</title>
+	<style>
+		:root{
+			--bg:#0f1724;
+			--card:#0f1a2b;
+			--muted:#9aa7bd;
+			--accent:#6ee7b7;
+			--accent-2:#60a5fa;
+			--text:#e6eef8;
+			--radius:12px;
+			--max-width:1100px;
+			--gap:28px;
+			font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+		}
+		html,body{height:100%;}
+		body{
+			margin:0; background:linear-gradient(180deg,#061024 0%, #071827 100%); color:var(--text); -webkit-font-smoothing:antialiased;
+			display:flex; align-items:flex-start; justify-content:center; padding:48px 24px; box-sizing:border-box;
+		}
+		.wrap{width:100%; max-width:var(--max-width);}
+		header{display:flex;align-items:center;justify-content:space-between;margin-bottom:44px}
+		.brand{display:flex;gap:14px;align-items:center}
+		.logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#042330}
+		.brand h1{margin:0;font-size:18px;letter-spacing:0.2px}
+		nav{display:flex;gap:20px;align-items:center}
+		nav a{color:var(--muted);text-decoration:none;font-size:14px}
+
+		.hero{display:grid;grid-template-columns:1fr 380px;gap:var(--gap);align-items:start}
+		.hero-main{padding:36px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:var(--radius)}
+		.kicker{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(110,231,183,0.08);color:var(--accent);font-weight:600;font-size:13px;margin-bottom:16px}
+		.title{font-size:44px;line-height:1.02;margin:0 0 12px}
+		.lead{color:var(--muted);font-size:16px;max-width:60%}
+		.cta{margin-top:20px;display:flex;gap:12px}
+		.btn{padding:12px 18px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+		.btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#042330}
+		.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text)}
+
+		.panel{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:12px;padding:22px;height:100%;}
+		.stats{display:flex;flex-direction:column;gap:14px}
+		.stat{display:flex;align-items:center;gap:12px}
+		.stat .num{font-weight:800;font-size:20px}
+		.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px}
+		.card{background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);padding:18px;border-radius:12px}
+		.card h3{margin:0 0 8px;font-size:16px}
+		.card p{margin:0;color:var(--muted);font-size:14px}
+
+		footer{margin-top:36px;color:var(--muted);font-size:13px}
+
+		/* Desktop-only visual polish */
+		.glass{backdrop-filter:blur(6px)}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<header>
+			<div class="brand">
+				<div class="logo">S</div>
+				<div>
+					<h1>Sequoia</h1>
+					<div style="font-size:12px;color:var(--muted)">Core Design System — demo</div>
+				</div>
+			</div>
+			<nav>
+				<a href="#">Design</a>
+				<a href="#">Components</a>
+				<a href="#">Tokens</a>
+				<a href="#">Docs</a>
+			</nav>
+		</header>
+
+		<main class="hero">
+			<section class="hero-main glass">
+				<div class="kicker">Design tokens • Desktop</div>
+				<h2 class="title">Core DS — Sequoia
+				</h2>
+				<p class="lead">A compact, modern design system example inspired by the Figma frame. Uses color tokens, rounded cards and clear hierarchy to communicate product values and component states.</p>
+				<div class="cta">
+					<button class="btn primary">Get started</button>
+					<button class="btn ghost">Explore tokens</button>
+				</div>
+
+				<div class="card-grid">
+					<div class="card">
+						<h3>Typography</h3>
+						<p>System font stack with clear scale for headings, body and captions.</p>
+					</div>
+					<div class="card">
+						<h3>Color tokens</h3>
+						<p>Neutral and accent palettes for light and dark contexts.</p>
+					</div>
+					<div class="card">
+						<h3>Components</h3>
+						<p>Buttons, inputs and cards with accessible contrast and spacing.</p>
+					</div>
+				</div>
+			</section>
+
+			<aside class="panel glass">
+				<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+					<div style="font-weight:700">System snapshot</div>
+					<div style="color:var(--muted);font-size:13px">Desktop</div>
+				</div>
+				<div class="stats">
+					<div class="stat"><div class="num">16</div><div style="color:var(--muted)">Tokens</div></div>
+					<div class="stat"><div class="num">24</div><div style="color:var(--muted)">Components</div></div>
+					<div class="stat"><div class="num">4</div><div style="color:var(--muted)">Variants</div></div>
+				</div>
+			</aside>
+		</main>
+
+		<footer>
+			Built from a Figma frame — desktop demo. View implemented in test.html.
+		</footer>
+	</div>
+</body>
+</html>
+

@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MFS Loan Decisioning — Systems Logic & Journey Map</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F8FAFC;
+    --surface: #FFFFFF;
+    --card: #F1F5F9;
+    --border: #E2E8F0;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-tertiary: #94A3B8;
+    --blue: #2563EB;
+    --blue-light: #DBEAFE;
+    --amber: #D97706;
+    --amber-light: #FEF3C7;
+    --green: #059669;
+    --green-light: #D1FAE5;
+    --red: #DC2626;
+    --red-light: #FEE2E2;
+    --orange: #F97316;
+    --orange-light: #FFEDD5;
+    --purple: #7C3AED;
+    --purple-light: #EDE9FE;
+    --mono: 'Space Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    font-family: var(--sans);
+    color: var(--text-primary);
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .header {
+    background: var(--text-primary);
+    color: white;
+    padding: 24px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--blue);
+  }
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .header-badge {
+    background: var(--blue);
+    color: white;
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 4px 10px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+  }
+  .header h1 {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .header-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-tertiary);
+    text-align: right;
+  }
+
+  /* Main layout */
+  .container { padding: 40px 48px; max-width: 1600px; margin: 0 auto; }
+
+  /* Section titles */
+  .section-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* KPI Cards */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 20px 24px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .kpi-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+  .kpi-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 4px;
+  }
+  .kpi-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .kpi-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .kpi-target {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--blue);
+    margin-top: 8px;
+    font-weight: 700;
+  }
+
+  /* Persona row */
+  .persona-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 0;
+    margin-bottom: 0;
+  }
+  .persona-label {
+    background: var(--text-primary);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px 20px;
+    border-bottom: 1px solid #1e293b;
+  }
+  .persona-label .role {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 4px;
+  }
+  .persona-label .name {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .persona-label .device {
+    font-size: 10px;
+    color: var(--text-tertiary);
+    margin-top: 2px;
+  }
+
+  /* Flow diagram */
+  .flow-wrapper {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow-x: auto;
+    margin-bottom: 40px;
+  }
+
+  .flow-container {
+    min-width: 1400px;
+    padding: 0;
+  }
+
+  /* Swimlane rows */
+  .swimlane {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+  .swimlane:last-child { border-bottom: none; }
+
+  .lane-label {
+    background: #0F172A;
+    color: white;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 3px solid var(--blue);
+  }
+  .lane-label .role {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+  .lane-label .name { font-size: 12px; font-weight: 600; color: white; margin-top: 2px; }
+
+  .lane-steps {
+    display: flex;
+    align-items: center;
+    padding: 20px 24px;
+    gap: 0;
+    position: relative;
+    min-height: 100px;
+  }
+
+  /* Step nodes */
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .step-node {
+    width: 80px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .step-node:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+  .step-node.process {
+    background: var(--blue-light);
+    border: 1.5px solid var(--blue);
+    border-radius: 4px;
+  }
+  .step-node.decision {
+    background: var(--amber-light);
+    border: 1.5px solid var(--amber);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    width: 72px;
+    height: 72px;
+  }
+  .step-node.terminal {
+    background: var(--text-primary);
+    border: 1.5px solid var(--text-primary);
+    border-radius: 28px;
+    color: white;
+  }
+  .step-node.system {
+    background: var(--purple-light);
+    border: 1.5px solid var(--purple);
+    border-radius: 4px;
+    border-style: dashed;
+  }
+  .step-node.success {
+    background: var(--green-light);
+    border: 1.5px solid var(--green);
+    border-radius: 4px;
+  }
+  .step-node.danger {
+    background: var(--red-light);
+    border: 1.5px solid var(--red);
+    border-radius: 4px;
+  }
+  .step-node.warning {
+    background: var(--orange-light);
+    border: 1.5px solid var(--orange);
+    border-radius: 4px;
+  }
+
+  .step-node-text {
+    font-size: 9px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.3;
+    color: var(--text-primary);
+  }
+  .step-node.terminal .step-node-text { color: white; }
+
+  .step-label {
+    font-size: 9px;
+    color: var(--text-secondary);
+    text-align: center;
+    width: 90px;
+    line-height: 1.3;
+  }
+
+  /* Arrows */
+  .arrow {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 20px;
+    position: relative;
+  }
+  .arrow-line {
+    width: 100%;
+    height: 2px;
+    background: var(--border);
+    position: relative;
+  }
+  .arrow-line::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    top: -4px;
+    border: 5px solid transparent;
+    border-left-color: var(--text-tertiary);
+  }
+  .arrow-label {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8px;
+    font-family: var(--mono);
+    color: var(--text-tertiary);
+    white-space: nowrap;
+    background: var(--surface);
+    padding: 0 4px;
+  }
+
+  /* Edge case callouts */
+  .edge-section {
+    margin-bottom: 40px;
+  }
+  .edge-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .edge-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-left: 3px solid var(--amber);
+  }
+  .edge-card.critical { border-left-color: var(--red); }
+  .edge-card.info { border-left-color: var(--blue); }
+  .edge-tag {
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+  .edge-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .edge-desc {
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .edge-steps {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .edge-step {
+    font-size: 10px;
+    color: var(--text-secondary);
+    padding-left: 12px;
+    position: relative;
+  }
+  .edge-step::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--text-tertiary);
+    font-size: 9px;
+  }
+
+  /* Data state legend */
+  .legend-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+  }
+  .legend-box {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    border-radius: 2px;
+  }
+  .legend-text { font-size: 11px; font-weight: 500; }
+
+  /* Full flow diagram */
+  .full-flow {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 32px;
+    margin-bottom: 40px;
+    overflow-x: auto;
+  }
+
+  .flow-phases {
+    display: flex;
+    gap: 0;
+    align-items: flex-start;
+    min-width: 1200px;
+  }
+
+  .phase {
+    flex: 1;
+    border-right: 1px dashed var(--border);
+    padding: 0 20px;
+  }
+  .phase:last-child { border-right: none; }
+
+  .phase-header {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .phase-num {
+    background: var(--text-primary);
+    color: white;
+    font-size: 9px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 700;
+  }
+
+  .phase-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .flow-step {
+    padding: 10px 12px;
+    border-left: 2px solid var(--border);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-primary);
+    position: relative;
+    background: var(--bg);
+    transition: all 0.15s;
+  }
+  .flow-step:hover { background: var(--card); }
+  .flow-step.blue { border-left-color: var(--blue); background: var(--blue-light); }
+  .flow-step.green { border-left-color: var(--green); background: var(--green-light); }
+  .flow-step.red { border-left-color: var(--red); background: var(--red-light); }
+  .flow-step.amber { border-left-color: var(--amber); background: var(--amber-light); }
+  .flow-step.purple { border-left-color: var(--purple); background: var(--purple-light); }
+
+  .flow-step-sub {
+    font-size: 9px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+    font-weight: 400;
+  }
+
+  .flow-connector {
+    margin: 4px 0 4px 12px;
+    font-size: 10px;
+    color: var(--text-tertiary);
+  }
+
+  .decision-node {
+    padding: 10px 12px;
+    border: 1.5px solid var(--amber);
+    background: var(--amber-light);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 8px 0;
+    position: relative;
+  }
+  .decision-node::before {
+    content: '◆';
+    color: var(--amber);
+    margin-right: 6px;
+    font-size: 10px;
+  }
+
+  .branch-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 8px 0;
+  }
+  .branch {
+    padding: 8px 10px;
+    font-size: 10px;
+    font-weight: 500;
+    border-left: 2px solid var(--border);
+    background: var(--bg);
+  }
+  .branch.yes { border-left-color: var(--green); background: var(--green-light); }
+  .branch.no { border-left-color: var(--red); background: var(--red-light); }
+  .branch-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  /* Offline conflict diagram */
+  .conflict-diagram {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+    margin-bottom: 40px;
+  }
+  .conflict-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: var(--red);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .conflict-flow {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    align-items: start;
+  }
+  .cf-step {
+    padding: 12px;
+    text-align: center;
+    position: relative;
+  }
+  .cf-node {
+    padding: 10px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.3;
+    margin-bottom: 6px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cf-label {
+    font-size: 9px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+  .cf-arrow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 28px;
+  }
+  .cf-arrow-icon { font-size: 18px; color: var(--text-tertiary); }
+
+  .timestamp-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 8px;
+    padding: 2px 6px;
+    border-radius: 2px;
+    margin-top: 4px;
+    font-weight: 700;
+  }
+
+  /* Footer */
+  .footer {
+    background: var(--text-primary);
+    color: var(--text-secondary);
+    padding: 20px 48px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="header-badge">TASK 01</div>
+    <h1>Systems Logic & Journey Map — MFS Loan Decisioning</h1>
+  </div>
+  <div class="header-meta">
+    DESIGN CHALLENGE — 72HR SUBMISSION<br>
+    v1.0 · FIELD OFFICER + MANAGER FLOW
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- KPI Section -->
+  <div class="section-title">§ 01 — KPI MAPPING</div>
+  <div class="kpi-grid" style="margin-bottom:40px;">
+    <div class="kpi-card" style="border-left: 3px solid var(--blue);">
+      <div class="kpi-icon" style="background:var(--blue-light); color:var(--blue);">📱</div>
+      <div>
+        <div class="kpi-label">Field Officer KPI</div>
+        <div class="kpi-title">Recommendation Accuracy Rate</div>
+        <div class="kpi-desc">% of Field Officer recommendations that align with Manager final decisions. High alignment = reduced cognitive overload and better structured data collection. Poor alignment = decision noise in the pipeline.</div>
+        <div class="kpi-target">TARGET: ≥ 85% alignment rate · Measured: weekly cohort analysis</div>
+      </div>
+    </div>
+    <div class="kpi-card" style="border-left: 3px solid var(--green);">
+      <div class="kpi-icon" style="background:var(--green-light); color:var(--green);">🖥️</div>
+      <div>
+        <div class="kpi-label">Manager KPI</div>
+        <div class="kpi-title">Application Throughput Time</div>
+        <div class="kpi-desc">Average time (minutes) from Manager opening an application to final decision (Approve/Reject). Drives operational efficiency and reduces applicant wait time. Batch processing is a direct lever.</div>
+        <div class="kpi-target">TARGET: ≤ 4 min avg per application · Measured: daily session telemetry</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Node Legend -->
+  <div class="section-title">§ 02 — FLOW LEGEND</div>
+  <div class="legend-grid">
+    <div class="legend-item">
+      <div class="legend-box" style="background:var(--blue-light); border:1.5px solid var(--blue);"></div>
+      <div class="legend-text">Process / Action</div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-box" style="background:var(--amber-light); border:1.5px solid var(--amber); transform:rotate(45deg);"></div>
+      <div class="legend-text">Decision Gate</div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-box" style="background:var(--purple-light); border:1.5px dashed var(--purple);"></div>
+      <div class="legend-text">System Auto-action</div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-box" style="background:var(--green-light); border:1.5px solid var(--green);"></div>
+      <div class="legend-text">Success / Approved</div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-box" style="background:var(--red-light); border:1.5px solid var(--red);"></div>
+      <div class="legend-text">Failure / Rejected</div>
+    </div>
+  </div>
+
+  <!-- Main Happy Path Flow -->
+  <div class="section-title">§ 03 — HAPPY PATH JOURNEY (SWIMLANE VIEW)</div>
+  <div class="flow-wrapper" style="margin-bottom:40px;">
+    <div class="flow-container">
+
+      <!-- Customer Lane -->
+      <div class="swimlane">
+        <div class="lane-label">
+          <div class="role">Actor</div>
+          <div class="name">Customer</div>
+        </div>
+        <div class="lane-steps">
+          <div class="step">
+            <div class="step-node terminal"><div class="step-node-text">Submits<br>Application</div></div>
+            <div class="step-label">Via MFS platform or field visit</div>
+          </div>
+          <div class="arrow"><div class="arrow-line"><span class="arrow-label">assigned</span></div></div>
+          <div style="flex:5;"></div>
+          <div class="arrow"><div class="arrow-line"><span class="arrow-label">notified</span></div></div>
+          <div class="step">
+            <div class="step-node success"><div class="step-node-text">Receives<br>Decision</div></div>
+            <div class="step-label">SMS + in-app notification</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Field Officer Lane -->
+      <div class="swimlane" style="background: rgba(37,99,235,0.02);">
+        <div class="lane-label" style="border-right-color: var(--blue);">
+          <div class="role">Field Officer · Mobile</div>
+          <div class="name">Loan Review</div>
+        </div>
+        <div class="lane-steps" style="gap:0;">
+          <div class="step">
+            <div class="step-node process"><div class="step-node-text">Receives<br>Assignment</div></div>
+            <div class="step-label">Push notification + queue</div>
+          </div>
+          <div class="arrow" style="min-width:30px;"><div class="arrow-line"></div></div>
+          <div class="step">
+            <div class="step-node process"><div class="step-node-text">Downloads<br>App Data</div></div>
+            <div class="step-label">Pre-fetches for offline</div>
+          </div>
+          <div class="arrow" style="min-width:30px;"><div class="arrow-line"></div></div>
+          <div class="step">
+            <div class="step-node process"><div class="step-node-text">Reviews<br>Profile + Tx</div></div>
+            <div class="step-label">Customer data, 3-mo trend</div>
+          </div>
+          <div class="arrow" style="min-width:30px;"><div class="arrow-line"></div></div>
+          <div class="step">
+            <div class="step-node decision"><div class="step-node-text" style="font-size:8px;">Recommend?</div></div>
+            <div class="step-label">Approve / Reject</div>
+          </div>
+          <div class="arrow" style="min-width:30px;"><div class="arrow-line"><span class="arrow-label">with notes</span></div></div>
+          <div class="step">
+            <div class="step-node process"><div class="step-node-text">Adds Notes<br>& Submits</div></div>
+            <div class="step-label">Mandatory rationale field</div>
+          </div>
+          <div class="arrow" style="min-width:30px;"><div class="arrow-line"></div></div>
+          <div class="step">
+            <div class="step-node system"><div class="step-node-text">Queued<br>for Sync</div></div>
+            <div class="step-label">Offline-safe local storage</div>
+          </div>
+          <div style="flex:1;"></div>
+        </div>
+      </div>
+
+      <!-- System Lane -->
+      <div class="swimlane" style="background: rgba(124,58,237,0.02);">
+        <div class="lane-label" style="border-right-color: var(--purple);">
+          <div class="role">System · Auto</div>
+          <div class="name">Backend Logic</div>
+        </div>
+        <div class="lane-steps">
+          <div style="flex:2;"></div>
+          <div class="step">
+            <div class="step-node system"><div class="step-node-text">Eligibility<br>Check</div></div>
+            <div class="step-label">Credit score, risk tier calc</div>
+          </div>
+          <div class="arrow" style="min-width:20px;"><div class="arrow-line"></div></div>
+          <div class="step">
+            <div class="step-node system"><div class="step-node-text">Pre-fetches<br>Tx Data</div></div>
+            <div class="step-label">3-month transaction history</div>
+          </div>
+          <div style="flex:1;"></div>
+          <div class="step">
+            <div class="step-node system"><div class="step-node-text">Conflict<br>Resolution</div></div>
+            <div class="step-label">Timestamp-based merge</div>
+          </div>
+          <div class="arrow" style="min-width:20px;"><div class="arrow-line"></div></div>
+          <div class="step">
+            <div class="step-node system"><div class="step-node-text">Routes to<br>Manager</div></div>
+            <div class="step-label">Priority queue assignment</div>
+          </div>
+          <div style="flex:1;"></div>
+        </div>
+      </div>
+
+      <!-- Manager Lane -->
+      <div class="swimlane" style="background: rgba(5,150,105,0.02);">
+        <div class="lane-label" style="border-right-color: var(--green);">
+          <div class="role">Manager · Web</div>
+          <div class="name">Final Decision</div>
+        </div>
+        <div class="lane-steps">
+          <div style="flex:4;"></div>
+          <div class="step">
+            <div class="step-node process"><div class="step-node-text">Reviews<br>Queue</div></div>
+            <div class="step-label">Sorted by risk + priority</div>
+          </div>
+          <div class="arrow" style="min-width:30px;"><div class="arrow-line"></div></div>
+          <div class="step">
+            <div class="step-node process"><div class="step-node-text">Opens<br>Application</div></div>
+            <div class="step-label">Full detail + FO notes</div>
+          </div>
+          <div class="arrow" style="min-width:30px;"><div class="arrow-line"></div></div>
+          <div class="step">
+            <div class="step-node decision"><div class="step-node-text" style="font-size:8px;">Approve?</div></div>
+            <div class="step-label">Final binding decision</div>
+          </div>
+          <div class="arrow" style="min-width:30px;"><div class="arrow-line"></div></div>
+          <div class="step">
+            <div class="step-node success"><div class="step-node-text">Decision<br>Logged</div></div>
+            <div class="step-label">Audit trail + notification</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Full Phase-based Flow -->
+  <div class="section-title">§ 04 — DETAILED PHASE BREAKDOWN</div>
+  <div class="full-flow">
+    <div class="flow-phases">
+
+      <!-- Phase 1 -->
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">1</div>INITIATION</div>
+        <div class="phase-steps">
+          <div class="flow-step blue">Customer submits loan application<div class="flow-step-sub">MFS platform or in-field form</div></div>
+          <div class="flow-connector">↓</div>
+          <div class="flow-step purple">System runs eligibility check<div class="flow-step-sub">Risk tier auto-assigned (Low/Med/High)</div></div>
+          <div class="flow-connector">↓</div>
+          <div class="flow-step blue">Application assigned to Field Officer<div class="flow-step-sub">Push notification + queue entry</div></div>
+          <div class="flow-connector">↓</div>
+          <div class="flow-step purple">System pre-fetches 3-mo tx data<div class="flow-step-sub">Cached for offline access</div></div>
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">2</div>FIELD REVIEW</div>
+        <div class="phase-steps">
+          <div class="flow-step blue">FO opens application (online or offline)<div class="flow-step-sub">Stale data indicator shown if >4hrs old</div></div>
+          <div class="flow-connector">↓</div>
+          <div class="flow-step blue">Reviews Customer Profile<div class="flow-step-sub">Risk tier, application history, active loans</div></div>
+          <div class="flow-connector">↓</div>
+          <div class="flow-step blue">Reviews Transaction Indicators<div class="flow-step-sub">3-mo trend cards (or partial data warning)</div></div>
+          <div class="flow-connector">↓</div>
+          <div class="flow-step blue">Reviews Loan Request vs Eligible Amount<div class="flow-step-sub">System calculated vs requested</div></div>
+          <div class="flow-connector">↓</div>
+          <div class="decision-node">Recommendation Decision</div>
+          <div class="branch-container">
+            <div class="branch yes"><div class="branch-label" style="color:var(--green);">✓ Recommend Approve</div>Adds supporting notes, photos if any</div>
+            <div class="branch no"><div class="branch-label" style="color:var(--red);">✗ Recommend Reject</div>Must enter rejection reason (required)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">3</div>SYNC & HANDOFF</div>
+        <div class="phase-steps">
+          <div class="flow-step purple">Recommendation saved to local queue<div class="flow-step-sub">Timestamp + FO ID attached</div></div>
+          <div class="flow-connector">↓</div>
+          <div class="decision-node">Is device online?</div>
+          <div class="branch-container">
+            <div class="branch yes"><div class="branch-label" style="color:var(--green);">Online</div>Immediate sync to server</div>
+            <div class="branch no"><div class="branch-label" style="color:var(--amber);">Offline</div>Queued locally, syncs when connected</div>
+          </div>
+          <div class="flow-connector">↓</div>
+          <div class="flow-step purple">Server conflict resolution check<div class="flow-step-sub">Compare timestamps, flag conflicts</div></div>
+          <div class="flow-connector">↓</div>
+          <div class="flow-step green">Application routed to Manager queue<div class="flow-step-sub">Priority sorted by risk tier + wait time</div></div>
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">4</div>MANAGER REVIEW</div>
+        <div class="phase-steps">
+          <div class="flow-step green">Manager views application list<div class="flow-step-sub">Sorted: High-risk first, then aging</div></div>
+          <div class="flow-connector">↓</div>
+          <div class="flow-step green">Opens application detail view<div class="flow-step-sub">FO recommendation + rationale visible</div></div>
+          <div class="flow-connector">↓</div>
+          <div class="flow-step green">Reviews risk flags and data<div class="flow-step-sub">Transaction trend, eligible vs requested</div></div>
+          <div class="flow-connector">↓</div>
+          <div class="decision-node">Final Decision</div>
+          <div class="branch-container">
+            <div class="branch yes"><div class="branch-label" style="color:var(--green);">✓ Approve</div>Confirm amount + tenure</div>
+            <div class="branch no"><div class="branch-label" style="color:var(--red);">✗ Reject</div>Log rejection reason for audit</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">5</div>NOTIFICATION</div>
+        <div class="phase-steps">
+          <div class="flow-step purple">Decision logged to audit trail<div class="flow-step-sub">Immutable record, outside-platform audit</div></div>
+          <div class="flow-connector">↓</div>
+          <div class="flow-step purple">Customer notification triggered<div class="flow-step-sub">SMS + in-app push</div></div>
+          <div class="flow-connector">↓</div>
+          <div class="flow-step purple">Field Officer notified of outcome<div class="flow-step-sub">Closes feedback loop for accuracy tracking</div></div>
+          <div class="flow-connector">↓</div>
+          <div class="flow-step green" style="border-left-color:var(--green);">Application moved to History<div class="flow-step-sub">Accessible in Manager audit trail view</div></div>
+          <div class="flow-connector">↓</div>
+          <div class="flow-step blue">KPI metrics updated<div class="flow-step-sub">FO alignment rate + Manager throughput</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Edge Cases -->
+  <div class="section-title">§ 05 — EDGE CASES & CONFLICT RESOLUTION</div>
+
+  <!-- Offline Conflict Diagram -->
+  <div class="conflict-diagram">
+    <div class="conflict-title">⚠ OFFLINE DATA CONFLICT — Resolution Protocol</div>
+    <div style="display:grid; grid-template-columns: repeat(7, 1fr); gap:0; align-items:center; min-width:900px; overflow-x:auto;">
+      <div style="text-align:center; padding:12px 8px;">
+        <div class="cf-node" style="background:var(--blue-light); border:1.5px solid var(--blue); font-size:10px; font-weight:600; padding:12px 8px; min-height:56px; display:flex; align-items:center; justify-content:center; flex-direction:column;">
+          FO Submits<br>Recommendation
+          <div class="timestamp-badge" style="background:var(--blue); color:white;">T+0:00</div>
+        </div>
+        <div style="font-size:9px; color:var(--text-secondary); margin-top:6px; line-height:1.4;">Saved locally<br>with timestamp</div>
+      </div>
+      <div style="text-align:center; font-size:18px; color:var(--text-tertiary); padding-top:8px;">→</div>
+      <div style="text-align:center; padding:12px 8px;">
+        <div class="cf-node" style="background:var(--orange-light); border:1.5px solid var(--orange); font-size:10px; font-weight:600; padding:12px 8px; min-height:56px; display:flex; align-items:center; justify-content:center; flex-direction:column;">
+          Connectivity<br>Restored
+          <div class="timestamp-badge" style="background:var(--orange); color:white;">T+2:34</div>
+        </div>
+        <div style="font-size:9px; color:var(--text-secondary); margin-top:6px; line-height:1.4;">Device back<br>online</div>
+      </div>
+      <div style="text-align:center; font-size:18px; color:var(--text-tertiary); padding-top:8px;">→</div>
+      <div style="text-align:center; padding:12px 8px;">
+        <div class="cf-node" style="background:var(--purple-light); border:1.5px dashed var(--purple); font-size:10px; font-weight:600; padding:12px 8px; min-height:56px; display:flex; align-items:center; justify-content:center; flex-direction:column;">
+          Server Receives<br>Submission
+          <div class="timestamp-badge" style="background:var(--purple); color:white;">T+2:35</div>
+        </div>
+        <div style="font-size:9px; color:var(--text-secondary); margin-top:6px; line-height:1.4;">System checks<br>for server version</div>
+      </div>
+      <div style="text-align:center; font-size:18px; color:var(--text-tertiary); padding-top:8px;">→</div>
+      <div style="text-align:center; padding:12px 8px;">
+        <div class="cf-node" style="background:var(--amber-light); border:1.5px solid var(--amber); font-size:10px; font-weight:600; padding:12px 8px; min-height:56px; display:flex; align-items:center; justify-content:center; flex-direction:column;">
+          Conflict<br>Detected?</div>
+        <div style="font-size:9px; color:var(--text-secondary); margin-top:6px; line-height:1.4;">Stale server data<br>vs local version</div>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px;">
+      <div style="padding:16px; background:var(--green-light); border:1.5px solid var(--green); border-radius:2px;">
+        <div style="font-family:var(--mono); font-size:9px; font-weight:700; letter-spacing:0.1em; color:var(--green); margin-bottom:8px;">NO CONFLICT — AUTO RESOLVE</div>
+        <div style="font-size:11px; color:var(--text-primary); font-weight:500; margin-bottom:6px;">Local version accepted as authoritative</div>
+        <div style="font-size:10px; color:var(--text-secondary); line-height:1.6;">Field Officer's local timestamp is newer than server record → system accepts and syncs automatically. FO sees "Sync Complete" status. Application proceeds to Manager queue without delay.</div>
+      </div>
+      <div style="padding:16px; background:var(--red-light); border:1.5px solid var(--red); border-radius:2px;">
+        <div style="font-family:var(--mono); font-size:9px; font-weight:700; letter-spacing:0.1em; color:var(--red); margin-bottom:8px;">CONFLICT DETECTED — ESCALATION PATH</div>
+        <div style="font-size:11px; color:var(--text-primary); font-weight:500; margin-bottom:6px;">Conflict flagged, FO shown diff view</div>
+        <div style="font-size:10px; color:var(--text-secondary); line-height:1.6;">Server has a newer version (e.g., data updated at HQ) → FO is shown a "Data Conflict" modal with side-by-side comparison of their version vs server version. FO must explicitly confirm or re-review. Manager is notified of conflict history in the application detail.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Other Edge Cases -->
+  <div class="edge-grid">
+    <div class="edge-card critical">
+      <div class="edge-tag">⚠ CRITICAL EDGE CASE 01</div>
+      <div class="edge-title">Stale Data Warning</div>
+      <div class="edge-desc">If cached application data is older than 4 hours, the FO sees a prominent "Stale Data" banner with the last sync timestamp. They cannot submit without acknowledging the warning.</div>
+      <div class="edge-steps">
+        <div class="edge-step">System checks cache age on application open</div>
+        <div class="edge-step">If >4hrs: show amber "Data may be outdated" banner</div>
+        <div class="edge-step">FO taps to acknowledge before reviewing</div>
+        <div class="edge-step">Warning is logged and surfaced to Manager</div>
+      </div>
+    </div>
+    <div class="edge-card">
+      <div class="edge-tag">⚠ EDGE CASE 02</div>
+      <div class="edge-title">Partial Transaction Data (1 of 3 months)</div>
+      <div class="edge-desc">When only 1 or 2 months of transaction history exist, the trend cards show available data with explicit partial data warning. Risk tier is recalculated with available data and confidence score shown.</div>
+      <div class="edge-steps">
+        <div class="edge-step">Detect incomplete data at fetch time</div>
+        <div class="edge-step">Show "Partial Data (1/3 months)" badge</div>
+        <div class="edge-step">Display confidence indicator on risk score</div>
+        <div class="edge-step">Manager sees same warning in detail view</div>
+      </div>
+    </div>
+    <div class="edge-card critical">
+      <div class="edge-tag">⚠ CRITICAL EDGE CASE 03</div>
+      <div class="edge-title">Sync Failure / Server Error</div>
+      <div class="edge-desc">If sync fails after connectivity is restored (server error, timeout), the app retries 3× with exponential backoff. After 3 failures, FO is shown an error state with manual retry option. Data is preserved locally.</div>
+      <div class="edge-steps">
+        <div class="edge-step">Retry attempt 1: immediate</div>
+        <div class="edge-step">Retry attempt 2: after 30 seconds</div>
+        <div class="edge-step">Retry attempt 3: after 2 minutes</div>
+        <div class="edge-step">After 3 failures: manual retry + IT alert</div>
+      </div>
+    </div>
+    <div class="edge-card info">
+      <div class="edge-tag">ℹ EDGE CASE 04</div>
+      <div class="edge-title">Manager Overrides FO Recommendation</div>
+      <div class="edge-desc">Manager approves an application the FO recommended rejecting (or vice versa). System logs the discrepancy. This feeds into FO accuracy tracking and may trigger coaching workflow.</div>
+      <div class="edge-steps">
+        <div class="edge-step">Discrepancy automatically flagged in audit log</div>
+        <div class="edge-step">FO notified of override outcome</div>
+        <div class="edge-step">Aggregated monthly in FO accuracy report</div>
+        <div class="edge-step">Patterns trigger automated coaching prompt</div>
+      </div>
+    </div>
+    <div class="edge-card">
+      <div class="edge-tag">⚠ EDGE CASE 05</div>
+      <div class="edge-title">Application Timeout / Abandoned</div>
+      <div class="edge-desc">If a Field Officer opens an application but doesn't submit within 48 hours, it auto-returns to unassigned queue with an "Abandoned" tag. The application can be reassigned to a different FO.</div>
+      <div class="edge-steps">
+        <div class="edge-step">24hr: FO receives reminder notification</div>
+        <div class="edge-step">48hr: Application auto-returns to queue</div>
+        <div class="edge-step">Manager notified of abandonment</div>
+        <div class="edge-step">Reassigned with priority escalation</div>
+      </div>
+    </div>
+    <div class="edge-card info">
+      <div class="edge-tag">ℹ EDGE CASE 06</div>
+      <div class="edge-title">Batch Rejection (Manager)</div>
+      <div class="edge-desc">Manager selects multiple low-tier applications for batch rejection. System requires a batch rejection reason (dropdown + optional notes). Each application gets individual audit entries. Notifications sent in bulk.</div>
+      <div class="edge-steps">
+        <div class="edge-step">Manager selects 2–50 applications</div>
+        <div class="edge-step">Confirms batch action with reason code</div>
+        <div class="edge-step">System creates individual audit entries per app</div>
+        <div class="edge-step">Bulk customer notifications triggered</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span>MFS LOAN DECISIONING SYSTEM · TASK 01 · JOURNEY MAP & SYSTEMS LOGIC</span>
+  <span>FIELD OFFICER KPI: RECOMMENDATION ACCURACY ≥85% · MANAGER KPI: THROUGHPUT ≤4 MIN/APP</span>
+</div>
+
+</body>
+</html>

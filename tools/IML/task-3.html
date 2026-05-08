@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MFS Loan Decisioning — Mobile Experience (Field Officer)</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F8FAFC;
+    --surface: #FFFFFF;
+    --card: #F1F5F9;
+    --border: #E2E8F0;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-tertiary: #94A3B8;
+    --blue: #2563EB;
+    --blue-light: #DBEAFE;
+    --amber: #D97706;
+    --amber-light: #FEF3C7;
+    --green: #059669;
+    --green-light: #D1FAE5;
+    --red: #DC2626;
+    --red-light: #FEE2E2;
+    --orange: #F97316;
+    --orange-light: #FFEDD5;
+    --mono: 'Space Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    font-family: var(--sans);
+    color: var(--text-primary);
+  }
+
+  .page-header {
+    background: var(--text-primary);
+    color: white;
+    padding: 24px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--blue);
+  }
+  .page-header-badge {
+    background: var(--blue);
+    color: white;
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 4px 10px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-right: 16px;
+  }
+  .page-header h1 {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: inline;
+  }
+  .page-header-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-tertiary);
+    text-align: right;
+  }
+
+  .screens-container {
+    padding: 48px;
+    display: flex;
+    gap: 40px;
+    justify-content: flex-start;
+    overflow-x: auto;
+    align-items: flex-start;
+  }
+
+  /* Phone frame */
+  .phone-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  .phone-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-align: center;
+  }
+
+  .phone-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: 2px;
+  }
+
+  .phone-frame {
+    width: 320px;
+    background: #1a1a1a;
+    border-radius: 40px;
+    padding: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25), 0 0 0 1px #2a2a2a;
+    position: relative;
+  }
+
+  .phone-notch {
+    background: #1a1a1a;
+    height: 28px;
+    width: 100%;
+    border-radius: 28px 28px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: -4px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .phone-pill {
+    background: #000;
+    width: 100px;
+    height: 28px;
+    border-radius: 0 0 16px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .phone-screen {
+    background: #FFFFFF;
+    border-radius: 28px;
+    overflow: hidden;
+    height: 620px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Status bar */
+  .status-bar {
+    background: var(--text-primary);
+    padding: 6px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .status-time {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: white;
+  }
+
+  .status-icons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .status-icon {
+    font-size: 9px;
+    color: white;
+  }
+
+  /* App header */
+  .app-header {
+    background: var(--surface);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .app-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .app-title {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.05em;
+  }
+
+  .app-subtitle {
+    font-size: 10px;
+    color: var(--text-secondary);
+    margin-top: 1px;
+  }
+
+  .sync-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 9px;
+    font-weight: 600;
+    padding: 3px 7px;
+    border-radius: 2px;
+  }
+
+  .sync-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* Scrollable content */
+  .screen-body {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Screen 1: Application Queue */
+  .queue-filters {
+    display: flex;
+    gap: 6px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+
+  .filter-chip {
+    padding: 4px 10px;
+    border-radius: 2px;
+    font-size: 10px;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-secondary);
+  }
+
+  .filter-chip.active {
+    background: var(--text-primary);
+    color: white;
+    border-color: var(--text-primary);
+  }
+
+  .queue-item {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .queue-item:active { background: var(--card); }
+
+  .queue-item-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+
+  .queue-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .queue-amount {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .queue-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+  }
+
+  .risk-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 6px;
+    font-size: 9px;
+    font-weight: 700;
+    border-radius: 2px;
+    font-family: var(--mono);
+  }
+
+  .risk-tag.high { background: var(--red-light); color: var(--red); }
+  .risk-tag.medium { background: var(--amber-light); color: var(--amber); }
+  .risk-tag.low { background: var(--green-light); color: var(--green); }
+
+  .queue-time {
+    font-size: 9px;
+    color: var(--text-tertiary);
+  }
+
+  .queue-indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+  }
+
+  /* Skeleton states */
+  .skeleton {
+    background: linear-gradient(90deg, #E2E8F0 25%, #F1F5F9 50%, #E2E8F0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 3px;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .skeleton-row {
+    height: 12px;
+    margin-bottom: 6px;
+  }
+
+  /* Section headers */
+  .list-section-header {
+    padding: 6px 16px;
+    background: var(--card);
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Bottom nav */
+  .bottom-nav {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 8px 0 12px;
+    flex-shrink: 0;
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 8px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+  }
+
+  .nav-item.active { color: var(--blue); }
+
+  .nav-icon { font-size: 16px; }
+
+  /* Screen 2: Customer Profile */
+  .profile-hero {
+    background: var(--text-primary);
+    padding: 16px;
+    color: white;
+  }
+
+  .back-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-bottom: 12px;
+  }
+
+  .profile-name {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .profile-id {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-tertiary);
+    margin-bottom: 10px;
+  }
+
+  .profile-risk-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .profile-stat {
+    background: rgba(255,255,255,0.08);
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-align: center;
+  }
+
+  .profile-stat-val {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+  }
+
+  .profile-stat-label {
+    font-size: 8px;
+    color: var(--text-tertiary);
+    margin-top: 2px;
+  }
+
+  /* Info cards */
+  .info-card {
+    margin: 10px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .info-card-header {
+    padding: 8px 12px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .info-card-body { padding: 10px 12px; }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+  }
+  .info-row:last-child { border-bottom: none; }
+
+  .info-key { color: var(--text-secondary); }
+  .info-val { font-weight: 600; color: var(--text-primary); }
+
+  /* Loan comparison bar */
+  .loan-compare {
+    margin: 8px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 12px;
+    border-radius: 4px;
+  }
+
+  .loan-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+
+  .loan-bar-track {
+    height: 6px;
+    background: var(--card);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 4px;
+  }
+
+  .loan-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    position: relative;
+  }
+
+  .loan-bar-marker {
+    position: absolute;
+    top: -3px;
+    width: 2px;
+    height: 12px;
+    background: var(--red);
+    border-radius: 1px;
+  }
+
+  /* Screen 3: Transaction Data */
+  .tx-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .partial-data-banner {
+    margin: 10px 12px;
+    background: var(--amber-light);
+    border: 1px solid var(--amber);
+    padding: 8px 10px;
+    border-radius: 3px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .partial-data-text {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--amber);
+    line-height: 1.4;
+  }
+
+  .tx-card {
+    margin: 0 12px 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .tx-card-header {
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    background: var(--card);
+  }
+
+  .tx-card-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  .tx-card-val {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .tx-mini-chart {
+    padding: 8px 12px;
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 36px;
+  }
+
+  .tx-bar {
+    flex: 1;
+    border-radius: 2px 2px 0 0;
+    background: var(--blue-light);
+    border-top: 2px solid var(--blue);
+    transition: all 0.3s;
+  }
+
+  .tx-trend {
+    font-size: 9px;
+    padding: 0 12px 8px;
+    color: var(--text-tertiary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* Screen 4: Recommendation */
+  .rec-hero {
+    padding: 16px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .rec-summary-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .rec-stat {
+    flex: 1;
+    background: var(--card);
+    padding: 8px;
+    border-radius: 3px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+
+  .rec-stat-val {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .rec-stat-label { font-size: 8px; color: var(--text-tertiary); margin-top: 2px; }
+
+  .ai-insight {
+    background: var(--blue-light);
+    border: 1px solid var(--blue);
+    border-radius: 3px;
+    padding: 8px 10px;
+    font-size: 10px;
+    color: var(--blue);
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  .ai-insight-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+  }
+
+  .rec-btn-row {
+    display: flex;
+    gap: 8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .btn-approve {
+    flex: 1;
+    padding: 12px;
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 12px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .btn-reject {
+    flex: 1;
+    padding: 12px;
+    background: var(--surface);
+    color: var(--red);
+    border: 2px solid var(--red);
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 12px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .notes-area {
+    margin: 10px 12px;
+    border: 1.5px solid var(--blue);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .notes-label {
+    background: var(--blue-light);
+    padding: 6px 10px;
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--blue);
+    text-transform: uppercase;
+  }
+
+  .notes-content {
+    padding: 8px 10px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    min-height: 60px;
+    line-height: 1.5;
+    background: var(--surface);
+  }
+
+  .notes-cursor {
+    display: inline-block;
+    width: 1px;
+    height: 12px;
+    background: var(--blue);
+    animation: blink 1s infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  .submit-btn {
+    margin: 10px 12px;
+    width: calc(100% - 24px);
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 13px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  /* Screen 5: Offline/Sync Status */
+  .offline-banner {
+    background: var(--orange);
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .sync-status-card {
+    margin: 10px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .sync-item {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sync-item:last-child { border-bottom: none; }
+
+  .sync-item-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sync-item-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  .sync-item-name { font-size: 11px; font-weight: 600; }
+  .sync-item-time { font-size: 9px; color: var(--text-tertiary); }
+
+  .sync-status-badge {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 3px 7px;
+    border-radius: 2px;
+    font-family: var(--mono);
+  }
+
+  .error-card {
+    margin: 10px 12px;
+    background: var(--red-light);
+    border: 1.5px solid var(--red);
+    border-radius: 4px;
+    padding: 12px;
+  }
+
+  .error-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .error-desc {
+    font-size: 10px;
+    color: var(--red);
+    opacity: 0.8;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .retry-btn {
+    background: var(--red);
+    color: white;
+    border: none;
+    padding: 7px 14px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .queue-count {
+    background: var(--orange);
+    color: white;
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    padding: 2px 5px;
+    border-radius: 10px;
+    min-width: 16px;
+    text-align: center;
+  }
+
+  .page-footer {
+    background: var(--text-primary);
+    color: var(--text-secondary);
+    padding: 16px 48px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* scrolling for screen bodies */
+  .screen-scroll {
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .screen-scroll::-webkit-scrollbar { display: none; }
+
+  .annotation {
+    font-size: 10px;
+    color: var(--text-secondary);
+    text-align: center;
+    max-width: 320px;
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+
+  .state-label {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+    margin-bottom: 6px;
+  }
+
+  .tab-bar {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .tab {
+    flex: 1;
+    padding: 8px 6px;
+    text-align: center;
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    border-bottom: 2px solid transparent;
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .tab.active {
+    color: var(--blue);
+    border-bottom-color: var(--blue);
+  }
+
+  .progress-ring {
+    transform: rotate(-90deg);
+  }
+
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <span class="page-header-badge">TASK 03</span>
+    <h1>Mobile Experience — Field Officer</h1>
+  </div>
+  <div class="page-header-meta">
+    5 SCREENS · HIGH FIDELITY WIREFRAMES<br>
+    320PX WIDTH · ALL DATA STATES COVERED
+  </div>
+</div>
+
+<div class="screens-container">
+
+  <!-- SCREEN 1: Application Queue (with Skeleton Loading State) -->
+  <div class="phone-wrapper">
+    <div class="state-label" style="background:var(--blue-light);color:var(--blue);">SCREEN 1</div>
+    <div class="phone-title">Application Queue</div>
+    <div class="state-label" style="background:var(--purple-light);color:#7C3AED;">⟳ LOADING STATE (SKELETON)</div>
+    <div class="phone-frame">
+      <div class="phone-notch"><div class="phone-pill"></div></div>
+      <div class="phone-screen">
+        <!-- Status Bar -->
+        <div class="status-bar">
+          <span class="status-time">09:41</span>
+          <div class="status-icons">
+            <span class="status-icon">▲▲▲</span>
+            <span class="status-icon" style="color:#F97316;">⬡ OFFLINE</span>
+            <span class="status-icon">⬡⬡⬡</span>
+          </div>
+        </div>
+        <!-- App Header -->
+        <div class="app-header">
+          <div class="app-header-row">
+            <div>
+              <div class="app-title">MFS LOANS</div>
+              <div class="app-subtitle">Field Officer — Reza Mahmoud</div>
+            </div>
+            <div class="sync-badge" style="background:var(--orange-light);color:var(--orange);">
+              <div class="sync-dot" style="background:var(--orange);"></div>
+              Offline
+              <span class="queue-count">3</span>
+            </div>
+          </div>
+        </div>
+        <!-- Filters -->
+        <div class="queue-filters">
+          <div class="filter-chip active">All (12)</div>
+          <div class="filter-chip">New (5)</div>
+          <div class="filter-chip">High Risk</div>
+          <div class="filter-chip">Pending</div>
+        </div>
+        <!-- Skeleton List Items -->
+        <div class="screen-body">
+          <div class="list-section-header">TODAY'S QUEUE — LOADING...</div>
+          <!-- Skeleton items -->
+          <div style="padding:12px 16px; border-bottom:1px solid var(--border);">
+            <div class="skeleton skeleton-row" style="width:60%;height:13px;margin-bottom:8px;"></div>
+            <div style="display:flex;gap:8px;">
+              <div class="skeleton skeleton-row" style="width:60px;height:10px;margin-bottom:4px;"></div>
+              <div class="skeleton skeleton-row" style="width:80px;height:10px;margin-bottom:4px;"></div>
+              <div class="skeleton skeleton-row" style="width:50px;height:10px;margin-bottom:4px;"></div>
+            </div>
+          </div>
+          <div style="padding:12px 16px; border-bottom:1px solid var(--border);">
+            <div class="skeleton skeleton-row" style="width:75%;height:13px;margin-bottom:8px;"></div>
+            <div style="display:flex;gap:8px;">
+              <div class="skeleton skeleton-row" style="width:55px;height:10px;margin-bottom:4px;"></div>
+              <div class="skeleton skeleton-row" style="width:90px;height:10px;margin-bottom:4px;"></div>
+              <div class="skeleton skeleton-row" style="width:40px;height:10px;margin-bottom:4px;"></div>
+            </div>
+          </div>
+          <div style="padding:12px 16px; border-bottom:1px solid var(--border);">
+            <div class="skeleton skeleton-row" style="width:50%;height:13px;margin-bottom:8px;"></div>
+            <div style="display:flex;gap:8px;">
+              <div class="skeleton skeleton-row" style="width:70px;height:10px;margin-bottom:4px;"></div>
+              <div class="skeleton skeleton-row" style="width:60px;height:10px;margin-bottom:4px;"></div>
+              <div class="skeleton skeleton-row" style="width:50px;height:10px;margin-bottom:4px;"></div>
+            </div>
+          </div>
+          <div style="padding:12px 16px; border-bottom:1px solid var(--border);">
+            <div class="skeleton skeleton-row" style="width:65%;height:13px;margin-bottom:8px;"></div>
+            <div style="display:flex;gap:8px;">
+              <div class="skeleton skeleton-row" style="width:65px;height:10px;margin-bottom:4px;"></div>
+              <div class="skeleton skeleton-row" style="width:75px;height:10px;margin-bottom:4px;"></div>
+            </div>
+          </div>
+          <div style="padding:12px 16px; border-bottom:1px solid var(--border);">
+            <div class="skeleton skeleton-row" style="width:55%;height:13px;margin-bottom:8px;"></div>
+            <div style="display:flex;gap:8px;">
+              <div class="skeleton skeleton-row" style="width:60px;height:10px;margin-bottom:4px;"></div>
+              <div class="skeleton skeleton-row" style="width:85px;height:10px;margin-bottom:4px;"></div>
+            </div>
+          </div>
+          <div style="padding:12px 16px;">
+            <div class="skeleton skeleton-row" style="width:70%;height:13px;margin-bottom:8px;"></div>
+            <div style="display:flex;gap:8px;">
+              <div class="skeleton skeleton-row" style="width:55px;height:10px;margin-bottom:4px;"></div>
+              <div class="skeleton skeleton-row" style="width:70px;height:10px;margin-bottom:4px;"></div>
+            </div>
+          </div>
+          <div style="padding:12px 16px; text-align:center; color:var(--text-tertiary); font-size:10px; font-family:var(--mono); margin-top:8px;">
+            Fetching applications...
+          </div>
+        </div>
+        <!-- Bottom Nav -->
+        <div class="bottom-nav">
+          <div class="nav-item active"><div class="nav-icon">⬛</div>Queue</div>
+          <div class="nav-item"><div class="nav-icon">○</div>History</div>
+          <div class="nav-item"><div class="nav-icon">☁</div>Sync</div>
+          <div class="nav-item"><div class="nav-icon">◎</div>Profile</div>
+        </div>
+      </div>
+    </div>
+    <div class="annotation">Skeleton shimmer effect while data loads.<br>Offline badge shows queued items count.</div>
+  </div>
+
+  <!-- SCREEN 2: Customer Profile & Application Detail -->
+  <div class="phone-wrapper">
+    <div class="state-label" style="background:var(--blue-light);color:var(--blue);">SCREEN 2</div>
+    <div class="phone-title">Customer Profile & Detail</div>
+    <div class="state-label" style="background:var(--green-light);color:var(--green);">✓ LOADED STATE</div>
+    <div class="phone-frame">
+      <div class="phone-notch"><div class="phone-pill"></div></div>
+      <div class="phone-screen">
+        <div class="status-bar">
+          <span class="status-time">09:47</span>
+          <div class="status-icons">
+            <span class="status-icon">▲▲▲</span>
+            <span class="status-icon" style="color:#059669;">● ONLINE</span>
+            <span class="status-icon">⬡⬡⬡</span>
+          </div>
+        </div>
+        <div class="screen-scroll">
+          <!-- Hero -->
+          <div class="profile-hero">
+            <div class="back-row">← Applications</div>
+            <div class="profile-name">Fatema Begum</div>
+            <div class="profile-id">APP-2025-08471 · Applied 2 days ago</div>
+            <div class="profile-risk-row">
+              <div class="risk-tag high" style="padding:4px 8px;font-size:10px;">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;"><path d="M12 3C12 3 8 7 8 11C8 11 6 10 6 8C6 8 3 10 3 14C3 17.3 6.1 20 10 20.9V22H14V20.9C17.9 20 21 17.3 21 14C21 10 18 8 18 8C18 10 16 11 16 11C16 7 12 3 12 3Z" fill="#DC2626"/></svg>
+                HIGH RISK
+              </div>
+              <div style="display:flex;gap:8px;flex:1;justify-content:flex-end;">
+                <div class="profile-stat">
+                  <div class="profile-stat-val">৳ 50K</div>
+                  <div class="profile-stat-label">Requested</div>
+                </div>
+                <div class="profile-stat">
+                  <div class="profile-stat-val">৳ 35K</div>
+                  <div class="profile-stat-label">Eligible</div>
+                </div>
+                <div class="profile-stat">
+                  <div class="profile-stat-val">24mo</div>
+                  <div class="profile-stat-label">Tenure</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stale data warning -->
+          <div style="margin:10px 12px 0; background:var(--amber-light); border:1px solid var(--amber); padding:6px 10px; border-radius:3px; display:flex; align-items:center; gap:6px;">
+            <span style="font-size:12px;">⚠</span>
+            <span style="font-size:9px; color:var(--amber); font-weight:600;">Data cached 3h 22m ago · Tap to refresh</span>
+          </div>
+
+          <!-- Loan Amount Compare -->
+          <div class="loan-compare">
+            <div style="font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:8px;">LOAN REQUEST VS ELIGIBLE</div>
+            <div class="loan-bar-label">
+              <span style="font-size:10px;font-weight:600;color:var(--green);">Eligible ৳35,000</span>
+              <span style="font-size:10px;font-weight:600;color:var(--red);">Requested ৳50,000</span>
+            </div>
+            <div class="loan-bar-track">
+              <div class="loan-bar-fill" style="width:70%;background:var(--green);">
+                <div class="loan-bar-marker" style="left:100%;"></div>
+              </div>
+            </div>
+            <div style="font-size:9px;color:var(--red);font-weight:600;">⚠ Request exceeds eligible by ৳15,000 (43% over)</div>
+          </div>
+
+          <!-- Customer Profile -->
+          <div class="info-card">
+            <div class="info-card-header">CUSTOMER PROFILE</div>
+            <div class="info-card-body">
+              <div class="info-row"><span class="info-key">Previous Applications</span><span class="info-val">3 (2 approved)</span></div>
+              <div class="info-row"><span class="info-key">Active Loans</span><span class="info-val" style="color:var(--amber);">1 Ongoing</span></div>
+              <div class="info-row"><span class="info-key">Account Age</span><span class="info-val">4 years 2 mo</span></div>
+              <div class="info-row"><span class="info-key">Repayment History</span><span class="info-val" style="color:var(--green);">On-time 87%</span></div>
+              <div class="info-row"><span class="info-key">Business Type</span><span class="info-val">Retail Trade</span></div>
+            </div>
+          </div>
+
+          <!-- Interest Rate -->
+          <div class="info-card" style="margin-bottom:16px;">
+            <div class="info-card-header">LOAN TERMS</div>
+            <div class="info-card-body">
+              <div class="info-row"><span class="info-key">Interest Rate</span><span class="info-val">18% p.a. flat</span></div>
+              <div class="info-row"><span class="info-key">Processing Fee</span><span class="info-val">৳ 750</span></div>
+              <div class="info-row"><span class="info-key">Monthly EMI</span><span class="info-val" style="color:var(--blue);">৳ 2,458</span></div>
+            </div>
+          </div>
+
+        </div>
+        <!-- Fixed CTA at bottom -->
+        <div style="padding:10px 12px;border-top:1px solid var(--border);background:var(--surface);">
+          <button style="width:100%;background:var(--blue);color:white;border:none;padding:12px;border-radius:4px;font-weight:700;font-size:13px;cursor:pointer;">View Transactions →</button>
+        </div>
+      </div>
+    </div>
+    <div class="annotation">Dark hero with risk tag, stale data alert.<br>Loan bar shows overshoot at a glance.</div>
+  </div>
+
+  <!-- SCREEN 3: Transaction Indicators (Partial Data State) -->
+  <div class="phone-wrapper">
+    <div class="state-label" style="background:var(--blue-light);color:var(--blue);">SCREEN 3</div>
+    <div class="phone-title">Transaction Indicators</div>
+    <div class="state-label" style="background:var(--amber-light);color:var(--amber);">⚠ PARTIAL DATA (1/3 MONTHS)</div>
+    <div class="phone-frame">
+      <div class="phone-notch"><div class="phone-pill"></div></div>
+      <div class="phone-screen">
+        <div class="status-bar">
+          <span class="status-time">09:52</span>
+          <div class="status-icons">
+            <span class="status-icon">▲▲</span>
+            <span class="status-icon" style="color:#059669;">● ONLINE</span>
+            <span class="status-icon">⬡⬡⬡</span>
+          </div>
+        </div>
+        <!-- Tab bar -->
+        <div style="background:var(--surface);border-bottom:1px solid var(--border);">
+          <div class="back-row" style="padding:8px 16px;background:var(--card);border-bottom:1px solid var(--border);">← Fatema Begum</div>
+          <div class="tab-bar">
+            <div class="tab">Profile</div>
+            <div class="tab active">Transactions</div>
+            <div class="tab">Recommend</div>
+          </div>
+        </div>
+        <div class="screen-scroll" style="background:var(--bg);">
+          <!-- Partial Data Banner -->
+          <div class="partial-data-banner">
+            <span style="font-size:16px;flex-shrink:0;">⚠</span>
+            <div class="partial-data-text">
+              <strong>Partial Data: 1 of 3 months available.</strong><br>
+              Customer account is 5 weeks old. Risk score confidence is reduced. This is flagged for the Manager.
+            </div>
+          </div>
+
+          <!-- Confidence indicator -->
+          <div style="margin:0 12px 8px; background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:10px 12px; display:flex; align-items:center; justify-content:space-between;">
+            <div style="font-size:10px; font-weight:600; color:var(--text-secondary);">Risk Score Confidence</div>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <div style="width:60px; height:6px; background:var(--card); border-radius:3px; overflow:hidden;">
+                <div style="width:33%; height:100%; background:var(--amber); border-radius:3px;"></div>
+              </div>
+              <span style="font-family:var(--mono); font-size:9px; font-weight:700; color:var(--amber);">LOW</span>
+            </div>
+          </div>
+
+          <!-- Tx Cards -->
+          <div class="tx-card" style="margin-top:0;">
+            <div class="tx-card-header">
+              <span class="tx-card-label">💳 Total Payments</span>
+              <span class="tx-card-val" style="color:var(--blue);">৳ 18,400</span>
+            </div>
+            <div class="tx-mini-chart">
+              <div class="tx-bar" style="height:60%;background:var(--blue-light);border-color:var(--border);"></div>
+              <div class="tx-bar" style="height:40%;background:var(--blue-light);border-color:var(--border);"></div>
+              <div class="tx-bar" style="height:80%;"></div>
+            </div>
+            <div class="tx-trend"><span style="color:var(--amber);">— Only 1 month of data</span></div>
+          </div>
+
+          <div class="tx-card">
+            <div class="tx-card-header">
+              <span class="tx-card-label">📱 Mobile Recharge</span>
+              <span class="tx-card-val" style="color:var(--green);">৳ 3,200</span>
+            </div>
+            <div class="tx-mini-chart">
+              <div class="tx-bar" style="height:40%;background:var(--blue-light);border-color:var(--border);"></div>
+              <div class="tx-bar" style="height:40%;background:var(--blue-light);border-color:var(--border);"></div>
+              <div class="tx-bar" style="height:55%;background:var(--green-light);border-color:var(--green);"></div>
+            </div>
+            <div class="tx-trend"><span style="color:var(--amber);">— Only 1 month of data</span></div>
+          </div>
+
+          <div class="tx-card">
+            <div class="tx-card-header">
+              <span class="tx-card-label">🔄 Cash In/Out</span>
+              <span class="tx-card-val" style="color:var(--text-primary);">৳ 42,100</span>
+            </div>
+            <div class="tx-mini-chart">
+              <div class="tx-bar" style="height:40%;background:var(--blue-light);border-color:var(--border);"></div>
+              <div class="tx-bar" style="height:40%;background:var(--blue-light);border-color:var(--border);"></div>
+              <div class="tx-bar" style="height:100%;"></div>
+            </div>
+            <div class="tx-trend"><span style="color:var(--amber);">— Only 1 month of data</span></div>
+          </div>
+
+          <div class="tx-card" style="margin-bottom:16px;">
+            <div class="tx-card-header">
+              <span class="tx-card-label">👥 P2P Transfers</span>
+              <span class="tx-card-val" style="color:var(--red);">৳ 1,800</span>
+            </div>
+            <div class="tx-mini-chart">
+              <div class="tx-bar" style="height:40%;background:var(--blue-light);border-color:var(--border);"></div>
+              <div class="tx-bar" style="height:40%;background:var(--blue-light);border-color:var(--border);"></div>
+              <div class="tx-bar" style="height:20%;background:var(--red-light);border-color:var(--red);"></div>
+            </div>
+            <div class="tx-trend"><span style="color:var(--amber);">— Only 1 month of data</span></div>
+          </div>
+        </div>
+        <div style="padding:10px 12px;border-top:1px solid var(--border);background:var(--surface);">
+          <button style="width:100%;background:var(--text-primary);color:white;border:none;padding:12px;border-radius:4px;font-weight:700;font-size:13px;cursor:pointer;">Go to Recommendation →</button>
+        </div>
+      </div>
+    </div>
+    <div class="annotation">Partial data banner + confidence bar.<br>Chart shows missing months greyed out.</div>
+  </div>
+
+  <!-- SCREEN 4: Recommendation Screen -->
+  <div class="phone-wrapper">
+    <div class="state-label" style="background:var(--blue-light);color:var(--blue);">SCREEN 4</div>
+    <div class="phone-title">Recommendation & Notes</div>
+    <div class="state-label" style="background:var(--green-light);color:var(--green);">✓ RECOMMEND APPROVE SELECTED</div>
+    <div class="phone-frame">
+      <div class="phone-notch"><div class="phone-pill"></div></div>
+      <div class="phone-screen">
+        <div class="status-bar">
+          <span class="status-time">10:04</span>
+          <div class="status-icons">
+            <span class="status-icon">▲▲▲</span>
+            <span class="status-icon" style="color:#059669;">● ONLINE</span>
+          </div>
+        </div>
+        <div style="background:var(--card);border-bottom:1px solid var(--border);">
+          <div class="back-row" style="padding:8px 16px;">← Fatema Begum — Transactions</div>
+          <div class="tab-bar">
+            <div class="tab">Profile</div>
+            <div class="tab">Transactions</div>
+            <div class="tab active">Recommend</div>
+          </div>
+        </div>
+        <div class="screen-scroll" style="background:var(--bg);">
+          <!-- Summary stats -->
+          <div style="padding:10px 12px;">
+            <div style="font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:8px;">QUICK SUMMARY</div>
+            <div class="rec-summary-row">
+              <div class="rec-stat">
+                <div class="rec-stat-val">HIGH</div>
+                <div class="rec-stat-label">Risk Tier</div>
+              </div>
+              <div class="rec-stat">
+                <div class="rec-stat-val">৳35K</div>
+                <div class="rec-stat-label">Eligible</div>
+              </div>
+              <div class="rec-stat">
+                <div class="rec-stat-val">143%</div>
+                <div class="rec-stat-label">Req/Eligible</div>
+              </div>
+              <div class="rec-stat">
+                <div class="rec-stat-val">1/3</div>
+                <div class="rec-stat-label">Data Months</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Insight -->
+          <div style="padding:0 12px 8px;">
+            <div class="ai-insight">
+              <span class="ai-insight-label">⚡ SYSTEM FLAG</span>
+              Requested amount exceeds eligible limit. Customer has 1 active loan. Recommend reviewing at eligible amount (৳35,000) if approving.
+            </div>
+          </div>
+
+          <!-- Decision buttons -->
+          <div style="padding:8px 12px;">
+            <div style="font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:8px;">YOUR RECOMMENDATION</div>
+            <div class="rec-btn-row" style="padding:0;gap:8px;">
+              <button class="btn-approve" style="box-shadow:0 0 0 2px var(--green), 0 0 0 4px var(--green-light);">
+                ✓ Recommend Approve
+              </button>
+              <button class="btn-reject">
+                ✗ Recommend Reject
+              </button>
+            </div>
+          </div>
+
+          <!-- Notes -->
+          <div style="padding:0 12px 8px;">
+            <div style="font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:6px;">RATIONALE NOTES <span style="color:var(--red);">*required</span></div>
+            <div class="notes-area">
+              <div class="notes-label">FIELD OFFICER NOTES</div>
+              <div class="notes-content">
+                Customer runs a small grocery shop in Mirpur. Business appeared active during visit. Recommend approving at ৳35,000 (eligible amount). Cash flow is high but limited history.<span class="notes-cursor"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Approve at eligible amount toggle -->
+          <div style="margin:0 12px 8px; background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:10px 12px; display:flex; align-items:center; justify-content:space-between;">
+            <div>
+              <div style="font-size:11px;font-weight:600;">Recommend eligible amount</div>
+              <div style="font-size:9px;color:var(--text-tertiary);">Approve at ৳35,000 instead of ৳50,000</div>
+            </div>
+            <div style="width:36px;height:20px;background:var(--blue);border-radius:10px;position:relative;cursor:pointer;">
+              <div style="width:16px;height:16px;background:white;border-radius:50%;position:absolute;top:2px;right:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2);"></div>
+            </div>
+          </div>
+
+          <button class="submit-btn" style="display:block;margin-bottom:16px;">Submit Recommendation →</button>
+        </div>
+      </div>
+    </div>
+    <div class="annotation">Approve button selected (ring highlight).<br>Mandatory rationale notes, eligible toggle.</div>
+  </div>
+
+  <!-- SCREEN 5: Offline / Sync / Error State -->
+  <div class="phone-wrapper">
+    <div class="state-label" style="background:var(--blue-light);color:var(--blue);">SCREEN 5</div>
+    <div class="phone-title">Sync Status & Error State</div>
+    <div class="state-label" style="background:var(--red-light);color:var(--red);">✗ ERROR STATE (SYNC FAILED)</div>
+    <div class="phone-frame">
+      <div class="phone-notch"><div class="phone-pill"></div></div>
+      <div class="phone-screen">
+        <div class="status-bar">
+          <span class="status-time">11:23</span>
+          <div class="status-icons">
+            <span class="status-icon">▲</span>
+            <span class="status-icon" style="color:#F97316;">● WEAK</span>
+            <span class="status-icon">⬡⬡⬡</span>
+          </div>
+        </div>
+        <!-- Offline banner -->
+        <div class="offline-banner">
+          <span>⚡</span>
+          <span>Connection lost — 3 items pending sync</span>
+        </div>
+        <div class="app-header">
+          <div class="app-header-row">
+            <div>
+              <div class="app-title">SYNC STATUS</div>
+              <div class="app-subtitle">Last sync: 11:01 AM today</div>
+            </div>
+            <div class="sync-badge" style="background:var(--red-light);color:var(--red);">
+              <div class="sync-dot" style="background:var(--red);"></div>
+              Failed
+            </div>
+          </div>
+        </div>
+        <div class="screen-scroll" style="background:var(--bg);">
+          <!-- Error Card -->
+          <div class="error-card">
+            <div class="error-title">
+              <span>✗</span> Sync Failed — Attempt 3/3
+            </div>
+            <div class="error-desc">
+              Unable to reach server after 3 retries. Your recommendations are safely stored on this device. They will sync automatically when connection is restored.
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button class="retry-btn">↺ Retry Now</button>
+              <button style="background:transparent;color:var(--red);border:1.5px solid var(--red);padding:7px 14px;border-radius:3px;font-size:11px;font-weight:700;cursor:pointer;">Contact IT</button>
+            </div>
+          </div>
+
+          <!-- Pending Queue -->
+          <div style="margin:0 12px;">
+            <div style="font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:8px;">PENDING SYNC QUEUE</div>
+          </div>
+
+          <div class="sync-status-card">
+            <div class="sync-item">
+              <div class="sync-item-left">
+                <div class="sync-item-icon" style="background:var(--orange-light);">📋</div>
+                <div>
+                  <div class="sync-item-name">Fatema Begum</div>
+                  <div class="sync-item-time">Submitted 10:04 AM · Recommend Approve</div>
+                </div>
+              </div>
+              <div class="sync-status-badge" style="background:var(--orange-light);color:var(--orange);">PENDING</div>
+            </div>
+            <div class="sync-item">
+              <div class="sync-item-left">
+                <div class="sync-item-icon" style="background:var(--orange-light);">📋</div>
+                <div>
+                  <div class="sync-item-name">Karim Uddin</div>
+                  <div class="sync-item-time">Submitted 09:12 AM · Recommend Reject</div>
+                </div>
+              </div>
+              <div class="sync-status-badge" style="background:var(--orange-light);color:var(--orange);">PENDING</div>
+            </div>
+            <div class="sync-item">
+              <div class="sync-item-left">
+                <div class="sync-item-icon" style="background:var(--orange-light);">📋</div>
+                <div>
+                  <div class="sync-item-name">Nasrin Akter</div>
+                  <div class="sync-item-time">Submitted 08:55 AM · Recommend Approve</div>
+                </div>
+              </div>
+              <div class="sync-status-badge" style="background:var(--orange-light);color:var(--orange);">PENDING</div>
+            </div>
+          </div>
+
+          <!-- Successfully synced -->
+          <div style="margin:12px 12px 0;">
+            <div style="font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:8px;">SYNCED TODAY</div>
+          </div>
+
+          <div class="sync-status-card">
+            <div class="sync-item">
+              <div class="sync-item-left">
+                <div class="sync-item-icon" style="background:var(--green-light);">✓</div>
+                <div>
+                  <div class="sync-item-name">Md. Alam Hossain</div>
+                  <div class="sync-item-time">Synced 08:32 AM</div>
+                </div>
+              </div>
+              <div class="sync-status-badge" style="background:var(--green-light);color:var(--green);">SYNCED</div>
+            </div>
+            <div class="sync-item">
+              <div class="sync-item-left">
+                <div class="sync-item-icon" style="background:var(--green-light);">✓</div>
+                <div>
+                  <div class="sync-item-name">Rashida Khatun</div>
+                  <div class="sync-item-time">Synced 07:58 AM</div>
+                </div>
+              </div>
+              <div class="sync-status-badge" style="background:var(--green-light);color:var(--green);">SYNCED</div>
+            </div>
+          </div>
+
+          <!-- Data safety assurance -->
+          <div style="margin:12px 12px 16px; background:var(--blue-light); border:1px solid var(--blue); border-radius:3px; padding:10px 12px;">
+            <div style="font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:0.1em;color:var(--blue);margin-bottom:4px;text-transform:uppercase;">DATA SAFETY</div>
+            <div style="font-size:10px;color:var(--blue);line-height:1.5;">All recommendations are stored locally and will not be lost. Sync will resume automatically.</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="annotation">Error state with 3 retry attempts logged.<br>Pending queue persisted locally. Safe storage assured.</div>
+  </div>
+
+</div>
+
+<div class="page-footer">
+  <span>MFS LOAN DECISIONING SYSTEM · TASK 03 · MOBILE EXPERIENCE (FIELD OFFICER)</span>
+  <span>5 SCREENS · SKELETON · PARTIAL DATA · RECOMMEND · ERROR/SYNC STATES</span>
+</div>
+
+</body>
+</html>
