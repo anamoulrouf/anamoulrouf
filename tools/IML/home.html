@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MFS LoanFlow OS — Design Submission</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F8FAFC;--s:#fff;--c:#F1F5F9;--b:#E2E8F0;--b2:#CBD5E1;--amber:#D97706;--abg:#FFFBEB;--ab:#FDE68A;--green:#059669;--gbg:#ECFDF5;--red:#DC2626;--blue:#2563EB;--bbg:#EFF6FF;--pur:#7C3AED;--t1:#0F172A;--t2:#475569;--t3:#94A3B8;--mono:'IBM Plex Mono',monospace;--sans:'Inter',sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}body{background:var(--bg);color:var(--t1);font-family:var(--sans);}
+nav{background:var(--s);border-bottom:1px solid var(--b);padding:0 48px;display:flex;align-items:center;height:56px;position:sticky;top:0;z-index:100;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+.logo{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--amber);letter-spacing:2px;}
+.sep{width:1px;height:20px;background:var(--b);margin:0 20px;}
+.nsub{font-size:12px;color:var(--t3);}
+.nbadge{margin-left:auto;background:var(--abg);border:1px solid var(--ab);color:var(--amber);font-family:var(--mono);font-size:10px;padding:3px 10px;letter-spacing:1px;}
+.hero{padding:72px 48px 56px;max-width:1280px;margin:0 auto;}
+.htag{font-family:var(--mono);font-size:10px;color:var(--amber);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;}
+.htitle{font-size:52px;font-weight:700;line-height:1.1;letter-spacing:-1.5px;margin-bottom:14px;}
+.htitle span{color:var(--amber);}
+.hsub{font-size:15px;color:var(--t2);max-width:580px;line-height:1.75;margin-bottom:36px;}
+.hmeta{display:flex;gap:20px;flex-wrap:wrap;}
+.hm{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--t3);}
+.hmdot{width:7px;height:7px;border-radius:50%;}
+.sec{max-width:1280px;margin:0 auto;padding:0 48px 72px;}
+.slabel{font-family:var(--mono);font-size:10px;color:var(--t3);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+.stitle{font-size:24px;font-weight:700;color:var(--t1);margin-bottom:28px;}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:56px;}
+.dcard{background:var(--s);border:1px solid var(--b);border-radius:10px;overflow:hidden;transition:all .2s;text-decoration:none;color:inherit;display:block;}
+.dcard:hover{box-shadow:0 12px 32px rgba(0,0,0,.09);transform:translateY(-3px);border-color:var(--amber);}
+.dct{padding:28px 28px 20px;}
+.dnum{font-family:var(--mono);font-size:10px;color:var(--t3);letter-spacing:2px;margin-bottom:8px;}
+.dtitle{font-size:19px;font-weight:700;margin-bottom:8px;}
+.dsub{font-size:13px;color:var(--t2);line-height:1.65;margin-bottom:18px;}
+.dtags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px;}
+.dtag{font-family:var(--mono);font-size:9px;padding:3px 9px;border-radius:20px;letter-spacing:.5px;}
+.pstrip{display:flex;gap:3px;margin:16px 28px 0;height:3px;}
+.pbar{flex:1;border-radius:2px;}
+.dcb{background:var(--c);border-top:1px solid var(--b);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;}
+.dsc{font-family:var(--mono);font-size:10px;color:var(--t3);}
+.dcta{font-size:12px;font-weight:600;color:var(--amber);}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:48px;}
+.pcard{background:var(--s);border:1px solid var(--b);border-radius:8px;padding:22px;}
+.picon{font-size:22px;margin-bottom:10px;}
+.ptitle{font-size:13px;font-weight:700;margin-bottom:6px;}
+.pbody{font-size:12px;color:var(--t2);line-height:1.7;}
+.pgrid2{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.pcard2{background:var(--s);border:1px solid var(--b);border-radius:6px;padding:16px;}
+.pcard2 .picon{font-size:18px;margin-bottom:7px;}
+.pcard2 .ptitle{font-size:11px;color:var(--t3);font-weight:500;font-family:var(--mono);letter-spacing:1px;text-transform:uppercase;}
+.pcard2 .pval{font-size:13px;font-weight:600;color:var(--t1);margin-top:3px;}
+footer{background:var(--s);border-top:1px solid var(--b);padding:24px 48px;display:flex;justify-content:space-between;align-items:center;}
+.fl{font-family:var(--mono);font-size:10px;color:var(--t3);}
+.fr{display:flex;gap:14px;}
+.fl2{font-size:11px;color:var(--t3);}
+</style>
+</head>
+<body>
+<nav><div class="logo">MFS · LOANFLOW OS</div><div class="sep"></div><div class="nsub">Small Business Loan Decisioning & Workflow System</div><div class="nbadge">DESIGN SUBMISSION</div></nav>
+<div class="hero">
+  <div class="htag">Design Challenge · 72-Hour Submission</div>
+  <div class="htitle">MFS Loan <span>Decisioning</span><br>&amp; Workflow System</div>
+  <div class="hsub">A complete product design system solving field officer cognitive overload, decision noise, offline data conflicts, and manager throughput bottlenecks for a Mobile Financial Services platform.</div>
+  <div class="hmeta">
+    <div class="hm"><div class="hmdot" style="background:var(--amber)"></div>2 User Personas</div>
+    <div class="hm"><div class="hmdot" style="background:var(--blue)"></div>4 Deliverables</div>
+    <div class="hm"><div class="hmdot" style="background:var(--green)"></div>10 UI Screens</div>
+    <div class="hm"><div class="hmdot" style="background:var(--pur)"></div>5 Custom Icons</div>
+    <div class="hm"><div class="hmdot" style="background:var(--red)"></div>4 Edge Cases</div>
+  </div>
+</div>
+<div class="sec">
+  <div class="slabel">All Deliverables</div>
+  <div class="stitle">4 Tasks</div>
+  <div class="dgrid">
+    <a class="dcard" href="task1-journey-map.html">
+      <div class="pstrip"><div class="pbar" style="background:#2563EB"></div><div class="pbar" style="background:#7C3AED"></div><div class="pbar" style="background:#059669"></div></div>
+      <div class="dct">
+        <div class="dnum">TASK 01</div>
+        <div class="dtitle">Systems Logic & Journey Map</div>
+        <div class="dsub">Full swim-lane journey across 6 phases. Offline conflict resolution, sync failure, partial data edge cases. KPI design rationale for both personas.</div>
+        <div class="dtags">
+          <span class="dtag" style="background:#EFF6FF;color:#2563EB">Swim Lane</span>
+          <span class="dtag" style="background:#F5F3FF;color:#7C3AED">Edge Cases</span>
+          <span class="dtag" style="background:#ECFDF5;color:#059669">KPI Design</span>
+          <span class="dtag" style="background:#FFFBEB;color:#D97706">Offline Logic</span>
+        </div>
+      </div>
+      <div class="dcb"><div class="dsc">6 Phases · 3 Edge Cases · 2 KPIs</div><div class="dcta">Open →</div></div>
+    </a>
+    <a class="dcard" href="task2-icon-spec.html">
+      <div class="pstrip"><div class="pbar" style="background:#DC2626"></div><div class="pbar" style="background:#D97706"></div><div class="pbar" style="background:#059669"></div><div class="pbar" style="background:#2563EB"></div><div class="pbar" style="background:#D97706"></div></div>
+      <div class="dct">
+        <div class="dnum">TASK 02</div>
+        <div class="dtitle">Custom Iconography & Visual Language</div>
+        <div class="dsub">5 custom icons on 24px grid. Triangle/Diamond/Circle shapes ensure color-blind accessibility. Full spec with scale demos, usage context, and WCAG rationale.</div>
+        <div class="dtags">
+          <span class="dtag" style="background:#FEF2F2;color:#DC2626">▲ High Risk</span>
+          <span class="dtag" style="background:#FFFBEB;color:#D97706">◆ Med Risk</span>
+          <span class="dtag" style="background:#ECFDF5;color:#059669">● Low Risk</span>
+          <span class="dtag" style="background:#EFF6FF;color:#2563EB">Offline/Sync</span>
+        </div>
+      </div>
+      <div class="dcb"><div class="dsc">5 Icons · 24px Grid · WCAG 1.4.1</div><div class="dcta">Open →</div></div>
+    </a>
+    <a class="dcard" href="task3-mobile-officer.html">
+      <div class="pstrip"><div class="pbar" style="background:#2563EB"></div><div class="pbar" style="background:#D97706"></div><div class="pbar" style="background:#059669"></div><div class="pbar" style="background:#DC2626"></div><div class="pbar" style="background:#7C3AED"></div></div>
+      <div class="dct">
+        <div class="dnum">TASK 03</div>
+        <div class="dtitle">Mobile Experience — Field Officer</div>
+        <div class="dsub">5-screen interactive prototype: Queue dashboard, Customer profile with AI summary, Transaction trends with partial-data toggle, Recommendation form, and 4-state Sync screen.</div>
+        <div class="dtags">
+          <span class="dtag" style="background:#EFF6FF;color:#2563EB">5 Screens</span>
+          <span class="dtag" style="background:#FFFBEB;color:#D97706">Offline Mode</span>
+          <span class="dtag" style="background:#FEF2F2;color:#DC2626">Sync States</span>
+          <span class="dtag" style="background:#F5F3FF;color:#7C3AED">Partial Data</span>
+        </div>
+      </div>
+      <div class="dcb"><div class="dsc">5 Screens · 4 UI States · Interactive</div><div class="dcta">Open →</div></div>
+    </a>
+    <a class="dcard" href="task4-web-manager.html">
+      <div class="pstrip"><div class="pbar" style="background:#059669"></div><div class="pbar" style="background:#2563EB"></div><div class="pbar" style="background:#D97706"></div><div class="pbar" style="background:#DC2626"></div><div class="pbar" style="background:#7C3AED"></div></div>
+      <div class="dct">
+        <div class="dnum">TASK 04</div>
+        <div class="dtitle">Web Experience — Manager Portal</div>
+        <div class="dsub">5-screen interactive portal: Live dashboard with KPIs, queue with all 4 states, application detail with conflict comparison, full batch processing, and decision confirmation.</div>
+        <div class="dtags">
+          <span class="dtag" style="background:#ECFDF5;color:#059669">5 Screens</span>
+          <span class="dtag" style="background:#FFFBEB;color:#D97706">Batch Mode</span>
+          <span class="dtag" style="background:#FEF2F2;color:#DC2626">Conflict Review</span>
+          <span class="dtag" style="background:#EFF6FF;color:#2563EB">Skeleton UI</span>
+        </div>
+      </div>
+      <div class="dcb"><div class="dsc">5 Screens · Batch Mode · 4 States · Interactive</div><div class="dcta">Open →</div></div>
+    </a>
+  </div>
+  <div class="slabel">Design Rationale</div>
+  <div class="stitle">Core Principles</div>
+  <div class="pgrid">
+    <div class="pcard"><div class="picon">📶</div><div class="ptitle">Offline-First Architecture</div><div class="pbody">Never blocks field officers due to connectivity. Recommendations are stored locally with encrypted retry queues. Data staleness is surfaced explicitly to the manager — not silently ignored.</div></div>
+    <div class="pcard"><div class="picon">🧠</div><div class="ptitle">Cognitive Load Reduction</div><div class="pbody">Raw 3-month transaction data is pre-processed into AI-generated flag summaries. FOs see "what to pay attention to" — trend bars replace number tables. Anomalies surface automatically.</div></div>
+    <div class="pcard"><div class="picon">⚡</div><div class="ptitle">Manager Throughput Design</div><div class="pbody">Batch processing restricted to Low-risk + FO-Approved + no-conflict cases only, preventing batch as a risk shortcut. Queue sorts by risk tier, amount, and conflict flag automatically.</div></div>
+    <div class="pcard"><div class="picon">♿</div><div class="ptitle">Accessibility as Constraint</div><div class="pbody">Risk icons use distinct geometric shapes (▲ triangle / ◆ diamond / ● circle), not just color, satisfying WCAG 1.4.1 for deuteranopia and protanopia.</div></div>
+    <div class="pcard"><div class="picon">🔍</div><div class="ptitle">Transparency Architecture</div><div class="pbody">FO reasoning note is mandatory (≥20 chars) and visible to the manager. Conflict cases show a data comparison — server state vs. FO review state. Managers must acknowledge conflicts.</div></div>
+    <div class="pcard"><div class="picon">🛡</div><div class="ptitle">No Silent Failure</div><div class="pbody">Every error state shows a specific code, human-readable cause, safety assurance ("data saved"), and recovery action. Local data is never deleted without server receipt confirmation.</div></div>
+  </div>
+  <div class="slabel">Technical Scope</div>
+  <div class="stitle" style="margin-bottom:18px">Platform Constraints Addressed</div>
+  <div class="pgrid2">
+    <div class="pcard2"><div class="picon">📱</div><div class="ptitle">Mobile Platform</div><div class="pval">Offline-first, pre-fetch on connect</div></div>
+    <div class="pcard2"><div class="picon">🔄</div><div class="ptitle">Sync Logic</div><div class="pval">Backoff retry + conflict detection</div></div>
+    <div class="pcard2"><div class="picon">🖥</div><div class="ptitle">Web Portal</div><div class="pval">Real-time queue, batch ops</div></div>
+    <div class="pcard2"><div class="picon">📊</div><div class="ptitle">Data Coverage</div><div class="pval">Partial data flag (1–2 of 3 mo)</div></div>
+  </div>
+</div>
+<footer>
+  <div class="fl">MFS LOANFLOW OS · DESIGN SUBMISSION · 72-HOUR CHALLENGE</div>
+  <div class="fr"><span class="fl2">index.html</span><span class="fl2">task1-journey-map.html</span><span class="fl2">task2-icon-spec.html</span><span class="fl2">task3-mobile-officer.html</span><span class="fl2">task4-web-manager.html</span></div>
+</footer>
+</body></html>

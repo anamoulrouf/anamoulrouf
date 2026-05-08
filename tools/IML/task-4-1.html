@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Task 4 — Manager Web Portal · MFS LoanFlow</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#F8FAFC;--surface:#FFFFFF;--card:#F8FAFC;--card2:#F1F5F9;
+  --border:#E2E8F0;--border2:#CBD5E1;
+  --amber:#B45309;--amber-bg:#FEF3C7;--amber-b:#FCD34D;--amber-dim:rgba(180,83,9,.07);
+  --green:#047857;--green-bg:#D1FAE5;--green-b:#6EE7B7;--green-dim:rgba(4,120,87,.07);
+  --red:#B91C1C;--red-bg:#FEE2E2;--red-b:#FCA5A5;--red-dim:rgba(185,28,28,.07);
+  --blue:#1D4ED8;--blue-bg:#DBEAFE;--blue-b:#93C5FD;--blue-dim:rgba(29,78,216,.07);
+  --orange:#C2410C;--orange-bg:#FFEDD5;--orange-b:#FDBA74;
+  --purple:#6D28D9;--purple-bg:#EDE9FE;--purple-b:#C4B5FD;
+  --t1:#0F172A;--t2:#334155;--t3:#64748B;--t4:#94A3B8;--t5:#CBD5E1;
+  --mono:'IBM Plex Mono',monospace;--sans:'DM Sans',sans-serif;
+  --sidebar:228px;--topbar:56px;
+}
+*{box-sizing:border-box;}
+body{background:var(--bg);color:var(--t1);font-family:var(--sans);height:100vh;display:flex;flex-direction:column;overflow:hidden;}
+a{color:var(--amber);text-decoration:none;}
+
+/* ══ GLOBAL TOP NAV ══ */
+.topbar{height:var(--topbar);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px 0 0;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,.05);position:relative;z-index:200;}
+.topbar-logo{width:var(--sidebar);padding:0 20px;border-right:1px solid var(--border);height:100%;display:flex;align-items:center;flex-shrink:0;}
+.logo-text{font-family:var(--mono);font-size:12px;color:var(--amber);letter-spacing:2.5px;font-weight:600;}
+.logo-sub{font-family:var(--mono);font-size:8px;color:var(--t4);letter-spacing:1.5px;margin-top:2px;}
+.topbar-screens{display:flex;align-items:center;gap:0;flex:1;height:100%;padding-left:8px;}
+.ts-btn{height:100%;padding:0 16px;font-family:var(--mono);font-size:10px;color:var(--t3);letter-spacing:1px;cursor:pointer;border:none;background:transparent;border-bottom:2px solid transparent;transition:all .18s;white-space:nowrap;}
+.ts-btn:hover{color:var(--t1);}
+.ts-btn.active{color:var(--amber);border-bottom-color:var(--amber);}
+.topbar-right{display:flex;align-items:center;gap:10px;margin-left:auto;padding-left:16px;}
+.nav-ext{font-family:var(--mono);font-size:9px;color:var(--t4);letter-spacing:1px;}
+.badge{background:var(--amber-bg);border:1px solid var(--amber-b);color:var(--amber);font-family:var(--mono);font-size:9px;padding:4px 10px;letter-spacing:1px;border-radius:3px;}
+.ext-nav{display:flex;gap:4px;}
+.ext-link{font-family:var(--mono);font-size:9px;color:var(--t3);padding:5px 10px;border:1px solid transparent;letter-spacing:1px;border-radius:3px;transition:all .18s;}
+.ext-link:hover,.ext-link.cur{background:var(--amber-bg);border-color:var(--amber-b);color:var(--amber);}
+
+/* ══ SHELL ══ */
+.shell{display:flex;flex:1;overflow:hidden;}
+
+/* ══ SIDEBAR ══ */
+.sidebar{width:var(--sidebar);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;}
+.sb-section{padding:18px 12px 8px;}
+.sb-label{font-family:var(--mono);font-size:8px;color:var(--t4);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;padding:0 8px;}
+.sb-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:4px;cursor:pointer;color:var(--t2);font-size:13px;transition:all .18s;position:relative;}
+.sb-item:hover{background:var(--card2);color:var(--t1);}
+.sb-item.active{background:var(--amber-dim);color:var(--amber);font-weight:600;}
+.sb-item.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--amber);border-radius:0 2px 2px 0;}
+.sb-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0;}
+.sb-count{margin-left:auto;font-family:var(--mono);font-size:9px;background:var(--card2);border:1px solid var(--border);padding:1px 6px;border-radius:10px;color:var(--t3);}
+.sb-count.urg{background:var(--red-bg);border-color:var(--red-b);color:var(--red);}
+.sb-footer{margin-top:auto;padding:16px;border-top:1px solid var(--border);}
+.user-row{display:flex;align-items:center;gap:10px;}
+.user-av{width:30px;height:30px;background:var(--amber-bg);border:1px solid var(--amber-b);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--amber);}
+.user-name{font-size:12px;font-weight:600;color:var(--t1);}
+.user-role{font-family:var(--mono);font-size:8px;color:var(--t4);}
+
+/* ══ MAIN ══ */
+.main{flex:1;overflow:hidden;display:flex;flex-direction:column;}
+.main-hdr{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.mh-title{font-size:18px;font-weight:700;color:var(--t1);}
+.mh-sub{font-family:var(--mono);font-size:9px;color:var(--t4);letter-spacing:1px;margin-top:2px;}
+.mh-actions{display:flex;gap:8px;align-items:center;}
+.content{flex:1;overflow-y:auto;padding:24px 28px;}
+.content::-webkit-scrollbar{width:4px;}
+.content::-webkit-scrollbar-track{background:transparent;}
+.content::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+
+/* ══ BUTTONS ══ */
+.btn{padding:8px 16px;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;border-radius:3px;border:none;transition:all .18s;display:inline-flex;align-items:center;gap:6px;}
+.btn-primary{background:var(--amber);color:#fff;}
+.btn-primary:hover{background:#92400E;}
+.btn-secondary{background:transparent;border:1px solid var(--border2);color:var(--t2);}
+.btn-secondary:hover{border-color:var(--t2);color:var(--t1);}
+.btn-success{background:var(--green-bg);border:1px solid var(--green-b);color:var(--green);}
+.btn-success:hover{background:var(--green);color:#fff;}
+.btn-danger{background:var(--red-bg);border:1px solid var(--red-b);color:var(--red);}
+.btn-danger:hover{background:var(--red);color:#fff;}
+.btn-sm{padding:6px 12px;font-size:12px;}
+.btn-xs{padding:4px 8px;font-size:11px;}
+.btn:disabled{opacity:.45;cursor:not-allowed;}
+
+/* ══ KPI CARDS ══ */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.kpi-card{background:var(--surface);border:1px solid var(--border);padding:18px 20px;border-radius:4px;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.kpi-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;}
+.kpi-card.ka::after{background:var(--amber);}
+.kpi-card.kg::after{background:var(--green);}
+.kpi-card.kr::after{background:var(--red);}
+.kpi-card.kb::after{background:var(--blue);}
+.kpi-label{font-family:var(--mono);font-size:8px;color:var(--t3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+.kpi-val{font-size:30px;font-weight:700;margin-bottom:4px;line-height:1;}
+.kpi-delta{font-family:var(--mono);font-size:10px;}
+.kpi-delta.up{color:var(--green);}
+.kpi-delta.dn{color:var(--red);}
+.kpi-delta.neu{color:var(--t4);}
+
+/* ══ TABLE ══ */
+.tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.tbl-head{background:var(--surface);border-bottom:1px solid var(--border);}
+table.dtable{width:100%;border-collapse:collapse;}
+.dtable th{padding:10px 14px;text-align:left;font-family:var(--mono);font-size:8px;color:var(--t3);letter-spacing:1.5px;font-weight:600;background:var(--card2);border-bottom:1px solid var(--border);white-space:nowrap;}
+.dtable td{padding:11px 14px;font-size:13px;vertical-align:middle;border-bottom:1px solid var(--border);}
+.dtable tr:last-child td{border-bottom:none;}
+.dtable tr:hover td{background:var(--card2);}
+.dtable tr.sel td{background:rgba(180,83,9,.04);}
+.dtable tr.conflict-row td{background:var(--orange-bg);}
+.dtable tr.conflict-row:hover td{background:#FDE8D0;}
+
+/* ══ TAGS ══ */
+.tag{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:2px;font-family:var(--mono);font-size:8px;letter-spacing:.5px;font-weight:700;white-space:nowrap;}
+.t-high{background:var(--red-bg);border:1px solid var(--red-b);color:var(--red);}
+.t-med{background:var(--amber-bg);border:1px solid var(--amber-b);color:var(--amber);}
+.t-low{background:var(--green-bg);border:1px solid var(--green-b);color:var(--green);}
+.t-conflict{background:var(--orange-bg);border:1px solid var(--orange-b);color:var(--orange);}
+.t-partial{background:var(--purple-bg);border:1px solid var(--purple-b);color:var(--purple);}
+.t-approved{background:var(--green-bg);border:1px solid var(--green-b);color:var(--green);}
+.t-rejected{background:var(--red-bg);border:1px solid var(--red-b);color:var(--red);}
+.t-pending{background:var(--amber-bg);border:1px solid var(--amber-b);color:var(--amber);}
+
+/* ══ REC INDICATOR ══ */
+.rec-approve{color:var(--green);font-weight:700;font-size:12px;}
+.rec-reject{color:var(--red);font-weight:700;font-size:12px;}
+
+/* ══ FILTER BAR ══ */
+.filter-bar{display:flex;gap:6px;align-items:center;margin-bottom:14px;flex-wrap:wrap;}
+.search-inp{padding:8px 12px;background:var(--surface);border:1px solid var(--border2);color:var(--t1);font-family:var(--sans);font-size:13px;border-radius:3px;outline:none;flex:1;min-width:180px;max-width:260px;}
+.search-inp:focus{border-color:var(--amber-b);box-shadow:0 0 0 3px rgba(180,83,9,.08);}
+.search-inp::placeholder{color:var(--t4);}
+.fchip{padding:6px 12px;background:var(--surface);border:1px solid var(--border2);color:var(--t3);font-family:var(--mono);font-size:9px;cursor:pointer;letter-spacing:.5px;border-radius:3px;transition:all .18s;}
+.fchip:hover{border-color:var(--border2);color:var(--t1);}
+.fchip.fa{background:var(--amber-bg);border-color:var(--amber-b);color:var(--amber);}
+.fchip.fhigh{background:var(--red-bg);border-color:var(--red-b);color:var(--red);}
+.fchip.fmed{background:var(--amber-bg);border-color:var(--amber-b);color:var(--amber);}
+.fchip.flow{background:var(--green-bg);border-color:var(--green-b);color:var(--green);}
+.fchip.fconflict{background:var(--orange-bg);border-color:var(--orange-b);color:var(--orange);}
+.fchip.fpartial{background:var(--purple-bg);border-color:var(--purple-b);color:var(--purple);}
+
+/* ══ BATCH BAR ══ */
+.batch-bar{background:var(--amber-bg);border:1px solid var(--amber-b);border-radius:4px;padding:10px 16px;display:flex;align-items:center;gap:14px;margin-bottom:14px;animation:slideDown .25s ease;}
+@keyframes slideDown{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+.batch-count{font-family:var(--mono);font-size:12px;color:var(--amber);font-weight:700;}
+.batch-info{font-size:12px;color:var(--t2);}
+
+/* ══ CHECKBOX ══ */
+.cb{width:15px;height:15px;border:1.5px solid var(--border2);border-radius:3px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;background:var(--surface);flex-shrink:0;transition:all .15s;}
+.cb.chk{background:var(--amber);border-color:var(--amber);}
+.cb.chk::after{content:'✓';font-size:9px;color:#fff;font-weight:700;}
+.cb.dis{opacity:.3;cursor:not-allowed;}
+
+/* ══ SECTION CARD ══ */
+.sec-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.sc-hdr{padding:13px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--surface);}
+.sc-title{font-size:13px;font-weight:700;color:var(--t1);}
+.sc-body{padding:18px;}
+
+/* ══ DATA GRID ══ */
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+.dg-cell{background:var(--surface);padding:12px 14px;}
+.dg-label{font-family:var(--mono);font-size:8px;color:var(--t4);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}
+.dg-val{font-size:16px;font-weight:700;color:var(--t1);}
+.dg-val.good{color:var(--green);}
+.dg-val.bad{color:var(--red);}
+.dg-val.warn{color:var(--amber);}
+.dg-sub{font-size:10px;margin-top:2px;}
+
+/* ══ PROFILE HERO ══ */
+.profile-hero{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:22px;margin-bottom:18px;display:flex;align-items:center;gap:18px;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.profile-hero::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;}
+.ph-high::before{background:var(--red);}
+.ph-med::before{background:var(--amber);}
+.ph-low::before{background:var(--green);}
+.ph-av{width:52px;height:52px;background:var(--card2);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--t2);flex-shrink:0;}
+.ph-info{flex:1;}
+.ph-name{font-size:20px;font-weight:700;margin-bottom:3px;}
+.ph-meta{font-size:12px;color:var(--t2);}
+.ph-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+.ph-amount{text-align:right;flex-shrink:0;}
+.ph-req{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--t1);}
+.ph-elig{font-family:var(--mono);font-size:13px;color:var(--green);margin-top:2px;}
+.ph-gap{font-family:var(--mono);font-size:11px;color:var(--red);margin-top:2px;}
+
+/* ══ DETAIL GRID ══ */
+.detail-layout{display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;}
+
+/* ══ ALERT ══ */
+.inline-alert{padding:12px 16px;border-radius:3px;display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.55;margin-bottom:16px;}
+.ia-warn{background:var(--orange-bg);border:1px solid var(--orange-b);color:var(--orange);}
+.ia-info{background:var(--blue-bg);border:1px solid var(--blue-b);color:var(--blue);}
+.ia-partial{background:var(--purple-bg);border:1px solid var(--purple-b);color:var(--purple);}
+.ia-success{background:var(--green-bg);border:1px solid var(--green-b);color:var(--green);}
+.ia-icon{font-size:16px;flex-shrink:0;margin-top:1px;}
+
+/* ══ CONFLICT PANEL ══ */
+.conflict-panel{background:var(--orange-bg);border:1px solid var(--orange-b);border-radius:4px;padding:16px;margin-bottom:16px;}
+.cp-title{font-family:var(--mono);font-size:8px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;font-weight:600;}
+.cp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.cp-box{background:var(--surface);border:1px solid var(--border);padding:12px;border-radius:3px;}
+.cp-box.current{border-color:var(--orange-b);}
+.cp-box-label{font-family:var(--mono);font-size:8px;color:var(--t4);letter-spacing:1px;margin-bottom:8px;text-transform:uppercase;}
+.cp-box-label.current{color:var(--orange);}
+.cp-row{display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;}
+.cp-row:last-child{margin-bottom:0;}
+.cp-key{color:var(--t3);}
+.cp-val{font-weight:700;color:var(--t1);}
+.cp-val.changed{color:var(--orange);}
+
+/* ══ FO NOTE ══ */
+.fo-note-block{background:var(--card2);border:1px solid var(--border);border-left:3px solid var(--blue);padding:14px 16px;border-radius:0 3px 3px 0;}
+.fo-note-meta{font-family:var(--mono);font-size:8px;color:var(--t4);margin-bottom:6px;letter-spacing:.5px;}
+.fo-note-text{font-size:13px;color:var(--t2);line-height:1.65;font-style:italic;}
+
+/* ══ DECISION FORM ══ */
+.decision-form{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.df-label{font-family:var(--mono);font-size:8px;color:var(--amber);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);font-weight:600;}
+.df-rec{font-size:12px;color:var(--t2);margin-bottom:16px;}
+.df-btn{width:100%;padding:12px;border-radius:3px;font-size:14px;font-weight:700;cursor:pointer;border:2px solid;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:7px;font-family:var(--sans);transition:all .18s;}
+.df-approve{background:var(--green-bg);border-color:var(--green-b);color:var(--green);}
+.df-approve.sel,.df-approve:hover{background:var(--green);color:#fff;border-color:var(--green);}
+.df-reject{background:var(--red-bg);border-color:var(--red-b);color:var(--red);}
+.df-reject.sel,.df-reject:hover{background:var(--red);color:#fff;border-color:var(--red);}
+.df-note{width:100%;background:var(--bg);border:1px solid var(--border2);color:var(--t1);font-family:var(--sans);font-size:13px;padding:10px 12px;resize:none;border-radius:3px;margin-bottom:10px;min-height:72px;outline:none;line-height:1.5;}
+.df-note:focus{border-color:var(--amber-b);box-shadow:0 0 0 3px rgba(180,83,9,.08);}
+.df-note::placeholder{color:var(--t4);}
+.df-submit{width:100%;padding:12px;background:var(--amber);color:#fff;font-size:14px;font-weight:700;border:none;border-radius:3px;cursor:pointer;font-family:var(--sans);transition:all .18s;}
+.df-submit:hover{background:#92400E;}
+.df-submit:disabled{background:var(--t5);color:var(--t4);cursor:not-allowed;}
+.ack-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:14px;cursor:pointer;}
+.ack-text{font-size:12px;color:var(--t2);line-height:1.5;}
+
+/* ══ MINI CHART ══ */
+.mini-chart{display:flex;align-items:flex-end;gap:2px;height:40px;}
+.mc-bar{flex:1;border-radius:1px 1px 0 0;min-height:2px;}
+
+/* ══ SKELETON ══ */
+.skel{background:linear-gradient(90deg,var(--card2) 25%,var(--border) 50%,var(--card2) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:3px;}
+@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+.skel-row{height:48px;width:100%;margin-bottom:1px;}
+.skel-hdr{height:56px;width:100%;margin-bottom:14px;}
+.skel-block{height:120px;width:100%;margin-bottom:14px;}
+
+/* ══ EMPTY STATE ══ */
+.empty-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 40px;text-align:center;}
+.empty-icon{font-size:56px;margin-bottom:18px;opacity:.5;}
+.empty-h{font-size:20px;font-weight:700;margin-bottom:8px;}
+.empty-p{font-size:14px;color:var(--t2);line-height:1.7;max-width:380px;}
+
+/* ══ ERROR STATE ══ */
+.error-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px 40px;text-align:center;}
+.err-code{font-family:var(--mono);font-size:10px;color:var(--red);letter-spacing:2px;margin-bottom:12px;font-weight:600;}
+.err-icon{font-size:52px;margin-bottom:14px;}
+.err-h{font-size:18px;font-weight:700;color:var(--red);margin-bottom:8px;}
+.err-p{font-size:13px;color:var(--t2);line-height:1.7;max-width:420px;margin-bottom:24px;}
+
+/* ══ SUCCESS / CONFIRM ══ */
+.confirm-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:56px 40px;text-align:center;}
+.confirm-ring{width:96px;height:96px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;margin-bottom:20px;}
+.confirm-ring.approved{border:3px solid var(--green);background:var(--green-bg);color:var(--green);animation:pglow 2s ease-in-out infinite;}
+.confirm-ring.rejected{border:3px solid var(--red);background:var(--red-bg);color:var(--red);}
+@keyframes pglow{0%,100%{box-shadow:0 0 0 0 rgba(4,120,87,.2);}50%{box-shadow:0 0 0 16px rgba(4,120,87,0);}}
+
+/* ══ BATCH RESULT ══ */
+.batch-result{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:680px;width:100%;margin-top:20px;}
+.br-card{background:var(--surface);border:1px solid var(--border);padding:20px;border-radius:4px;text-align:center;}
+.br-val{font-size:32px;font-weight:700;margin-bottom:4px;}
+.br-label{font-family:var(--mono);font-size:8px;color:var(--t4);letter-spacing:1.5px;text-transform:uppercase;}
+
+/* ══ TABLE FOOTER ══ */
+.tbl-foot{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-top:1px solid var(--border);background:var(--surface);}
+.tf-count{font-family:var(--mono);font-size:9px;color:var(--t4);}
+
+/* ══ TOGGLE TABS ══ */
+.toggle-tabs{display:flex;gap:4px;margin-bottom:16px;}
+.ttab{font-family:var(--mono);font-size:10px;color:var(--t3);padding:7px 14px;border:1px solid var(--border);cursor:pointer;border-radius:3px;transition:all .18s;background:var(--surface);}
+.ttab:hover{border-color:var(--border2);color:var(--t1);}
+.ttab.active{background:var(--amber-bg);border-color:var(--amber-b);color:var(--amber);}
+
+/* ══ STATE TABS ══ */
+.state-tabs{display:flex;gap:4px;margin-bottom:16px;}
+.stab{font-family:var(--mono);font-size:10px;padding:7px 14px;border:1px solid var(--border);cursor:pointer;border-radius:3px;background:var(--surface);color:var(--t3);transition:all .18s;}
+.stab.sa{background:var(--amber-bg);border-color:var(--amber-b);color:var(--amber);}
+
+/* ══ HISTORY ITEMS ══ */
+.hist-item{display:flex;justify-content:space-between;font-size:12px;padding:8px 0;border-bottom:1px solid var(--border);}
+.hist-item:last-child{border-bottom:none;}
+.hist-key{color:var(--t3);}
+.hist-val{font-weight:600;color:var(--t1);}
+.hist-val.good{color:var(--green);}
+.hist-val.bad{color:var(--red);}
+.hist-val.warn{color:var(--amber);}
+
+/* ══ PROGRESS BAR ══ */
+.prog-bar{height:6px;background:var(--card2);border-radius:3px;overflow:hidden;margin:8px 0;}
+.prog-fill{height:100%;border-radius:3px;}
+
+/* ══ SCREEN PAGES ══ */
+.page{display:none;flex-direction:column;height:100%;}
+.page.show{display:flex;}
+
+/* ══ TOOLTIP ══ */
+.tooltip{position:relative;}
+.tooltip:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--t1);color:#fff;font-size:11px;padding:5px 9px;border-radius:3px;white-space:nowrap;z-index:100;font-family:var(--sans);}
+</style>
+</head>
+<body>
+
+<!-- ══ TOP NAV ══ -->
+<div class="topbar">
+  <div class="topbar-logo">
+    <div>
+      <div class="logo-text">MFS · MGR</div>
+      <div class="logo-sub">MANAGER PORTAL</div>
+    </div>
+  </div>
+  <div class="topbar-screens">
+    <button class="ts-btn active" id="ts0" onclick="goto(0)">01 · Dashboard</button>
+    <button class="ts-btn" id="ts1" onclick="goto(1)">02 · Application Queue</button>
+    <button class="ts-btn" id="ts2" onclick="goto(2)">03 · Application Detail</button>
+    <button class="ts-btn" id="ts3" onclick="goto(3)">04 · Batch Processing</button>
+    <button class="ts-btn" id="ts4" onclick="goto(4)">05 · Decision Confirmed</button>
+  </div>
+  <div class="topbar-right">
+    <div class="ext-nav">
+      <a class="ext-link" href="task1-journey-map.html">01 Journey</a>
+      <a class="ext-link" href="task2-icon-spec.html">02 Icons</a>
+      <a class="ext-link" href="task3-mobile-officer.html">03 Mobile</a>
+      <a class="ext-link cur">04 Web</a>
+      <a class="ext-link" href="index.html">↩ Home</a>
+    </div>
+    <div class="badge">TASK 4 OF 4</div>
+  </div>
+</div>
+
+<div class="shell">
+
+  <!-- ══ SIDEBAR ══ -->
+  <div class="sidebar">
+    <div class="sb-section">
+      <div class="sb-label">Overview</div>
+      <div class="sb-item active" id="sbi-0" onclick="goto(0)"><div class="sb-icon">▤</div>Dashboard</div>
+      <div class="sb-item" id="sbi-1" onclick="goto(1)"><div class="sb-icon">⬜</div>Queue<span class="sb-count urg">47</span></div>
+      <div class="sb-item" id="sbi-3" onclick="goto(3)"><div class="sb-icon">⊞</div>Batch Process</div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Priority Filters</div>
+      <div class="sb-item" onclick="goto(1)"><div class="sb-icon" style="color:var(--red);">▲</div>High Risk<span class="sb-count urg">12</span></div>
+      <div class="sb-item" onclick="goto(1)"><div class="sb-icon" style="color:var(--amber);">◆</div>Medium Risk<span class="sb-count">21</span></div>
+      <div class="sb-item" onclick="goto(1)"><div class="sb-icon" style="color:var(--green);">●</div>Low Risk<span class="sb-count">14</span></div>
+      <div class="sb-item" onclick="goto(1)" style="color:var(--orange);"><div class="sb-icon">⚠</div>Conflicts<span class="sb-count" style="color:var(--orange);border-color:var(--orange-b);background:var(--orange-bg);">3</span></div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Reports</div>
+      <div class="sb-item"><div class="sb-icon">📊</div>Analytics</div>
+      <div class="sb-item"><div class="sb-icon">📋</div>Decision History</div>
+      <div class="sb-item"><div class="sb-icon">📁</div>Audit Log</div>
+    </div>
+    <div class="sb-footer">
+      <div class="user-row">
+        <div class="user-av">RA</div>
+        <div>
+          <div class="user-name">Rashida Ahmed</div>
+          <div class="user-role">SENIOR MANAGER · DK NORTH</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PAGE 0: DASHBOARD                          -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="page show" id="page-0">
+    <div class="main">
+      <div class="main-hdr">
+        <div>
+          <div class="mh-title">Dashboard</div>
+          <div class="mh-sub">FRIDAY, 18 APR 2025 · 10:24 AM · DHAKA NORTH ZONE</div>
+        </div>
+        <div class="mh-actions">
+          <button class="btn btn-secondary btn-sm" onclick="goto(1)">View Queue</button>
+          <button class="btn btn-primary btn-sm" onclick="goto(3)">⊞ Batch Process</button>
+        </div>
+      </div>
+      <div class="content">
+        <!-- KPI CARDS -->
+        <div class="kpi-row">
+          <div class="kpi-card ka">
+            <div class="kpi-label">PENDING REVIEW</div>
+            <div class="kpi-val" style="color:var(--amber);">47</div>
+            <div class="kpi-delta dn">↑ 8 from yesterday</div>
+          </div>
+          <div class="kpi-card kg">
+            <div class="kpi-label">DECIDED TODAY</div>
+            <div class="kpi-val" style="color:var(--green);">23</div>
+            <div class="kpi-delta up">↑ 35% vs. daily avg</div>
+          </div>
+          <div class="kpi-card kr">
+            <div class="kpi-label">CONFLICTS FLAGGED</div>
+            <div class="kpi-val" style="color:var(--red);">3</div>
+            <div class="kpi-delta neu">Require manual review</div>
+          </div>
+          <div class="kpi-card kb">
+            <div class="kpi-label">APPROVAL RATE</div>
+            <div class="kpi-val" style="color:var(--blue);">67%</div>
+            <div class="kpi-delta up">↑ 4% this week</div>
+          </div>
+        </div>
+
+        <!-- MAIN CONTENT GRID -->
+        <div style="display:grid;grid-template-columns:1fr 340px;gap:18px;margin-bottom:18px;">
+
+          <!-- PRIORITY QUEUE TABLE -->
+          <div class="tbl-wrap">
+            <div class="sc-hdr">
+              <div class="sc-title">Priority Queue — Top 5 Applications</div>
+              <button class="btn btn-secondary btn-sm" onclick="goto(1)">View All 47 →</button>
+            </div>
+            <table class="dtable">
+              <thead><tr>
+                <th>APPLICANT</th><th>RISK</th><th>REQUESTED</th><th>FO RECOMMENDATION</th><th>FLAGS</th><th>ACTION</th>
+              </tr></thead>
+              <tbody>
+                <tr class="conflict-row">
+                  <td><div style="font-weight:700;">Rokeya Fatema</div><div style="font-size:10px;color:var(--t3);font-family:var(--mono);">MFS-2024-018743</div></td>
+                  <td><span class="tag t-high"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M12 3L21.5 20H2.5L12 3Z" stroke="#B91C1C" stroke-width="2" stroke-linejoin="round"/></svg>HIGH</span></td>
+                  <td><span style="font-family:var(--mono);font-size:12px;font-weight:600;">৳ 85,000</span></td>
+                  <td><span class="rec-reject">✕ Recommend Reject</span></td>
+                  <td></td>
+                  <td><button class="btn btn-secondary btn-xs" onclick="goto(2)">Review</button></td>
+                </tr>
+                <tr class="conflict-row">
+                  <td><div style="font-weight:700;">Mohammad Hasan</div><div style="font-size:10px;color:var(--t3);font-family:var(--mono);">MFS-2024-019012</div></td>
+                  <td><span class="tag t-high"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M12 3L21.5 20H2.5L12 3Z" stroke="#B91C1C" stroke-width="2" stroke-linejoin="round"/></svg>HIGH</span></td>
+                  <td><span style="font-family:var(--mono);font-size:12px;font-weight:600;">৳ 1,20,000</span></td>
+                  <td><span class="rec-approve">✓ Recommend Approve</span></td>
+                  <td><span class="tag t-conflict">⚠ CONFLICT</span></td>
+                  <td><button class="btn btn-secondary btn-xs" onclick="goto(2)">Review</button></td>
+                </tr>
+                <tr>
+                  <td><div style="font-weight:700;">Salma Akter</div><div style="font-size:10px;color:var(--t3);font-family:var(--mono);">MFS-2024-020341</div></td>
+                  <td><span class="tag t-med"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M12 2L22 12L12 22L2 12L12 2Z" stroke="#B45309" stroke-width="2" stroke-linejoin="round"/></svg>MED</span></td>
+                  <td><span style="font-family:var(--mono);font-size:12px;font-weight:600;">৳ 50,000</span></td>
+                  <td><span class="rec-approve">✓ Recommend Approve</span></td>
+                  <td><span class="tag t-partial">◑ PARTIAL</span></td>
+                  <td><button class="btn btn-secondary btn-xs" onclick="goto(2)">Review</button></td>
+                </tr>
+                <tr>
+                  <td><div style="font-weight:700;">Karim Islam</div><div style="font-size:10px;color:var(--t3);font-family:var(--mono);">MFS-2024-021109</div></td>
+                  <td><span class="tag t-low"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#047857" stroke-width="2"/><path d="M8 12L10.5 14.5L16 9" stroke="#047857" stroke-width="2" stroke-linecap="round"/></svg>LOW</span></td>
+                  <td><span style="font-family:var(--mono);font-size:12px;font-weight:600;">৳ 30,000</span></td>
+                  <td><span class="rec-approve">✓ Recommend Approve</span></td>
+                  <td></td>
+                  <td><button class="btn btn-secondary btn-xs" onclick="goto(2)">Review</button></td>
+                </tr>
+                <tr>
+                  <td><div style="font-weight:700;">Nasrin Begum</div><div style="font-size:10px;color:var(--t3);font-family:var(--mono);">MFS-2024-021487</div></td>
+                  <td><span class="tag t-low"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#047857" stroke-width="2"/><path d="M8 12L10.5 14.5L16 9" stroke="#047857" stroke-width="2" stroke-linecap="round"/></svg>LOW</span></td>
+                  <td><span style="font-family:var(--mono);font-size:12px;font-weight:600;">৳ 25,000</span></td>
+                  <td><span class="rec-approve">✓ Recommend Approve</span></td>
+                  <td></td>
+                  <td><button class="btn btn-secondary btn-xs" onclick="goto(2)">Review</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- STATS SIDEBAR -->
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <!-- Decision Split -->
+            <div class="sec-card">
+              <div class="sc-hdr"><div class="sc-title">Decision Split — Today</div></div>
+              <div class="sc-body">
+                <div style="display:flex;gap:0;height:10px;border-radius:3px;overflow:hidden;margin-bottom:10px;">
+                  <div style="background:var(--green);width:65%;"></div>
+                  <div style="background:var(--red);width:35%;"></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;">
+                  <span style="color:var(--green);">✓ 15 Approved (65%)</span>
+                  <span style="color:var(--red);">✕ 8 Rejected (35%)</span>
+                </div>
+              </div>
+            </div>
+            <!-- RAR -->
+            <div class="sec-card">
+              <div class="sc-hdr"><div class="sc-title">FO Alignment Rate (RAR)</div></div>
+              <div class="sc-body">
+                <div style="font-size:36px;font-weight:700;color:var(--green);">76%</div>
+                <div style="font-family:var(--mono);font-size:8px;color:var(--t4);margin-bottom:8px;letter-spacing:1px;">LAST 7 DAYS · TARGET: ≥78%</div>
+                <div class="prog-bar"><div class="prog-fill" style="background:var(--green);width:76%;"></div></div>
+                <div style="font-size:11px;color:var(--t2);margin-top:6px;">2 pts below target. On track with 90-day goal.</div>
+              </div>
+            </div>
+            <!-- DTR -->
+            <div class="sec-card">
+              <div class="sc-hdr"><div class="sc-title">Decisions/Day (DTR)</div></div>
+              <div class="sc-body">
+                <div style="font-size:36px;font-weight:700;color:var(--amber);">23</div>
+                <div style="font-family:var(--mono);font-size:8px;color:var(--t4);margin-bottom:8px;letter-spacing:1px;">TODAY · TARGET: 30/DAY</div>
+                <div class="prog-bar"><div class="prog-fill" style="background:var(--amber);width:77%;"></div></div>
+                <div style="font-size:11px;color:var(--t2);margin-top:6px;">Batch processing could add ~10 decisions/day.</div>
+              </div>
+            </div>
+            <!-- Field Officers -->
+            <div class="sec-card">
+              <div class="sc-hdr"><div class="sc-title">Active Field Officers</div></div>
+              <div class="sc-body" style="display:flex;flex-direction:column;gap:6px;">
+                <div style="display:flex;justify-content:space-between;font-size:12px;"><span style="color:var(--t3);">Farhan Ahmed</span><span style="font-family:var(--mono);font-size:11px;color:var(--amber);">4 pending</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;"><span style="color:var(--t3);">Jannat Ali</span><span style="font-family:var(--mono);font-size:11px;color:var(--amber);">6 pending</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;"><span style="color:var(--t3);">Mim Akter</span><span style="font-family:var(--mono);font-size:11px;color:var(--amber);">3 pending</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PAGE 1: APPLICATION QUEUE                  -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="page" id="page-1">
+    <div class="main">
+      <div class="main-hdr">
+        <div>
+          <div class="mh-title">Application Queue</div>
+          <div class="mh-sub">47 PENDING · SORTED: HIGH RISK FIRST · CONFLICTS PINNED</div>
+        </div>
+        <div class="mh-actions">
+          <button class="btn btn-secondary btn-sm" onclick="goto(0)">← Dashboard</button>
+          <button class="btn btn-primary btn-sm" onclick="goto(3)">⊞ Batch Process</button>
+        </div>
+      </div>
+      <div class="content">
+        <!-- STATE TABS -->
+        <div class="state-tabs">
+          <button class="stab sa" id="stab-live" onclick="showQueueState('live')">Live Queue</button>
+          <button class="stab" id="stab-skel" onclick="showQueueState('skeleton')">⬜ Loading / Skeleton</button>
+          <button class="stab" id="stab-empty" onclick="showQueueState('empty')">Empty State</button>
+          <button class="stab" id="stab-error" onclick="showQueueState('error')">Error State</button>
+        </div>
+
+        <!-- LIVE STATE -->
+        <div id="qs-live">
+          <!-- FILTER BAR -->
+          <div class="filter-bar">
+            <input class="search-inp" placeholder="Search applicant, ID, field officer...">
+            <div class="fchip fa">All (47)</div>
+            <div class="fchip fhigh">▲ High (12)</div>
+            <div class="fchip fmed">◆ Medium (21)</div>
+            <div class="fchip flow">● Low (14)</div>
+            <div class="fchip fconflict">⚠ Conflicts (3)</div>
+            <div class="fchip fpartial">◑ Partial (5)</div>
+            <div style="margin-left:auto;display:flex;gap:6px;">
+              <button class="btn btn-secondary btn-sm">Sort: Risk ↓</button>
+              <button class="btn btn-secondary btn-sm">Export CSV</button>
+            </div>
+          </div>
+
+          <!-- BATCH BAR -->
+          <div class="batch-bar" id="batch-bar" style="display:none;">
+            <span class="batch-count" id="batch-count-label">0 selected</span>
+            <span class="batch-info">Only Low-risk + FO-Approved cases eligible for batch.</span>
+            <div style="margin-left:auto;display:flex;gap:8px;">
+              <button class="btn btn-success btn-sm" onclick="goto(4)">✓ Batch Approve Selected</button>
+              <button class="btn btn-secondary btn-sm" onclick="clearSel()">✕ Clear</button>
+            </div>
+          </div>
+
+          <!-- TABLE -->
+          <div class="tbl-wrap">
+            <table class="dtable">
+              <thead><tr>
+                <th style="width:32px;"><div class="cb" id="cb-all" onclick="toggleAll()" title="Select all eligible"></div></th>
+                <th>APPLICANT</th><th>RISK TIER</th><th>REQUESTED</th><th>ELIGIBLE</th>
+                <th>FO RECOMMENDATION</th><th>FIELD OFFICER</th><th>FLAGS</th>
+                <th>SUBMITTED</th><th>ACTION</th>
+              </tr></thead>
+              <tbody>
+                <!-- Row 1: High + Conflict – not batchable -->
+                <tr class="conflict-row">
+                  <td><div class="cb dis" title="Not eligible: conflict flag"></div></td>
+                  <td><div style="font-weight:700;">Rokeya Fatema</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">MFS-2024-018743</div></td>
+                  <td><span class="tag t-high"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M12 3L21.5 20H2.5L12 3Z" stroke="#B91C1C" stroke-width="2" stroke-linejoin="round"/></svg>HIGH</span></td>
+                  <td><span style="font-family:var(--mono);font-weight:600;">৳ 85,000</span></td>
+                  <td><span style="font-family:var(--mono);color:var(--green);">৳ 42,000</span></td>
+                  <td><span class="rec-reject">✕ Recommend Reject</span></td>
+                  <td style="font-size:12px;color:var(--t3);">Farhan Ahmed</td>
+                  <td></td>
+                  <td style="font-family:var(--mono);font-size:9px;color:var(--t4);">10:22 AM</td>
+                  <td><button class="btn btn-secondary btn-xs" onclick="goto(2)">Review</button></td>
+                </tr>
+                <!-- Row 2: High + Conflict – not batchable -->
+                <tr class="conflict-row">
+                  <td><div class="cb dis" title="Not eligible: high risk + conflict"></div></td>
+                  <td><div style="font-weight:700;">Mohammad Hasan</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">MFS-2024-019012</div></td>
+                  <td><span class="tag t-high"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M12 3L21.5 20H2.5L12 3Z" stroke="#B91C1C" stroke-width="2" stroke-linejoin="round"/></svg>HIGH</span></td>
+                  <td><span style="font-family:var(--mono);font-weight:600;">৳ 1,20,000</span></td>
+                  <td><span style="font-family:var(--mono);color:var(--green);">৳ 95,000</span></td>
+                  <td><span class="rec-approve">✓ Recommend Approve</span></td>
+                  <td style="font-size:12px;color:var(--t3);">Farhan Ahmed</td>
+                  <td><span class="tag t-conflict">⚠ CONFLICT</span></td>
+                  <td style="font-family:var(--mono);font-size:9px;color:var(--t4);">09:45 AM</td>
+                  <td><button class="btn btn-secondary btn-xs" onclick="goto(2)">Review</button></td>
+                </tr>
+                <!-- Row 3: Med + Partial – not batchable -->
+                <tr>
+                  <td><div class="cb dis" title="Not eligible: partial data flag"></div></td>
+                  <td><div style="font-weight:700;">Salma Akter</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">MFS-2024-020341</div></td>
+                  <td><span class="tag t-med"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M12 2L22 12L12 22L2 12L12 2Z" stroke="#B45309" stroke-width="2" stroke-linejoin="round"/></svg>MED</span></td>
+                  <td><span style="font-family:var(--mono);font-weight:600;">৳ 50,000</span></td>
+                  <td><span style="font-family:var(--mono);color:var(--green);">৳ 48,000</span></td>
+                  <td><span class="rec-approve">✓ Recommend Approve</span></td>
+                  <td style="font-size:12px;color:var(--t3);">Farhan Ahmed</td>
+                  <td><span class="tag t-partial">◑ PARTIAL</span></td>
+                  <td style="font-family:var(--mono);font-size:9px;color:var(--t4);">08:58 AM</td>
+                  <td><button class="btn btn-secondary btn-xs" onclick="goto(2)">Review</button></td>
+                </tr>
+                <!-- Row 4: Low – BATCHABLE -->
+                <tr id="qrow-karim">
+                  <td><div class="cb" id="qcb-karim" onclick="toggleQRow('karim')" title="Eligible for batch approve"></div></td>
+                  <td><div style="font-weight:700;">Karim Islam</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">MFS-2024-021109</div></td>
+                  <td><span class="tag t-low"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#047857" stroke-width="2"/><path d="M8 12L10.5 14.5L16 9" stroke="#047857" stroke-width="2" stroke-linecap="round"/></svg>LOW</span></td>
+                  <td><span style="font-family:var(--mono);font-weight:600;">৳ 30,000</span></td>
+                  <td><span style="font-family:var(--mono);color:var(--green);">৳ 35,000</span></td>
+                  <td><span class="rec-approve">✓ Recommend Approve</span></td>
+                  <td style="font-size:12px;color:var(--t3);">Farhan Ahmed</td>
+                  <td></td>
+                  <td style="font-family:var(--mono);font-size:9px;color:var(--t4);">08:31 AM</td>
+                  <td><button class="btn btn-secondary btn-xs" onclick="goto(2)">Review</button></td>
+                </tr>
+                <!-- Row 5: Low – BATCHABLE -->
+                <tr id="qrow-nasrin">
+                  <td><div class="cb" id="qcb-nasrin" onclick="toggleQRow('nasrin')" title="Eligible for batch approve"></div></td>
+                  <td><div style="font-weight:700;">Nasrin Begum</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">MFS-2024-021487</div></td>
+                  <td><span class="tag t-low"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#047857" stroke-width="2"/><path d="M8 12L10.5 14.5L16 9" stroke="#047857" stroke-width="2" stroke-linecap="round"/></svg>LOW</span></td>
+                  <td><span style="font-family:var(--mono);font-weight:600;">৳ 25,000</span></td>
+                  <td><span style="font-family:var(--mono);color:var(--green);">৳ 28,000</span></td>
+                  <td><span class="rec-approve">✓ Recommend Approve</span></td>
+                  <td style="font-size:12px;color:var(--t3);">Jannat Ali</td>
+                  <td></td>
+                  <td style="font-family:var(--mono);font-size:9px;color:var(--t4);">07:55 AM</td>
+                  <td><button class="btn btn-secondary btn-xs" onclick="goto(2)">Review</button></td>
+                </tr>
+                <!-- Row 6: Low – BATCHABLE -->
+                <tr id="qrow-rahim">
+                  <td><div class="cb" id="qcb-rahim" onclick="toggleQRow('rahim')" title="Eligible for batch approve"></div></td>
+                  <td><div style="font-weight:700;">Abdul Rahim</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">MFS-2024-021503</div></td>
+                  <td><span class="tag t-low"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#047857" stroke-width="2"/><path d="M8 12L10.5 14.5L16 9" stroke="#047857" stroke-width="2" stroke-linecap="round"/></svg>LOW</span></td>
+                  <td><span style="font-family:var(--mono);font-weight:600;">৳ 20,000</span></td>
+                  <td><span style="font-family:var(--mono);color:var(--green);">৳ 22,000</span></td>
+                  <td><span class="rec-approve">✓ Recommend Approve</span></td>
+                  <td style="font-size:12px;color:var(--t3);">Jannat Ali</td>
+                  <td></td>
+                  <td style="font-family:var(--mono);font-size:9px;color:var(--t4);">07:42 AM</td>
+                  <td><button class="btn btn-secondary btn-xs" onclick="goto(2)">Review</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="tbl-foot">
+              <div class="tf-count">Showing 6 of 47 applications · Page 1 of 8</div>
+              <div style="display:flex;gap:6px;">
+                <button class="btn btn-secondary btn-xs">← Prev</button>
+                <button class="btn btn-secondary btn-xs" style="background:var(--amber);color:#fff;border-color:var(--amber);">1</button>
+                <button class="btn btn-secondary btn-xs">2</button>
+                <button class="btn btn-secondary btn-xs">3</button>
+                <button class="btn btn-secondary btn-xs">Next →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SKELETON STATE -->
+        <div id="qs-skeleton" style="display:none;">
+          <div style="margin-bottom:10px;display:flex;gap:8px;">
+            <div class="skel" style="height:36px;width:240px;"></div>
+            <div class="skel" style="height:36px;width:100px;"></div>
+            <div class="skel" style="height:36px;width:100px;"></div>
+            <div class="skel" style="height:36px;width:100px;"></div>
+          </div>
+          <div class="tbl-wrap">
+            <div class="skel skel-hdr" style="border-radius:0;"></div>
+            <div class="skel skel-row"></div>
+            <div class="skel skel-row"></div>
+            <div class="skel skel-row"></div>
+            <div class="skel skel-row" style="opacity:.8;"></div>
+            <div class="skel skel-row" style="opacity:.6;"></div>
+            <div class="skel skel-row" style="opacity:.4;"></div>
+          </div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--t4);margin-top:12px;text-align:center;letter-spacing:1px;">LOADING APPLICATION QUEUE…</div>
+        </div>
+
+        <!-- EMPTY STATE -->
+        <div id="qs-empty" style="display:none;">
+          <div class="tbl-wrap">
+            <div class="empty-wrap">
+              <div class="empty-icon">✦</div>
+              <div class="empty-h">Queue cleared — great work.</div>
+              <div class="empty-p">All applications for today have been reviewed. New submissions from field officers will appear here as they sync from the field. Check back in a few minutes.</div>
+              <button class="btn btn-secondary" style="margin-top:20px;">↺ Refresh Queue</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ERROR STATE -->
+        <div id="qs-error" style="display:none;">
+          <div class="tbl-wrap">
+            <div class="error-wrap">
+              <div class="err-code">ERR_QUEUE_LOAD_FAIL_501</div>
+              <div class="err-icon" style="color:var(--red);">✕</div>
+              <div class="err-h">Failed to Load Queue</div>
+              <div class="err-p">The application queue could not be retrieved from the server. The server may be temporarily unavailable. Your previously viewed applications remain cached and accessible. No data has been lost.</div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-danger">↺ Retry Connection</button>
+                <button class="btn btn-secondary">View Cached Queue</button>
+                <button class="btn btn-secondary">Contact Support</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PAGE 2: APPLICATION DETAIL                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="page" id="page-2">
+    <div class="main">
+      <div class="main-hdr">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <button class="btn btn-secondary btn-sm" onclick="goto(1)">← Queue</button>
+          <div>
+            <div class="mh-title">Application Detail</div>
+            <div class="mh-sub">MFS-2024-018743 · ROKEYA FATEMA · FO: FARHAN AHMED · APR 18 10:08 AM</div>
+          </div>
+        </div>
+        <div class="mh-actions">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--t4);">Application 3 of 47</span>
+          <button class="btn btn-secondary btn-sm">← Prev</button>
+          <button class="btn btn-secondary btn-sm">Next →</button>
+        </div>
+      </div>
+      <div class="content">
+
+        <!-- CONFLICT ALERT -->
+        <div class="inline-alert ia-warn">
+          <div class="ia-icon">⚠</div>
+          <div><strong>Data Conflict Detected:</strong> Field Officer reviewed this application offline at 08:15 AM. Server data was updated at 09:30 AM — a new cash-in transaction was recorded. The conflict panel below shows both data versions. You must acknowledge this conflict before submitting your final decision.</div>
+        </div>
+
+        <div class="detail-layout">
+          <!-- LEFT COLUMN -->
+          <div>
+            <!-- PROFILE HERO -->
+            <div class="profile-hero ph-high">
+              <div class="ph-av">RF</div>
+              <div class="ph-info">
+                <div class="ph-name">Rokeya Fatema</div>
+                <div class="ph-meta">MFS-2024-018743 · Dhaka North · Female · 34 yrs · Grocery Business</div>
+                <div class="ph-tags">
+                  <span class="tag t-high"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M12 3L21.5 20H2.5L12 3Z" stroke="#B91C1C" stroke-width="2" stroke-linejoin="round"/></svg>HIGH RISK</span>
+                  <span class="tag t-conflict">⚠ DATA CONFLICT</span>
+                </div>
+              </div>
+              <div class="ph-amount">
+                <div class="ph-req">৳ 85,000</div>
+                <div class="ph-elig">Eligible: ৳ 42,000</div>
+                <div class="ph-gap">Gap: −৳ 43,000 (102% over)</div>
+              </div>
+            </div>
+
+            <!-- CONFLICT COMPARISON -->
+            <div class="conflict-panel">
+              <div class="cp-title">⚠ CONFLICT — DATA AT TIME OF FO REVIEW vs. CURRENT SERVER DATA</div>
+              <div class="cp-grid">
+                <div class="cp-box">
+                  <div class="cp-box-label">AT FO REVIEW — APR 18, 08:15 AM (OFFLINE)</div>
+                  <div class="cp-row"><div class="cp-key">Cash-in (Month 3)</div><div class="cp-val">৳ 62,000</div></div>
+                  <div class="cp-row"><div class="cp-key">Total Balance</div><div class="cp-val">৳ 18,400</div></div>
+                  <div class="cp-row"><div class="cp-key">Active Loans</div><div class="cp-val">1</div></div>
+                  <div class="cp-row"><div class="cp-key">Risk Score</div><div class="cp-val">HIGH (72)</div></div>
+                </div>
+                <div class="cp-box current">
+                  <div class="cp-box-label current">CURRENT SERVER DATA — APR 18, 09:30 AM ← UPDATED</div>
+                  <div class="cp-row"><div class="cp-key">Cash-in (Month 3)</div><div class="cp-val changed">৳ 94,000 ↑ +52%</div></div>
+                  <div class="cp-row"><div class="cp-key">Total Balance</div><div class="cp-val changed">৳ 36,200 ↑ +97%</div></div>
+                  <div class="cp-row"><div class="cp-key">Active Loans</div><div class="cp-val">1</div></div>
+                  <div class="cp-row"><div class="cp-key">Risk Score</div><div class="cp-val changed">HIGH (78) ↑</div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TRANSACTION INDICATORS -->
+            <div class="sec-card" style="margin-bottom:16px;">
+              <div class="sc-hdr">
+                <div class="sc-title">Transaction Indicators — 3-Month Trend (Current Data)</div>
+                <span class="tag t-low" style="font-size:8px;">✓ FULL DATA (3/3 MONTHS)</span>
+              </div>
+              <div class="sc-body">
+                <div class="dg" style="margin-bottom:14px;">
+                  <div class="dg-cell">
+                    <div class="dg-label">Bill Payments</div>
+                    <div class="dg-val good">৳ 12,400</div>
+                    <div class="dg-sub" style="color:var(--green);">↑ Consistent across 3 months</div>
+                  </div>
+                  <div class="dg-cell">
+                    <div class="dg-label">P2P Transfers</div>
+                    <div class="dg-val">৳ 8,200</div>
+                    <div class="dg-sub" style="color:var(--t4);">→ Stable</div>
+                  </div>
+                  <div class="dg-cell">
+                    <div class="dg-label">Cash-In Volume</div>
+                    <div class="dg-val warn">৳ 94,000</div>
+                    <div class="dg-sub" style="color:var(--red);">↑↑ Spike in Month 3 — conflict updated</div>
+                  </div>
+                  <div class="dg-cell">
+                    <div class="dg-label">Cash-Out Volume</div>
+                    <div class="dg-val warn">৳ 88,500</div>
+                    <div class="dg-sub" style="color:var(--amber);">↑ Rising trend</div>
+                  </div>
+                  <div class="dg-cell">
+                    <div class="dg-label">Mobile Recharge</div>
+                    <div class="dg-val">৳ 1,800</div>
+                    <div class="dg-sub" style="color:var(--t4);">→ Normal range</div>
+                  </div>
+                  <div class="dg-cell">
+                    <div class="dg-label">Repayment Rate</div>
+                    <div class="dg-val good">91%</div>
+                    <div class="dg-sub" style="color:var(--green);">↑ Strong track record</div>
+                  </div>
+                </div>
+                <!-- CASH-IN MINI CHART -->
+                <div style="display:flex;align-items:flex-end;gap:10px;">
+                  <div style="font-family:var(--mono);font-size:8px;color:var(--t4);white-space:nowrap;margin-bottom:2px;">CASH-IN TREND</div>
+                  <div class="mini-chart" style="flex:1;">
+                    <div class="mc-bar" style="background:#BBF7D0;height:38%;"></div>
+                    <div class="mc-bar" style="background:#86EFAC;height:44%;"></div>
+                    <div class="mc-bar" style="background:#4ADE80;height:40%;"></div>
+                    <div class="mc-bar" style="background:#FDE68A;height:52%;"></div>
+                    <div class="mc-bar" style="background:#FCD34D;height:56%;"></div>
+                    <div class="mc-bar" style="background:#FBBF24;height:50%;"></div>
+                    <div class="mc-bar" style="background:var(--red);height:88%;"></div>
+                    <div class="mc-bar" style="background:var(--red);height:94%;"></div>
+                    <div class="mc-bar" style="background:var(--red);height:100%;"></div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:8px;color:var(--t4);min-width:90px;"><span>FEB</span><span>MAR</span><span>APR</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- FO NOTE -->
+            <div class="sec-card">
+              <div class="sc-hdr"><div class="sc-title">Field Officer Recommendation Note</div></div>
+              <div class="sc-body">
+                <div class="fo-note-block">
+                  <div class="fo-note-meta">FO: Farhan Ahmed · Submitted: Apr 18, 10:22 AM · Reviewed OFFLINE (08:15 AM)</div>
+                  <div class="fo-note-text">"Recommend Reject. Applicant requested significantly above eligible amount (৳85K vs ৳42K eligible). Observed business premise — small grocery shop, modest inventory. Cash-in spike in Month 3 could not be explained by owner during interview; owner claimed 'savings withdrawal' but no documentation provided. One active loan already running at ৳30,000. High risk of double exposure and default."</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: Decision Panel -->
+          <div style="display:flex;flex-direction:column;gap:14px;">
+
+            <!-- DECISION FORM -->
+            <div class="decision-form">
+              <div class="df-label">FINAL DECISION</div>
+
+              <div class="df-rec">
+                <span style="color:var(--t3);">FO Recommendation: </span>
+                <span class="rec-reject">✕ Recommend Reject</span>
+              </div>
+
+              <button class="df-btn df-approve" id="d-approve" onclick="selectD('approve')">✓ &nbsp; APPROVE LOAN</button>
+              <button class="df-btn df-reject" id="d-reject" onclick="selectD('reject')">✕ &nbsp; REJECT LOAN</button>
+
+              <div style="font-family:var(--mono);font-size:8px;color:var(--t3);letter-spacing:1px;margin:8px 0 6px;text-transform:uppercase;">Decision Note <span style="color:var(--red);">*required</span></div>
+              <textarea class="df-note" id="d-note" placeholder="Required. Min. 10 characters. If overriding FO recommendation, explain why." oninput="chkDecision()"></textarea>
+
+              <div class="inline-alert ia-warn" style="margin-bottom:12px;font-size:12px;">
+                <div style="font-size:14px;flex-shrink:0;">⚠</div>
+                <div>Conflict acknowledgement required before submitting. Confirm you have reviewed both data versions.</div>
+              </div>
+
+              <div class="ack-row" onclick="toggleAck()">
+                <div class="cb" id="ack-cb"></div>
+                <div class="ack-text">I have reviewed both the FO's data version and the current server data. I acknowledge the conflict and am making an informed decision.</div>
+              </div>
+
+              <button class="df-submit" id="d-submit" disabled onclick="goto(4)">Submit Final Decision</button>
+
+              <div style="font-family:var(--mono);font-size:8px;color:var(--t4);text-align:center;margin-top:10px;line-height:1.6;">Decision is final and will be logged immutably. Officer will be notified automatically.</div>
+            </div>
+
+            <!-- LOAN DETAILS -->
+            <div class="sec-card">
+              <div class="sc-hdr"><div class="sc-title">Loan Application</div></div>
+              <div class="sc-body" style="padding:14px 16px;">
+                <div class="hist-item"><div class="hist-key">Requested Amount</div><div class="hist-val bad">৳ 85,000</div></div>
+                <div class="hist-item"><div class="hist-key">System Eligible</div><div class="hist-val good">৳ 42,000</div></div>
+                <div class="hist-item"><div class="hist-key">Tenure</div><div class="hist-val">12 months</div></div>
+                <div class="hist-item"><div class="hist-key">Interest Rate</div><div class="hist-val">18% p.a.</div></div>
+              </div>
+            </div>
+
+            <!-- APPLICATION HISTORY -->
+            <div class="sec-card">
+              <div class="sc-hdr"><div class="sc-title">Application History</div></div>
+              <div class="sc-body" style="padding:14px 16px;">
+                <div class="hist-item"><div class="hist-key">Total Applications</div><div class="hist-val">3</div></div>
+                <div class="hist-item"><div class="hist-key">Approved</div><div class="hist-val good">2</div></div>
+                <div class="hist-item"><div class="hist-key">Rejected</div><div class="hist-val bad">1</div></div>
+                <div class="hist-item"><div class="hist-key">Active Loans</div><div class="hist-val warn">1 (৳ 30,000)</div></div>
+                <div class="hist-item"><div class="hist-key">Repayment Rate</div><div class="hist-val good">91%</div></div>
+                <div class="hist-item"><div class="hist-key">Customer Since</div><div class="hist-val">Jan 2022</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PAGE 3: BATCH PROCESSING                   -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="page" id="page-3">
+    <div class="main">
+      <div class="main-hdr">
+        <div>
+          <div class="mh-title">Batch Processing</div>
+          <div class="mh-sub">14 ELIGIBLE APPLICATIONS · LOW RISK · FO-APPROVED · NO FLAGS</div>
+        </div>
+        <div class="mh-actions">
+          <button class="btn btn-secondary btn-sm" onclick="goto(1)">← Back to Queue</button>
+        </div>
+      </div>
+      <div class="content">
+
+        <!-- INFO BANNER -->
+        <div class="inline-alert ia-info" style="margin-bottom:20px;">
+          <div class="ia-icon">ℹ</div>
+          <div><strong>Batch Eligibility Rules:</strong> Only applications satisfying all 4 criteria are eligible: (1) Low-risk tier, (2) FO recommendation is Approve, (3) No data conflict flag, (4) No partial data flag. High-risk, medium-risk, conflict, and partial-data cases are excluded and must be reviewed individually. Batch approve does not bypass audit logging.</div>
+        </div>
+
+        <!-- BATCH STATS -->
+        <div class="kpi-row" style="margin-bottom:20px;">
+          <div class="kpi-card kg">
+            <div class="kpi-label">BATCH ELIGIBLE</div>
+            <div class="kpi-val" style="color:var(--green);">14</div>
+            <div class="kpi-delta up">Low-risk + FO Approved</div>
+          </div>
+          <div class="kpi-card ka">
+            <div class="kpi-label">SELECTED</div>
+            <div class="kpi-val" style="color:var(--amber);" id="bstat-sel">0</div>
+            <div class="kpi-delta neu">Click checkboxes below</div>
+          </div>
+          <div class="kpi-card kr">
+            <div class="kpi-label">EXCLUDED</div>
+            <div class="kpi-val" style="color:var(--red);">33</div>
+            <div class="kpi-delta dn">Require individual review</div>
+          </div>
+          <div class="kpi-card kb">
+            <div class="kpi-label">TOTAL AMOUNT</div>
+            <div class="kpi-val" style="color:var(--blue);font-size:20px;" id="bstat-amt">৳ 0</div>
+            <div class="kpi-delta neu">Selected total</div>
+          </div>
+        </div>
+
+        <!-- BATCH TABLE -->
+        <div class="tbl-wrap" style="margin-bottom:20px;">
+          <div class="sc-hdr">
+            <div class="sc-title">Eligible Applications — Select to Batch Approve</div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <span style="font-family:var(--mono);font-size:9px;color:var(--t4);" id="b-selcount">0 of 5 selected</span>
+              <button class="btn btn-secondary btn-sm" onclick="selectAllBatch()">Select All (5)</button>
+              <button class="btn btn-success btn-sm" id="batch-go" disabled onclick="goto(4)">✓ Approve Selected</button>
+            </div>
+          </div>
+          <table class="dtable">
+            <thead><tr>
+              <th><div class="cb" id="b-cb-all" onclick="selectAllBatch()"></div></th>
+              <th>APPLICANT</th><th>REQUESTED</th><th>ELIGIBLE</th>
+              <th>FIELD OFFICER</th><th>REPAYMENT RATE</th><th>SUBMITTED</th>
+            </tr></thead>
+            <tbody>
+              <tr id="brow-1"><td><div class="cb" id="bcb-1" onclick="toggleBatch(1,30000)"></div></td><td><div style="font-weight:700;">Karim Islam</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">MFS-2024-021109</div></td><td style="font-family:var(--mono);">৳ 30,000</td><td style="font-family:var(--mono);color:var(--green);">৳ 35,000</td><td style="font-size:12px;color:var(--t3);">Farhan Ahmed</td><td style="font-family:var(--mono);color:var(--green);">88%</td><td style="font-family:var(--mono);font-size:9px;color:var(--t4);">08:31 AM</td></tr>
+              <tr id="brow-2"><td><div class="cb" id="bcb-2" onclick="toggleBatch(2,25000)"></div></td><td><div style="font-weight:700;">Nasrin Begum</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">MFS-2024-021487</div></td><td style="font-family:var(--mono);">৳ 25,000</td><td style="font-family:var(--mono);color:var(--green);">৳ 28,000</td><td style="font-size:12px;color:var(--t3);">Jannat Ali</td><td style="font-family:var(--mono);color:var(--green);">95%</td><td style="font-family:var(--mono);font-size:9px;color:var(--t4);">07:55 AM</td></tr>
+              <tr id="brow-3"><td><div class="cb" id="bcb-3" onclick="toggleBatch(3,20000)"></div></td><td><div style="font-weight:700;">Abdul Rahim</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">MFS-2024-021503</div></td><td style="font-family:var(--mono);">৳ 20,000</td><td style="font-family:var(--mono);color:var(--green);">৳ 22,000</td><td style="font-size:12px;color:var(--t3);">Jannat Ali</td><td style="font-family:var(--mono);color:var(--green);">92%</td><td style="font-family:var(--mono);font-size:9px;color:var(--t4);">07:42 AM</td></tr>
+              <tr id="brow-4"><td><div class="cb" id="bcb-4" onclick="toggleBatch(4,18000)"></div></td><td><div style="font-weight:700;">Fatema Khatun</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">MFS-2024-021611</div></td><td style="font-family:var(--mono);">৳ 18,000</td><td style="font-family:var(--mono);color:var(--green);">৳ 20,000</td><td style="font-size:12px;color:var(--t3);">Farhan Ahmed</td><td style="font-family:var(--mono);color:var(--green);">97%</td><td style="font-family:var(--mono);font-size:9px;color:var(--t4);">07:30 AM</td></tr>
+              <tr id="brow-5"><td><div class="cb" id="bcb-5" onclick="toggleBatch(5,22000)"></div></td><td><div style="font-weight:700;">Jamal Uddin</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">MFS-2024-021720</div></td><td style="font-family:var(--mono);">৳ 22,000</td><td style="font-family:var(--mono);color:var(--green);">৳ 25,000</td><td style="font-size:12px;color:var(--t3);">Mim Akter</td><td style="font-family:var(--mono);color:var(--green);">90%</td><td style="font-family:var(--mono);font-size:9px;color:var(--t4);">Yesterday 4:50 PM</td></tr>
+            </tbody>
+          </table>
+          <div class="tbl-foot">
+            <div class="tf-count">Showing 5 of 14 eligible · <span style="color:var(--blue);cursor:pointer;">Load remaining 9</span></div>
+          </div>
+        </div>
+
+        <!-- EXCLUDED TABLE -->
+        <div class="tbl-wrap">
+          <div class="sc-hdr" onclick="toggleExcluded()" style="cursor:pointer;">
+            <div class="sc-title" style="color:var(--t3);">Excluded from Batch (33) — Click to expand</div>
+            <div style="font-family:var(--mono);font-size:9px;color:var(--t4);">▼ Require individual review</div>
+          </div>
+          <div id="excl-body" style="display:none;">
+            <table class="dtable">
+              <thead><tr><th>APPLICANT</th><th>RISK</th><th>REASON EXCLUDED</th><th>ACTION</th></tr></thead>
+              <tbody>
+                <tr class="conflict-row"><td><div style="font-weight:700;">Rokeya Fatema</div></td><td><span class="tag t-high">▲ HIGH</span></td><td style="font-size:12px;color:var(--t2);">High risk tier + FO Reject recommendation</td><td><button class="btn btn-secondary btn-xs" onclick="goto(2)">Review</button></td></tr>
+                <tr class="conflict-row"><td><div style="font-weight:700;">Mohammad Hasan</div></td><td><span class="tag t-high">▲ HIGH</span></td><td><span class="tag t-conflict">⚠ DATA CONFLICT</span></td><td><button class="btn btn-secondary btn-xs" onclick="goto(2)">Review</button></td></tr>
+                <tr><td><div style="font-weight:700;">Salma Akter</div></td><td><span class="tag t-med">◆ MED</span></td><td><span class="tag t-partial">◑ PARTIAL DATA (1/3 months)</span></td><td><button class="btn btn-secondary btn-xs" onclick="goto(2)">Review</button></td></tr>
+                <tr><td style="color:var(--t4);font-style:italic;" colspan="4">+ 30 more excluded applications requiring individual review…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PAGE 4: DECISION CONFIRMED                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="page" id="page-4">
+    <div class="main">
+      <div class="main-hdr">
+        <div>
+          <div class="mh-title">Decision Confirmed</div>
+          <div class="mh-sub">FINALIZED · APR 18, 2025 · 10:44 AM · AUDIT LOG UPDATED</div>
+        </div>
+        <div class="mh-actions">
+          <button class="btn btn-secondary btn-sm" onclick="goto(2)">← Back to Detail</button>
+          <button class="btn btn-primary btn-sm" onclick="goto(1)">Return to Queue →</button>
+        </div>
+      </div>
+      <div class="content">
+
+        <!-- TYPE TOGGLE -->
+        <div class="toggle-tabs">
+          <button class="ttab active" id="tt-ind" onclick="showDecision('individual')">Individual Decision</button>
+          <button class="ttab" id="tt-batch" onclick="showDecision('batch')">Batch Decision</button>
+        </div>
+
+        <!-- INDIVIDUAL -->
+        <div id="dc-individual">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+
+            <!-- REJECTED EXAMPLE (active) -->
+            <div class="sec-card">
+              <div class="sc-hdr" style="background:var(--red-bg);">
+                <div class="sc-title" style="color:var(--red);">✕ Loan Rejected</div>
+                <span class="tag t-rejected">FINAL STATUS: REJECTED</span>
+              </div>
+              <div class="sc-body">
+                <div class="confirm-wrap" style="padding:32px 20px;">
+                  <div class="confirm-ring rejected">✕</div>
+                  <div style="font-family:var(--mono);font-size:10px;color:var(--red);letter-spacing:2px;margin-bottom:8px;font-weight:600;">LOAN REJECTED</div>
+                  <div style="font-size:20px;font-weight:700;margin-bottom:4px;">Rokeya Fatema</div>
+                  <div style="font-family:var(--mono);font-size:12px;color:var(--t3);margin-bottom:22px;">MFS-2024-018743 · ৳ 85,000 requested</div>
+                  <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:18px;width:100%;text-align:left;">
+                    <div class="hist-item"><div class="hist-key">Manager Decision</div><div class="hist-val bad">Reject</div></div>
+                    <div class="hist-item"><div class="hist-key">FO Recommendation</div><div class="hist-val bad">Reject ✓ Aligned</div></div>
+                    <div class="hist-item"><div class="hist-key">Conflict Acknowledged</div><div class="hist-val good">✓ Yes</div></div>
+                    <div class="hist-item"><div class="hist-key">Override Applied</div><div class="hist-val">No (FO aligned)</div></div>
+                    <div class="hist-item"><div class="hist-key">Decided At</div><div class="hist-val" style="font-family:var(--mono);font-size:11px;">10:44 AM, Apr 18, 2025</div></div>
+                    <div class="hist-item"><div class="hist-key">Officer Notified</div><div class="hist-val good">✓ Push sent to Farhan Ahmed</div></div>
+                    <div class="hist-item" style="border:none;"><div class="hist-key">Customer Notified</div><div class="hist-val good">✓ SMS dispatched</div></div>
+                  </div>
+                </div>
+                <div class="inline-alert ia-info" style="margin-top:0;font-size:12px;">
+                  <div>ℹ</div>
+                  <div>Rejection reason has been logged in the immutable audit trail. Customer will receive SMS within 2 minutes. Case archived for 7 years per regulatory policy.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- APPROVED EXAMPLE (preview) -->
+            <div class="sec-card">
+              <div class="sc-hdr" style="background:var(--green-bg);">
+                <div class="sc-title" style="color:var(--green);">✓ Loan Approved — Preview</div>
+                <span class="tag t-approved">FINAL STATUS: APPROVED</span>
+              </div>
+              <div class="sc-body">
+                <div class="confirm-wrap" style="padding:32px 20px;">
+                  <div class="confirm-ring approved">✓</div>
+                  <div style="font-family:var(--mono);font-size:10px;color:var(--green);letter-spacing:2px;margin-bottom:8px;font-weight:600;">LOAN APPROVED</div>
+                  <div style="font-size:20px;font-weight:700;margin-bottom:4px;">Karim Islam</div>
+                  <div style="font-family:var(--mono);font-size:12px;color:var(--t3);margin-bottom:22px;">MFS-2024-021109 · ৳ 30,000 approved</div>
+                  <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:18px;width:100%;text-align:left;">
+                    <div class="hist-item"><div class="hist-key">Manager Decision</div><div class="hist-val good">Approve</div></div>
+                    <div class="hist-item"><div class="hist-key">FO Recommendation</div><div class="hist-val good">Approve ✓ Aligned</div></div>
+                    <div class="hist-item"><div class="hist-key">Disbursement</div><div class="hist-val good">✓ Initiated</div></div>
+                    <div class="hist-item"><div class="hist-key">Decided At</div><div class="hist-val" style="font-family:var(--mono);font-size:11px;">10:45 AM, Apr 18, 2025</div></div>
+                    <div class="hist-item"><div class="hist-key">Officer Notified</div><div class="hist-val good">✓ Push sent</div></div>
+                    <div class="hist-item" style="border:none;"><div class="hist-key">Customer Notified</div><div class="hist-val good">✓ SMS dispatched</div></div>
+                  </div>
+                </div>
+                <div class="inline-alert ia-success" style="margin-top:0;font-size:12px;">
+                  <div>✓</div>
+                  <div>Disbursement pipeline initiated. Loan amount of ৳30,000 will be credited to customer's MFS wallet within 4 business hours.</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- BATCH -->
+        <div id="dc-batch" style="display:none;">
+          <div class="sec-card">
+            <div class="sc-hdr" style="background:var(--green-bg);">
+              <div class="sc-title" style="color:var(--green);">⊞ Batch Approval Confirmed</div>
+              <span class="tag t-approved">5 APPLICATIONS · APPROVED</span>
+            </div>
+            <div class="sc-body">
+              <div class="confirm-wrap">
+                <div class="confirm-ring approved" style="font-size:32px;">⊞</div>
+                <div style="font-family:var(--mono);font-size:10px;color:var(--green);letter-spacing:2px;margin-bottom:10px;font-weight:600;">BATCH APPROVED</div>
+                <div style="font-size:22px;font-weight:700;margin-bottom:4px;">5 Applications Approved</div>
+                <div style="font-family:var(--mono);font-size:12px;color:var(--t3);margin-bottom:24px;">Total: ৳ 1,15,000 · Processed at 10:44 AM, Apr 18, 2025</div>
+                <div class="batch-result">
+                  <div class="br-card"><div class="br-val" style="color:var(--green);">5</div><div class="br-label">APPROVED</div></div>
+                  <div class="br-card"><div class="br-val" style="color:var(--amber);font-size:24px;">৳ 1,15,000</div><div class="br-label">TOTAL DISBURSED</div></div>
+                  <div class="br-card"><div class="br-val" style="color:var(--blue);">5</div><div class="br-label">FOs NOTIFIED</div></div>
+                  <div class="br-card"><div class="br-val" style="color:var(--green);">92%</div><div class="br-label">AVG REPAY RATE</div></div>
+                </div>
+                <div style="margin-top:20px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:18px;width:100%;max-width:560px;text-align:left;">
+                  <div class="hist-item"><div class="hist-key">Batch ID</div><div class="hist-val" style="font-family:var(--mono);font-size:11px;">BATCH-2025-04-18-001</div></div>
+                  <div class="hist-item"><div class="hist-key">Processed By</div><div class="hist-val">Rashida Ahmed (Senior Manager)</div></div>
+                  <div class="hist-item"><div class="hist-key">All Disbursements</div><div class="hist-val good">✓ Initiated</div></div>
+                  <div class="hist-item"><div class="hist-key">All Officers Notified</div><div class="hist-val good">✓ Push sent</div></div>
+                  <div class="hist-item" style="border:none;"><div class="hist-key">Audit Log</div><div class="hist-val good">✓ Recorded (5 entries)</div></div>
+                </div>
+                <div style="margin-top:14px;font-family:var(--mono);font-size:10px;color:var(--t4);">All 5 customers notified via SMS. Disbursement ETA: within 4 business hours.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div><!-- end shell -->
+
+<script>
+// ══ NAVIGATION ══
+function goto(n) {
+  for(let i=0;i<5;i++){
+    document.getElementById('page-'+i).className='page'+(i===n?' show':'');
+    document.getElementById('ts'+i).className='ts-btn'+(i===n?' active':'');
+  }
+  ['sbi-0','sbi-1','sbi-3'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.className='sb-item'+(id==='sbi-'+[0,1,3].filter(x=>x===n)[0]?((n===3&&id==='sbi-3')||(n===1&&id==='sbi-1')||(n===0&&id==='sbi-0')?' active':''):'');
+  });
+}
+
+// ══ QUEUE STATES ══
+function showQueueState(s){
+  const states=['live','skeleton','empty','error'];
+  states.forEach(st=>{
+    const el=document.getElementById('qs-'+st);
+    if(el) el.style.display=st===s?'block':'none';
+    const btn=document.getElementById('stab-'+st);
+    if(btn) btn.className='stab'+(st===s?' sa':'');
+  });
+}
+
+// ══ QUEUE ROW SELECTION ══
+const qSel={};
+function toggleQRow(id){
+  qSel[id]=!qSel[id];
+  const cb=document.getElementById('qcb-'+id);
+  const row=document.getElementById('qrow-'+id);
+  if(cb) cb.className='cb'+(qSel[id]?' chk':'');
+  if(row) row.className=qSel[id]?'sel':'';
+  updateQueueBatch();
+}
+function updateQueueBatch(){
+  const count=Object.values(qSel).filter(Boolean).length;
+  const bar=document.getElementById('batch-bar');
+  if(bar) bar.style.display=count>0?'flex':'none';
+  const lbl=document.getElementById('batch-count-label');
+  if(lbl) lbl.textContent=count+' selected';
+}
+function clearSel(){
+  Object.keys(qSel).forEach(k=>qSel[k]=false);
+  ['karim','nasrin','rahim'].forEach(id=>{
+    const cb=document.getElementById('qcb-'+id);
+    const row=document.getElementById('qrow-'+id);
+    if(cb) cb.className='cb';
+    if(row) row.className='';
+  });
+  updateQueueBatch();
+}
+function toggleAll(){}
+
+// ══ DETAIL DECISION ══
+let dSel=null, ackChecked=false;
+function selectD(t){
+  dSel=t;
+  document.getElementById('d-approve').className='df-btn df-approve'+(t==='approve'?' sel':'');
+  document.getElementById('d-reject').className='df-btn df-reject'+(t==='reject'?' sel':'');
+  chkDecision();
+}
+function toggleAck(){
+  ackChecked=!ackChecked;
+  document.getElementById('ack-cb').className='cb'+(ackChecked?' chk':'');
+  chkDecision();
+}
+function chkDecision(){
+  const note=document.getElementById('d-note').value;
+  document.getElementById('d-submit').disabled=!(dSel&&note.length>=10&&ackChecked);
+}
+
+// ══ BATCH PROCESSING ══
+const bSel={};const bAmt={1:30000,2:25000,3:20000,4:18000,5:22000};
+function toggleBatch(id,amt){
+  bSel[id]=!bSel[id];
+  const cb=document.getElementById('bcb-'+id);
+  const row=document.getElementById('brow-'+id);
+  if(cb) cb.className='cb'+(bSel[id]?' chk':'');
+  if(row) row.className=bSel[id]?'sel':'';
+  updateBatchStats();
+}
+function updateBatchStats(){
+  const sel=Object.values(bSel).filter(Boolean).length;
+  const total=Object.entries(bSel).filter(([,v])=>v).reduce((a,[k])=>a+(bAmt[k]||0),0);
+  document.getElementById('bstat-sel').textContent=sel;
+  document.getElementById('bstat-amt').textContent='৳ '+total.toLocaleString('en-IN');
+  document.getElementById('batch-go').disabled=sel===0;
+  document.getElementById('b-selcount').textContent=sel+' of 5 selected';
+  if(sel===5) document.getElementById('b-cb-all').className='cb chk';
+  else document.getElementById('b-cb-all').className='cb';
+}
+function selectAllBatch(){
+  for(let i=1;i<=5;i++){if(!bSel[i]) toggleBatch(i,bAmt[i]);}
+}
+function toggleExcluded(){
+  const b=document.getElementById('excl-body');
+  b.style.display=b.style.display==='none'?'block':'none';
+}
+
+// ══ DECISION CONFIRMED TOGGLE ══
+function showDecision(t){
+  document.getElementById('dc-individual').style.display=t==='individual'?'block':'none';
+  document.getElementById('dc-batch').style.display=t==='batch'?'block':'none';
+  document.getElementById('tt-ind').className='ttab'+(t==='individual'?' active':'');
+  document.getElementById('tt-batch').className='ttab'+(t==='batch'?' active':'');
+}
+</script>
+</body>
+</html>
