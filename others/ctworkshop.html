@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Little Creators' Workshop – Creative Time</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --pink:    #FF3E8A;
+    --purple:  #7B2FFF;
+    --teal:    #00C2A8;
+    --yellow:  #FFD600;
+    --orange:  #FF7A1A;
+    --sky:     #60CFFF;
+    --cream:   #FFFDF4;
+    --dark:    #1A1040;
+    --card-bg: #FFFFFF;
+    --radius:  20px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+
+
+  /* ── BLOBS BACKGROUND ── */
+  .blobs {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    overflow: hidden;
+  }
+  .blobs span {
+    position: absolute; border-radius: 50%; filter: blur(80px); opacity: .18;
+    animation: drift 14s ease-in-out infinite alternate;
+  }
+  .blobs span:nth-child(1){ width:520px;height:520px;background:var(--pink);   top:-160px;left:-100px; animation-delay:0s;   }
+  .blobs span:nth-child(2){ width:420px;height:420px;background:var(--purple); top:30%;  right:-140px;animation-delay:-4s;  }
+  .blobs span:nth-child(3){ width:360px;height:360px;background:var(--teal);   bottom:10%;left:10%;  animation-delay:-8s;  }
+  .blobs span:nth-child(4){ width:280px;height:280px;background:var(--yellow); bottom:-80px;right:20%;animation-delay:-2s; }
+  @keyframes drift { to { transform: translate(40px, 30px) scale(1.05); } }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100svh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 60px 24px 40px;
+    position: relative;
+  }
+
+  /* floating confetti dots */
+  .confetti {
+    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  }
+  .dot {
+    position: absolute; border-radius: 50%;
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    0%   { transform: translateY(-40px) rotate(0deg);   opacity: 1; }
+    100% { transform: translateY(110vh)  rotate(360deg); opacity: 0; }
+  }
+
+  .brand {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: white; border-radius: 50px;
+    padding: 8px 22px; margin-bottom: 32px;
+    box-shadow: 0 4px 24px rgba(123,47,255,.15);
+    animation: fadeUp .6s ease both;
+  }
+  .brand-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--pink); }
+  .brand-dot:nth-child(3){ background: var(--purple); }
+  .brand-name {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1rem; font-weight: 700; letter-spacing: .5px;
+    background: linear-gradient(90deg, var(--pink), var(--purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  .hero-sub {
+    font-size: clamp(.9rem, 2.5vw, 1.1rem);
+    font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 12px;
+    animation: fadeUp .6s .1s ease both;
+  }
+
+  .hero-title-sm {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(1.4rem, 5vw, 2rem);
+    font-weight: 600; color: var(--dark); margin-bottom: -4px;
+    animation: fadeUp .6s .2s ease both;
+  }
+
+  .hero-title-big {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(3.5rem, 12vw, 7rem);
+    font-weight: 800; line-height: .95;
+    background: linear-gradient(135deg, var(--teal) 0%, var(--purple) 60%, var(--pink) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 4px 0 rgba(0,194,168,.18));
+    animation: fadeUp .6s .3s ease both;
+    margin-bottom: 32px;
+  }
+
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 14px; justify-content: center;
+    margin-bottom: 40px;
+    animation: fadeUp .6s .4s ease both;
+  }
+  .badge {
+    display: flex; align-items: center; gap: 8px;
+    background: white; border-radius: 50px;
+    padding: 10px 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.08);
+    font-weight: 700; font-size: .95rem;
+    border: 2px solid transparent;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .badge:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,.13); }
+  .badge:nth-child(1){ border-color: var(--teal);   color: var(--teal);   }
+  .badge:nth-child(2){ border-color: var(--pink);   color: var(--pink);   }
+  .badge:nth-child(3){ border-color: var(--orange); color: var(--orange); }
+  .badge-icon { font-size: 1.3rem; }
+
+  .cta-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    color: white; font-family: 'Baloo 2', cursive;
+    font-size: 1.2rem; font-weight: 700;
+    padding: 16px 48px; border-radius: 50px;
+    text-decoration: none; border: none; cursor: pointer;
+    box-shadow: 0 8px 32px rgba(255,62,138,.35);
+    transition: transform .2s, box-shadow .2s;
+    animation: fadeUp .6s .5s ease both;
+    position: relative; overflow: hidden;
+  }
+  .cta-btn::after {
+    content: ''; position: absolute; inset: 0;
+    background: white; opacity: 0;
+    transition: opacity .2s;
+  }
+  .cta-btn:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 14px 40px rgba(255,62,138,.45); }
+  .cta-btn:hover::after { opacity: .08; }
+
+  /* scroll arrow */
+  .scroll-hint {
+    position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    color: var(--purple); opacity: .5; font-size: .75rem; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+  /* ── DETAILS STRIP ── */
+  .strip {
+    background: var(--dark);
+    padding: 28px 24px;
+  }
+  .strip-inner {
+    max-width: 860px; margin: 0 auto;
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 0;
+  }
+  .strip-item {
+    display: flex; flex-direction: column; align-items: center;
+    flex: 1 1 160px; padding: 12px 20px;
+    border-right: 1px solid rgba(255,255,255,.1);
+  }
+  .strip-item:last-child { border-right: none; }
+  .strip-label {
+    font-size: .72rem; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: rgba(255,255,255,.4);
+    margin-bottom: 4px;
+  }
+  .strip-value {
+    font-family: 'Baloo 2', cursive; font-size: 1.3rem; font-weight: 800;
+    color: white;
+  }
+  .strip-value span { color: var(--yellow); }
+
+  /* ── SECTIONS WRAPPER ── */
+  .sections { max-width: 920px; margin: 0 auto; padding: 72px 24px; }
+
+  /* ── SECTION HEADING ── */
+  .sec-heading {
+    text-align: center; margin-bottom: 40px;
+  }
+  .sec-tag {
+    display: inline-block; background: var(--yellow);
+    color: var(--dark); font-size: .7rem; font-weight: 800;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    padding: 5px 16px; border-radius: 50px; margin-bottom: 10px;
+  }
+  .sec-heading h2 {
+    font-family: 'Baloo 2', cursive; font-size: clamp(2rem, 6vw, 3rem);
+    font-weight: 800; line-height: 1.1;
+  }
+
+  /* ── ACTIVITIES ── */
+  .activities { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; }
+
+  .act-card {
+    background: white; border-radius: var(--radius);
+    padding: 36px 28px; text-align: center;
+    box-shadow: 0 4px 32px rgba(0,0,0,.07);
+    border: 2px solid transparent;
+    transition: transform .25s, box-shadow .25s, border-color .25s;
+    position: relative; overflow: hidden;
+    animation: fadeUp .6s ease both;
+  }
+  .act-card:nth-child(1){ animation-delay: .05s; }
+  .act-card:nth-child(2){ animation-delay: .15s; }
+  .act-card:nth-child(3){ animation-delay: .25s; }
+  .act-card:hover { transform: translateY(-8px); box-shadow: 0 16px 48px rgba(0,0,0,.13); }
+
+  .act-card:nth-child(1):hover { border-color: var(--teal);   }
+  .act-card:nth-child(2):hover { border-color: var(--pink);   }
+  .act-card:nth-child(3):hover { border-color: var(--orange); }
+
+  .act-icon {
+    font-size: 3.5rem; margin-bottom: 16px;
+    display: block;
+    animation: wiggle 3s ease-in-out infinite;
+  }
+  .act-card:nth-child(2) .act-icon { animation-delay: -1s; }
+  .act-card:nth-child(3) .act-icon { animation-delay: -2s; }
+  @keyframes wiggle { 0%,100%{transform:rotate(-4deg) scale(1)} 50%{transform:rotate(4deg) scale(1.1)} }
+
+  .act-title {
+    font-family: 'Baloo 2', cursive; font-size: 1.4rem; font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .act-card:nth-child(1) .act-title { color: var(--teal);   }
+  .act-card:nth-child(2) .act-title { color: var(--pink);   }
+  .act-card:nth-child(3) .act-title { color: var(--orange); }
+
+  .act-desc { font-size: .9rem; color: #666; line-height: 1.6; }
+
+  /* ── PRICE BLOCK ── */
+  .price-section {
+    margin-top: 72px;
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    border-radius: calc(var(--radius) * 2);
+    padding: 56px 32px; text-align: center; color: white;
+    position: relative; overflow: hidden;
+  }
+  .price-section::before {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='10'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .price-tag-label { font-size: .8rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; opacity: .7; margin-bottom: 8px; }
+  .price-amount { font-family: 'Baloo 2', cursive; font-size: clamp(4rem, 15vw, 8rem); font-weight: 800; line-height: 1; }
+  .price-currency { font-size: 1.1rem; font-weight: 700; opacity: .8; margin-top: -4px; margin-bottom: 24px; }
+  .limited-badge {
+    display: inline-block;
+    background: var(--yellow); color: var(--dark);
+    font-family: 'Baloo 2', cursive; font-weight: 800;
+    font-size: 1.1rem; padding: 10px 32px; border-radius: 50px;
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+
+  /* ── INFO GRID ── */
+  .info-grid {
+    margin-top: 72px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px;
+  }
+  .info-card {
+    background: white; border-radius: var(--radius);
+    padding: 28px; display: flex; align-items: flex-start; gap: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.07);
+    transition: transform .2s;
+  }
+  .info-card:hover { transform: translateY(-4px); }
+  .info-icon {
+    font-size: 2rem; flex-shrink: 0;
+    background: var(--cream); border-radius: 14px; padding: 10px;
+    width: 52px; height: 52px; display: flex; align-items: center; justify-content: center;
+  }
+  .info-label { font-size: .72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #999; margin-bottom: 4px; }
+  .info-value { font-family: 'Baloo 2', cursive; font-size: 1.3rem; font-weight: 800; color: var(--dark); line-height: 1.2; }
+
+  /* ── LOCATION ── */
+  .location-section { margin-top: 72px; }
+  .location-card {
+    background: white; border-radius: calc(var(--radius) * 1.5);
+    padding: 40px 36px;
+    box-shadow: 0 4px 32px rgba(0,0,0,.07);
+    display: flex; flex-wrap: wrap; gap: 32px; align-items: center;
+  }
+  .location-left { flex: 1 1 240px; }
+  .location-left h3 { font-family: 'Baloo 2', cursive; font-size: 1.8rem; font-weight: 800; color: var(--dark); margin-bottom: 6px; }
+  .location-left p  { color: #666; font-size: .95rem; margin-bottom: 20px; }
+  .phone-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .phone-list li {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--cream); border-radius: 12px; padding: 10px 16px;
+    font-weight: 700; font-size: .95rem; color: var(--dark);
+  }
+  .phone-list li span { font-size: 1.2rem; }
+  .location-right { flex: 1 1 200px; display: flex; justify-content: center; }
+  .map-placeholder {
+    width: 100%; max-width: 300px; aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #e8f5f3, #d4eef9);
+    border-radius: 16px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 8px;
+    font-size: .85rem; color: #666; font-weight: 600;
+    border: 2px dashed var(--teal);
+  }
+  .map-placeholder .map-pin { font-size: 2.5rem; }
+
+  /* ── SPONSOR ── */
+  .sponsor-bar {
+    text-align: center; padding: 48px 24px;
+    border-top: 1px solid rgba(0,0,0,.07);
+  }
+  .sponsor-bar p { font-size: .8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #aaa; margin-bottom: 12px; }
+  .sponsor-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--dark); color: white;
+    font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1rem;
+    padding: 10px 24px; border-radius: 50px;
+  }
+  .sponsor-pill .s-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark); color: rgba(255,255,255,.4);
+    text-align: center; padding: 24px;
+    font-size: .82rem; font-weight: 600;
+  }
+  footer strong { color: var(--pink); }
+
+  /* ── UTILS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+
+  /* Intersection observer reveal */
+  .reveal { opacity: 0; transform: translateY(32px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 520px) {
+    .strip-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .strip-item:last-child { border-bottom: none; }
+    .price-amount { font-size: 5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- background blobs -->
+<div class="blobs">
+  <span></span><span></span><span></span><span></span>
+</div>
+
+<!-- confetti -->
+<div class="confetti" id="confetti"></div>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="brand">
+    <span class="brand-dot"></span>
+    <span class="brand-name">Creative Time Presents</span>
+    <span class="brand-dot"></span>
+  </div>
+
+  <p class="hero-sub">✦ For kids aged 5–9 ✦</p>
+  <p class="hero-title-sm">Little Creators'</p>
+  <h1 class="hero-title-big">Workshop</h1>
+
+  <div class="hero-badges">
+    <div class="badge"><span class="badge-icon">🎨</span> Canvas Painting</div>
+    <div class="badge"><span class="badge-icon">✂️</span> Paper Crafting</div>
+    <div class="badge"><span class="badge-icon">📖</span> Story Time</div>
+  </div>
+
+  <a href="#register" class="cta-btn">🎉 Register Now – 500৳</a>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <svg width="16" height="22" viewBox="0 0 16 22" fill="none"><path d="M8 1v14M2 10l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</section>
+
+<!-- ═══════════ DETAILS STRIP ═══════════ -->
+<div class="strip">
+  <div class="strip-inner">
+    <div class="strip-item">
+      <span class="strip-label">Date & Time</span>
+      <span class="strip-value"><span>23 May</span>, 3 PM</span>
+    </div>
+    <div class="strip-item">
+      <span class="strip-label">Duration</span>
+      <span class="strip-value">2 <span>Hours</span></span>
+    </div>
+    <div class="strip-item">
+      <span class="strip-label">Age Group</span>
+      <span class="strip-value"><span>5–9</span> years</span>
+    </div>
+    <div class="strip-item">
+      <span class="strip-label">Seats</span>
+      <span class="strip-value"><span>Limited</span> Only</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ MAIN CONTENT ═══════════ -->
+<div class="sections">
+
+  <!-- Activities -->
+  <div class="sec-heading reveal">
+    <span class="sec-tag">What We Do</span>
+    <h2>3 Fun-Packed Activities 🌟</h2>
+  </div>
+
+  <div class="activities">
+    <div class="act-card">
+      <span class="act-icon">🎨</span>
+      <h3 class="act-title">Canvas Painting</h3>
+      <p class="act-desc">Let little hands express big imaginations on canvas with vibrant colors and guided painting fun.</p>
+    </div>
+    <div class="act-card">
+      <span class="act-icon">✂️</span>
+      <h3 class="act-title">Paper Crafting</h3>
+      <p class="act-desc">Cut, fold, and create! Kids build amazing paper crafts to take home as a memory of the day.</p>
+    </div>
+    <div class="act-card">
+      <span class="act-icon">📖</span>
+      <h3 class="act-title">Story Time</h3>
+      <p class="act-desc">Dive into a magical storytelling session that sparks creativity, imagination, and a love for reading.</p>
+    </div>
+  </div>
+
+  <!-- Price -->
+  <div class="price-section reveal" id="register">
+    <p class="price-tag-label">Registration Fee</p>
+    <div class="price-amount">500</div>
+    <p class="price-currency">Taka Only</p>
+    <div class="limited-badge">⚡ Limited Seats Available!</div>
+    <p style="margin-top:28px; opacity:.8; font-size:.95rem; max-width:400px; margin-left:auto; margin-right:auto;">
+      Secure your child's spot today. Call us to register before seats fill up!
+    </p>
+  </div>
+
+  <!-- Info Cards -->
+  <div class="info-grid reveal">
+    <div class="info-card">
+      <div class="info-icon">📅</div>
+      <div>
+        <p class="info-label">Date & Time</p>
+        <p class="info-value">23 May, 3:00 PM</p>
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-icon">⏱️</div>
+      <div>
+        <p class="info-label">Duration</p>
+        <p class="info-value">2 Hours</p>
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-icon">👧</div>
+      <div>
+        <p class="info-label">Who Can Join</p>
+        <p class="info-value">Ages 5–9 Years</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Location -->
+  <div class="location-section reveal">
+    <div class="sec-heading" style="margin-bottom:28px;">
+      <span class="sec-tag">Find Us</span>
+      <h2>Where to Go 📍</h2>
+    </div>
+    <div class="location-card">
+      <div class="location-left">
+        <h3>Bashundhara R/A</h3>
+        <p>Block B, Bashundhara Residential Area<br/>Dhaka, Bangladesh</p>
+        <ul class="phone-list">
+          <li><span>📱</span> 01911 998 493</li>
+          <li><span>📱</span> 01714 168 439</li>
+        </ul>
+      </div>
+      <div class="location-right">
+        <div class="map-placeholder">
+          <span class="map-pin">📍</span>
+          <span>Block B</span>
+          <span style="font-size:.75rem; opacity:.7">Bashundhara R/A</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /sections -->
+
+<!-- Sponsor -->
+<div class="sponsor-bar reveal">
+  <p>Sponsored by</p>
+  <div class="sponsor-pill">
+    <span class="s-dot"></span>
+    Creative Kids
+    <span class="s-dot"></span>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 <strong>Creative Time</strong>. All rights reserved. Little Creators' Workshop.
+</footer>
+
+<script>
+  /* ── CONFETTI DOTS ── */
+  const colors = ['#FF3E8A','#7B2FFF','#00C2A8','#FFD600','#FF7A1A','#60CFFF'];
+  const container = document.getElementById('confetti');
+  for (let i = 0; i < 38; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    const size = Math.random() * 10 + 5;
+    d.style.cssText = `
+      width:${size}px; height:${size}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      left:${Math.random()*100}%;
+      animation-duration:${Math.random()*10+8}s;
+      animation-delay:-${Math.random()*12}s;
+      opacity:${Math.random()*.5+.3};
+    `;
+    container.appendChild(d);
+  }
+
+  /* ── SCROLL REVEAL ── */
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => obs.observe(r));
+</script>
+</body>
+</html>
