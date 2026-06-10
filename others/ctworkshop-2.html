@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Little Creators' Workshop – Creative Time</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800;900&family=Schoolbell&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --pink:   #FF3E8A;
+    --purple: #8B35FF;
+    --teal:   #00C2A8;
+    --yellow: #FFD600;
+    --orange: #FF7A1A;
+    --sky:    #60CFFF;
+    --green:  #4CD964;
+    --red:    #FF4545;
+    --paper:  #FFF9EE;
+    --lined:  #E8F4FF;
+    --dark:   #2D1B69;
+    --ink:    #3D2B8F;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--paper);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ══════════════════════════════
+     PAPER TEXTURE BACKGROUND
+  ══════════════════════════════ */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: -2; pointer-events: none;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(100,149,237,.08) 31px, rgba(100,149,237,.08) 32px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,62,138,.04) 39px, rgba(255,62,138,.04) 40px);
+  }
+
+  /* ══════════════════════════════
+     FLOATING CRAFT ITEMS (fixed bg)
+  ══════════════════════════════ */
+  .craft-bg {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
+  }
+  .craft-bg span {
+    position: absolute;
+    font-size: 2rem;
+    opacity: .12;
+    animation: floatSpin linear infinite;
+    user-select: none;
+  }
+  @keyframes floatSpin {
+    0%   { transform: translateY(110vh) rotate(0deg); }
+    100% { transform: translateY(-10vh) rotate(720deg); }
+  }
+
+  /* ══════════════════════════════
+     WAVY TOP BANNER
+  ══════════════════════════════ */
+  .top-banner {
+    background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+    padding: 10px 20px 0;
+    text-align: center;
+    position: relative;
+  }
+  .top-banner p {
+    font-family: 'Schoolbell', cursive;
+    font-size: 1.1rem; color: rgba(255,255,255,.9);
+    letter-spacing: 1px;
+  }
+  .top-wave {
+    display: block; width: 100%; height: 48px; margin-bottom: -2px;
+  }
+
+  /* ══════════════════════════════
+     HERO
+  ══════════════════════════════ */
+  .hero {
+    min-height: 90svh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 48px 24px 60px;
+    position: relative;
+  }
+
+  /* Sticker: "Creative Time Presents" */
+  .sticker-brand {
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--dark);
+    font-family: 'Schoolbell', cursive;
+    font-size: 1.1rem;
+    padding: 8px 28px 10px;
+    border-radius: 4px;
+    margin-bottom: 28px;
+    transform: rotate(-2deg);
+    box-shadow: 3px 3px 0 rgba(0,0,0,.15), 6px 6px 16px rgba(0,0,0,.1);
+    animation: fadeUp .5s ease both;
+    position: relative;
+  }
+  /* tape strips */
+  .sticker-brand::before, .sticker-brand::after {
+    content: '';
+    position: absolute;
+    width: 36px; height: 14px;
+    background: rgba(255,255,255,.55);
+    top: -7px;
+    border-radius: 2px;
+  }
+  .sticker-brand::before { left: 10px; transform: rotate(-3deg); }
+  .sticker-brand::after  { right: 10px; transform: rotate(3deg); }
+
+  .hero-age {
+    font-family: 'Schoolbell', cursive;
+    font-size: 1.2rem; color: var(--teal);
+    margin-bottom: 8px;
+    animation: fadeUp .5s .1s ease both;
+  }
+
+  .hero-sm {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(1.3rem, 4vw, 1.9rem);
+    font-weight: 700; color: var(--ink);
+    animation: fadeUp .5s .15s ease both;
+  }
+
+  .hero-big {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(4rem, 14vw, 8rem);
+    font-weight: 900; line-height: .9;
+    position: relative; display: inline-block;
+    animation: fadeUp .5s .2s ease both;
+    margin-bottom: 8px;
+  }
+  /* multi-layer hand-drawn text effect */
+  .hero-big .w1 {
+    -webkit-text-stroke: 4px var(--purple);
+    color: white;
+    filter: drop-shadow(4px 6px 0 var(--pink)) drop-shadow(-2px -2px 0 var(--teal));
+    display: block;
+  }
+
+  /* Doodle underline */
+  .doodle-underline {
+    display: block; width: 80%; max-width: 340px; margin: 0 auto 32px;
+    animation: fadeUp .5s .3s ease both;
+  }
+
+  /* Activity sticker row */
+  .activity-stickers {
+    display: flex; flex-wrap: wrap; gap: 14px; justify-content: center;
+    margin-bottom: 36px;
+    animation: fadeUp .5s .35s ease both;
+  }
+  .act-sticker {
+    background: white;
+    border-radius: 16px;
+    padding: 12px 20px 10px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Schoolbell', cursive;
+    font-size: 1.1rem;
+    position: relative;
+    transition: transform .2s;
+    cursor: default;
+  }
+  .act-sticker:hover { transform: rotate(0deg) scale(1.08) translateY(-4px); }
+  .act-sticker:nth-child(1){ transform: rotate(-3deg); border: 3px solid var(--teal);   color: var(--teal);   box-shadow: 4px 4px 0 var(--teal); }
+  .act-sticker:nth-child(2){ transform: rotate(2deg);  border: 3px solid var(--pink);   color: var(--pink);   box-shadow: 4px 4px 0 var(--pink); }
+  .act-sticker:nth-child(3){ transform: rotate(-1deg); border: 3px solid var(--orange); color: var(--orange); box-shadow: 4px 4px 0 var(--orange); }
+  .act-sticker:nth-child(1):hover { transform: rotate(-3deg) scale(1.08) translateY(-4px); }
+  .act-sticker:nth-child(2):hover { transform: rotate(2deg)  scale(1.08) translateY(-4px); }
+  .act-sticker:nth-child(3):hover { transform: rotate(-1deg) scale(1.08) translateY(-4px); }
+  .act-sticker-icon { font-size: 1.5rem; }
+
+  /* CTA Button — crayon style */
+  .cta-btn {
+    display: inline-block;
+    background: var(--pink);
+    color: white;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.25rem; font-weight: 800;
+    padding: 16px 52px 14px;
+    border-radius: 12px;
+    text-decoration: none; border: none; cursor: pointer;
+    box-shadow: 0 6px 0 #c4005e, 0 10px 28px rgba(255,62,138,.35);
+    transition: transform .15s, box-shadow .15s;
+    animation: fadeUp .5s .45s ease both;
+    position: relative;
+  }
+  .cta-btn:hover  { transform: translateY(-3px); box-shadow: 0 9px 0 #c4005e, 0 16px 32px rgba(255,62,138,.4); }
+  .cta-btn:active { transform: translateY(3px);  box-shadow: 0 3px 0 #c4005e, 0 6px 16px rgba(255,62,138,.3); }
+
+  .scroll-hint {
+    position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    font-family: 'Schoolbell', cursive; color: var(--purple);
+    opacity: .5; font-size: .9rem;
+    animation: bob 2s ease-in-out infinite;
+  }
+  @keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(7px)} }
+
+  /* ══════════════════════════════
+     TORN PAPER DIVIDER
+  ══════════════════════════════ */
+  .torn {
+    width: 100%; overflow: hidden; line-height: 0; display: block;
+    margin-bottom: -2px;
+  }
+  .torn svg { display: block; width: 100%; }
+
+  /* ══════════════════════════════
+     DETAILS STRIP (chalkboard)
+  ══════════════════════════════ */
+  .chalkboard {
+    background: #2C3E50;
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(255,255,255,.03) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(255,255,255,.04) 0%, transparent 50%);
+    padding: 36px 24px 40px;
+    position: relative;
+  }
+  .chalk-border {
+    max-width: 860px; margin: 0 auto;
+    border: 3px dashed rgba(255,255,255,.2);
+    border-radius: 16px; padding: 24px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 0;
+  }
+  .chalk-item {
+    flex: 1 1 160px; text-align: center; padding: 12px 20px;
+    border-right: 2px dashed rgba(255,255,255,.15);
+  }
+  .chalk-item:last-child { border-right: none; }
+  .chalk-label {
+    font-family: 'Schoolbell', cursive;
+    font-size: .95rem; color: rgba(255,255,255,.5);
+    margin-bottom: 4px;
+  }
+  .chalk-value {
+    font-family: 'Schoolbell', cursive;
+    font-size: 1.6rem; color: white;
+    line-height: 1.1;
+  }
+  .chalk-value em { color: var(--yellow); font-style: normal; }
+
+  /* chalk stars */
+  .chalk-star { color: rgba(255,255,255,.15); font-size: .8rem; }
+
+  /* ══════════════════════════════
+     SECTIONS
+  ══════════════════════════════ */
+  .sections { max-width: 960px; margin: 0 auto; padding: 72px 24px; }
+
+  /* Section heading — looks hand-written on paper */
+  .sec-heading {
+    text-align: center; margin-bottom: 48px;
+    position: relative;
+  }
+  .sec-heading::after {
+    content: '';
+    display: block; width: 120px; height: 4px; margin: 12px auto 0;
+    background: repeating-linear-gradient(90deg, var(--pink) 0 8px, transparent 8px 14px);
+    border-radius: 2px;
+  }
+  .sec-tag {
+    display: inline-block;
+    font-family: 'Schoolbell', cursive;
+    font-size: 1rem; color: var(--pink);
+    background: rgba(255,62,138,.08);
+    padding: 4px 16px; border-radius: 50px;
+    border: 2px solid rgba(255,62,138,.2);
+    margin-bottom: 8px;
+  }
+  .sec-heading h2 {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(2rem, 6vw, 3rem); font-weight: 900;
+    color: var(--ink);
+  }
+
+  /* ══════════════════════════════
+     ACTIVITY CARDS (craft-paper look)
+  ══════════════════════════════ */
+  .activities { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px; }
+
+  .act-card {
+    position: relative;
+    border-radius: 4px 20px 20px 20px;
+    padding: 40px 28px 32px;
+    text-align: center;
+    transition: transform .25s;
+    overflow: visible;
+  }
+  .act-card:nth-child(1){ background: #FFF0F7; box-shadow: 6px 6px 0 var(--pink),   8px 8px 24px rgba(255,62,138,.15); }
+  .act-card:nth-child(2){ background: #F0FFF8; box-shadow: 6px 6px 0 var(--teal),   8px 8px 24px rgba(0,194,168,.15); }
+  .act-card:nth-child(3){ background: #FFF6ED; box-shadow: 6px 6px 0 var(--orange), 8px 8px 24px rgba(255,122,26,.15); }
+  .act-card:hover { transform: translateY(-8px) rotate(.5deg); }
+
+  /* pin/tape at top */
+  .act-card::before {
+    content: '📌';
+    position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+    font-size: 1.6rem;
+  }
+  .act-card:nth-child(2)::before { content: '📎'; }
+  .act-card:nth-child(3)::before { content: '🖇️'; }
+
+  .act-emoji { font-size: 4rem; margin-bottom: 12px; display: block; animation: wobble 3s ease-in-out infinite; }
+  .act-card:nth-child(2) .act-emoji { animation-delay: -1s; }
+  .act-card:nth-child(3) .act-emoji { animation-delay: -2s; }
+  @keyframes wobble { 0%,100%{transform:rotate(-5deg) scale(1)} 50%{transform:rotate(5deg) scale(1.12)} }
+
+  .act-title {
+    font-family: 'Baloo 2', cursive; font-size: 1.5rem; font-weight: 900;
+    margin-bottom: 10px;
+  }
+  .act-card:nth-child(1) .act-title { color: var(--pink); }
+  .act-card:nth-child(2) .act-title { color: var(--teal); }
+  .act-card:nth-child(3) .act-title { color: var(--orange); }
+
+  .act-desc {
+    font-size: .92rem; color: #666; line-height: 1.65;
+    font-weight: 600;
+  }
+
+  /* ══════════════════════════════
+     PRICE BLOCK — BIG PRICE TAG
+  ══════════════════════════════ */
+  .price-wrap {
+    margin-top: 80px;
+    position: relative; text-align: center;
+  }
+  .price-tag {
+    display: inline-block; position: relative;
+    background: linear-gradient(135deg, #8B35FF 0%, #FF3E8A 100%);
+    border-radius: 24px 24px 24px 24px;
+    padding: 52px 60px 44px;
+    color: white;
+    box-shadow: 0 12px 0 #5a1fb5, 0 18px 48px rgba(139,53,255,.35);
+    overflow: hidden;
+  }
+  /* confetti inside the price tag */
+  .price-tag::before {
+    content: '🌟✨⭐🌟✨⭐🌟✨';
+    position: absolute; top: 10px; left: 0; right: 0;
+    text-align: center; font-size: 1rem;
+    opacity: .25; letter-spacing: 8px;
+  }
+  /* price hole */
+  .price-hole {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--paper); border: 3px solid rgba(255,255,255,.3);
+    margin: 0 auto 16px;
+  }
+  .price-label {
+    font-family: 'Schoolbell', cursive;
+    font-size: 1.1rem; opacity: .8; margin-bottom: 4px;
+  }
+  .price-num {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(5rem, 18vw, 9rem); font-weight: 900;
+    line-height: .9; letter-spacing: -4px;
+    text-shadow: 4px 6px 0 rgba(0,0,0,.2);
+  }
+  .price-unit {
+    font-family: 'Schoolbell', cursive;
+    font-size: 1.2rem; opacity: .85; margin-bottom: 24px;
+  }
+  .limited-pill {
+    display: inline-block;
+    background: var(--yellow); color: var(--dark);
+    font-family: 'Baloo 2', cursive; font-weight: 900; font-size: 1.1rem;
+    padding: 10px 32px; border-radius: 50px;
+    box-shadow: 0 4px 0 #c9a500;
+    animation: jiggle 1.4s ease-in-out infinite;
+  }
+  @keyframes jiggle { 0%,100%{transform:rotate(-2deg) scale(1)} 50%{transform:rotate(2deg) scale(1.05)} }
+
+  /* string from hole */
+  .price-string {
+    width: 2px; height: 32px; background: rgba(0,0,0,.15);
+    margin: 0 auto;
+  }
+
+  /* ══════════════════════════════
+     INFO CARDS — index card look
+  ══════════════════════════════ */
+  .info-grid {
+    margin-top: 72px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px;
+  }
+  .info-card {
+    background: var(--lined);
+    border-left: 5px solid var(--pink);
+    border-radius: 4px 12px 12px 4px;
+    padding: 24px 24px 20px;
+    display: flex; align-items: center; gap: 16px;
+    box-shadow: 2px 4px 0 rgba(0,0,0,.08), 4px 8px 20px rgba(0,0,0,.06);
+    transition: transform .2s;
+    /* lined paper lines */
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 23px, rgba(100,149,237,.18) 23px, rgba(100,149,237,.18) 24px);
+    background-size: 100% 24px;
+    position: relative;
+  }
+  .info-card:nth-child(2){ border-color: var(--teal); }
+  .info-card:nth-child(3){ border-color: var(--orange); }
+  .info-card:hover { transform: translateY(-4px) rotate(-.5deg); }
+  .info-emoji { font-size: 2.4rem; flex-shrink: 0; }
+  .info-label {
+    font-family: 'Schoolbell', cursive;
+    font-size: .85rem; color: #888; margin-bottom: 2px;
+  }
+  .info-value {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.3rem; font-weight: 800; color: var(--ink);
+    line-height: 1.2;
+  }
+
+  /* ══════════════════════════════
+     STORY SECTION (open book)
+  ══════════════════════════════ */
+  .story-section { margin-top: 80px; }
+  .book {
+    background: white;
+    border-radius: 12px 24px 24px 12px;
+    box-shadow: -8px 0 0 #e0d4c3, -14px 4px 24px rgba(0,0,0,.12), 8px 8px 32px rgba(0,0,0,.1);
+    padding: 48px 40px;
+    display: flex; flex-wrap: wrap; gap: 40px; align-items: center;
+    position: relative;
+    /* center spine line */
+    background-image: linear-gradient(90deg, transparent calc(50% - 1px), rgba(0,0,0,.07) calc(50% - 1px), rgba(0,0,0,.07) calc(50% + 1px), transparent calc(50% + 1px));
+  }
+  .book-page { flex: 1 1 220px; }
+  .book-page h3 {
+    font-family: 'Baloo 2', cursive; font-size: 1.6rem; font-weight: 900;
+    color: var(--ink); margin-bottom: 6px;
+  }
+  .book-page p { color: #666; font-size: .93rem; line-height: 1.7; margin-bottom: 12px; font-weight: 600; }
+  .phone-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .phone-list li {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Schoolbell', cursive; font-size: 1.15rem; color: var(--ink);
+    background: var(--paper); border-radius: 8px; padding: 8px 14px;
+    border: 2px dashed rgba(0,0,0,.1);
+    width: fit-content;
+  }
+  .map-doodle {
+    flex: 1 1 200px;
+    aspect-ratio: 4/3;
+    background: #f0ffe8;
+    border-radius: 12px;
+    border: 3px dashed var(--teal);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+    font-family: 'Schoolbell', cursive;
+    font-size: 1rem; color: var(--teal);
+  }
+  .map-doodle .big-pin { font-size: 3rem; animation: bob 2s ease-in-out infinite; }
+
+  /* ══════════════════════════════
+     SPONSOR
+  ══════════════════════════════ */
+  .sponsor-wrap {
+    text-align: center; padding: 56px 24px 40px;
+    position: relative;
+  }
+  .sponsor-wrap::before {
+    content: '';
+    display: block; width: 80px; height: 3px; margin: 0 auto 28px;
+    background: repeating-linear-gradient(90deg, var(--purple) 0 6px, transparent 6px 12px);
+    border-radius: 2px;
+  }
+  .sponsor-label {
+    font-family: 'Schoolbell', cursive;
+    font-size: 1rem; color: #aaa; margin-bottom: 14px;
+  }
+  .sponsor-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--dark); color: white;
+    font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1rem;
+    padding: 12px 28px; border-radius: 12px;
+    box-shadow: 0 4px 0 #0e0830;
+    transform: rotate(-1deg);
+  }
+  .s-star { font-size: 1rem; }
+
+  /* ══════════════════════════════
+     FOOTER
+  ══════════════════════════════ */
+  footer {
+    background: var(--ink); color: rgba(255,255,255,.45);
+    text-align: center; padding: 24px;
+    font-family: 'Schoolbell', cursive; font-size: 1rem;
+  }
+  footer strong { color: var(--yellow); }
+
+  /* ══════════════════════════════
+     UTILS
+  ══════════════════════════════ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; transform: translateY(36px); transition: opacity .65s ease, transform .65s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 520px) {
+    .chalk-item { border-right: none; border-bottom: 2px dashed rgba(255,255,255,.12); }
+    .chalk-item:last-child { border-bottom: none; }
+    .price-num { font-size: 5.5rem; }
+    .price-tag { padding: 40px 28px 36px; }
+    .book { background-image: none; }
+    .act-sticker { font-size: .95rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- floating craft bg items -->
+<div class="craft-bg" id="craftBg"></div>
+
+<!-- ═══════════ TOP BANNER ═══════════ -->
+<div class="top-banner">
+  <p>✂️ &nbsp; 🎨 &nbsp; Creative Time Presents &nbsp; 📖 &nbsp; ✂️</p>
+  <svg class="top-wave" viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,24 C180,48 360,0 540,24 C720,48 900,0 1080,24 C1260,48 1380,16 1440,24 L1440,48 L0,48 Z" fill="#FFF9EE"/>
+  </svg>
+</div>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+
+  <div class="sticker-brand">✏️ Creative Time Presents ✏️</div>
+
+  <p class="hero-age">🌟 For little artists aged 5–9 🌟</p>
+  <p class="hero-sm">Little Creators'</p>
+  <div class="hero-big"><span class="w1">Workshop</span></div>
+
+  <!-- doodle underline SVG -->
+  <svg class="doodle-underline" viewBox="0 0 340 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 16 Q40 4 80 14 Q120 24 160 12 Q200 2 240 14 Q280 24 332 10" stroke="#FF3E8A" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <circle cx="338" cy="8" r="4" fill="#FFD600"/>
+    <circle cx="4" cy="18" r="3" fill="#00C2A8"/>
+  </svg>
+
+  <div class="activity-stickers">
+    <div class="act-sticker"><span class="act-sticker-icon">🎨</span> Canvas Painting</div>
+    <div class="act-sticker"><span class="act-sticker-icon">✂️</span> Paper Crafting</div>
+    <div class="act-sticker"><span class="act-sticker-icon">📖</span> Story Time</div>
+  </div>
+
+  <a href="#register" class="cta-btn">🎉 Register Now — 500৳</a>
+
+  <div class="scroll-hint">
+    <span>Scroll down ↓</span>
+  </div>
+</section>
+
+<!-- ═══════════ TORN PAPER ═══════════ -->
+<svg class="torn" viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+  <path d="M0,0 L0,30 Q30,10 60,28 Q90,46 120,22 Q150,0 180,26 Q210,50 240,28 Q270,6 300,24 Q330,42 360,20 Q390,0 420,28 Q450,52 480,24 Q510,0 540,26 Q570,48 600,22 Q630,0 660,28 Q690,52 720,24 Q750,0 780,26 Q810,48 840,20 Q870,0 900,28 Q930,52 960,24 Q990,0 1020,26 Q1050,48 1080,22 Q1110,0 1140,28 Q1170,52 1200,24 Q1230,0 1260,28 Q1290,50 1320,22 Q1350,0 1380,28 L1440,24 L1440,0 Z" fill="#FFF9EE"/>
+  <path d="M0,30 Q30,10 60,28 Q90,46 120,22 Q150,0 180,26 Q210,50 240,28 Q270,6 300,24 Q330,42 360,20 Q390,0 420,28 Q450,52 480,24 Q510,0 540,26 Q570,48 600,22 Q630,0 660,28 Q690,52 720,24 Q750,0 780,26 Q810,48 840,20 Q870,0 900,28 Q930,52 960,24 Q990,0 1020,26 Q1050,48 1080,22 Q1110,0 1140,28 Q1170,52 1200,24 Q1230,0 1260,28 Q1290,50 1320,22 Q1350,0 1380,28 L1440,24 L1440,60 L0,60 Z" fill="#2C3E50"/>
+</svg>
+
+<!-- ═══════════ CHALKBOARD STRIP ═══════════ -->
+<div class="chalkboard">
+  <div class="chalk-border">
+    <div class="chalk-item">
+      <p class="chalk-label">📅 Date & Time</p>
+      <p class="chalk-value"><em>23 May</em>, 3 PM</p>
+    </div>
+    <div class="chalk-item">
+      <p class="chalk-label">⏱ Duration</p>
+      <p class="chalk-value">2 <em>Hours</em></p>
+    </div>
+    <div class="chalk-item">
+      <p class="chalk-label">👧 Age Group</p>
+      <p class="chalk-value"><em>5–9</em> yrs</p>
+    </div>
+    <div class="chalk-item">
+      <p class="chalk-label">🪑 Seats</p>
+      <p class="chalk-value"><em>Limited!</em></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TORN PAPER (bottom of chalk) ═══════════ -->
+<svg class="torn" viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="transform:scaleY(-1); margin-top:-2px;">
+  <path d="M0,0 L0,30 Q30,10 60,28 Q90,46 120,22 Q150,0 180,26 Q210,50 240,28 Q270,6 300,24 Q330,42 360,20 Q390,0 420,28 Q450,52 480,24 Q510,0 540,26 Q570,48 600,22 Q630,0 660,28 Q690,52 720,24 Q750,0 780,26 Q810,48 840,20 Q870,0 900,28 Q930,52 960,24 Q990,0 1020,26 Q1050,48 1080,22 Q1110,0 1140,28 Q1170,52 1200,24 Q1230,0 1260,28 Q1290,50 1320,22 Q1350,0 1380,28 L1440,24 L1440,0 Z" fill="#FFF9EE"/>
+  <path d="M0,30 Q30,10 60,28 Q90,46 120,22 Q150,0 180,26 Q210,50 240,28 Q270,6 300,24 Q330,42 360,20 Q390,0 420,28 Q450,52 480,24 Q510,0 540,26 Q570,48 600,22 Q630,0 660,28 Q690,52 720,24 Q750,0 780,26 Q810,48 840,20 Q870,0 900,28 Q930,52 960,24 Q990,0 1020,26 Q1050,48 1080,22 Q1110,0 1140,28 Q1170,52 1200,24 Q1230,0 1260,28 Q1290,50 1320,22 Q1350,0 1380,28 L1440,24 L1440,60 L0,60 Z" fill="#2C3E50"/>
+</svg>
+
+<!-- ═══════════ MAIN SECTIONS ═══════════ -->
+<div class="sections">
+
+  <!-- Activities -->
+  <div class="sec-heading reveal">
+    <span class="sec-tag">✏️ What We'll Do</span>
+    <h2>3 Super Fun Activities! 🌈</h2>
+  </div>
+
+  <div class="activities reveal">
+    <div class="act-card">
+      <span class="act-emoji">🎨</span>
+      <h3 class="act-title">Canvas Painting</h3>
+      <p class="act-desc">Little hands, big masterpieces! Kids paint freely on canvas with bright colors, guided by our friendly instructors.</p>
+    </div>
+    <div class="act-card">
+      <span class="act-emoji">✂️</span>
+      <h3 class="act-title">Paper Crafting</h3>
+      <p class="act-desc">Snip, fold, glue & create! Children build adorable paper crafts they get to take home as their very own treasure.</p>
+    </div>
+    <div class="act-card">
+      <span class="act-emoji">📖</span>
+      <h3 class="act-title">Story Time</h3>
+      <p class="act-desc">Step into magical worlds! An enchanting storytelling session full of imagination, wonder, and happy little readers.</p>
+    </div>
+  </div>
+
+  <!-- Price Tag -->
+  <div class="price-wrap reveal" id="register">
+    <div class="price-string"></div>
+    <div class="price-tag">
+      <div class="price-hole"></div>
+      <p class="price-label">Registration Fee</p>
+      <div class="price-num">500</div>
+      <p class="price-unit">Taka Only 🎟️</p>
+      <div class="limited-pill">⚡ Limited Seats Available!</div>
+      <p style="margin-top:20px; opacity:.75; font-family:'Schoolbell',cursive; font-size:1.05rem;">
+        Call us now to grab your child's spot before it's gone!
+      </p>
+    </div>
+  </div>
+
+  <!-- Info Cards -->
+  <div class="info-grid reveal">
+    <div class="info-card">
+      <span class="info-emoji">📅</span>
+      <div>
+        <p class="info-label">Date & Time</p>
+        <p class="info-value">23 May, 3:00 PM</p>
+      </div>
+    </div>
+    <div class="info-card">
+      <span class="info-emoji">⏱️</span>
+      <div>
+        <p class="info-label">Duration</p>
+        <p class="info-value">2 Hours</p>
+      </div>
+    </div>
+    <div class="info-card">
+      <span class="info-emoji">👧</span>
+      <div>
+        <p class="info-label">Who Can Join</p>
+        <p class="info-value">Ages 5–9 Years</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Location — Open Book -->
+  <div class="story-section reveal">
+    <div class="sec-heading" style="margin-bottom:32px;">
+      <span class="sec-tag">📍 Find Us</span>
+      <h2>Come On Over! 🏠</h2>
+    </div>
+    <div class="book">
+      <div class="book-page">
+        <h3>Bashundhara R/A</h3>
+        <p>Block B, Bashundhara Residential Area<br/>Dhaka, Bangladesh</p>
+        <ul class="phone-list">
+          <li>📱 01911 998 493</li>
+          <li>📱 01714 168 439</li>
+        </ul>
+      </div>
+      <div class="map-doodle">
+        <span class="big-pin">📍</span>
+        <span>Block B</span>
+        <span style="font-size:.85rem; opacity:.7">Bashundhara R/A, Dhaka</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Sponsor -->
+<div class="sponsor-wrap reveal">
+  <p class="sponsor-label">✨ Proudly sponsored by ✨</p>
+  <div class="sponsor-badge">
+    <span class="s-star">⭐</span>
+    Creative Kids
+    <span class="s-star">⭐</span>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 <strong>Creative Time</strong> — Little Creators' Workshop 🎨✂️📖
+</footer>
+
+<script>
+  /* ── FLOATING CRAFT ITEMS ── */
+  const items = ['✂️','🖍️','📎','🎨','📌','📐','🖊️','📏','🌈','⭐','🎀','📖'];
+  const bg = document.getElementById('craftBg');
+  for (let i = 0; i < 24; i++) {
+    const s = document.createElement('span');
+    s.textContent = items[Math.floor(Math.random() * items.length)];
+    const dur = Math.random() * 20 + 14;
+    s.style.cssText = `
+      left: ${Math.random() * 100}%;
+      font-size: ${Math.random() * 1.2 + 1.2}rem;
+      animation-duration: ${dur}s;
+      animation-delay: -${Math.random() * dur}s;
+      opacity: ${Math.random() * .08 + .05};
+    `;
+    bg.appendChild(s);
+  }
+
+  /* ── SCROLL REVEAL ── */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+</script>
+</body>
+</html>
