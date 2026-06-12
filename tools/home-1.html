@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Anamoul Rouf — Product Designer & UX Strategist | Dhaka, Bangladesh</title>
+<meta name="description" content="Anamoul Rouf is a product designer with 8+ years of experience designing mobile apps, web apps and design systems — ShareTrip, Truck Lagbe, Sick.org and more. 2M+ users served." />
+<meta name="keywords" content="product designer, UX designer, UI designer, design systems, mobile app design, Dhaka, Bangladesh, Anamoul Rouf" />
+<meta name="author" content="Anamoul Rouf" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<link rel="canonical" href="https://anamoulrouf.com/" />
+<meta name="theme-color" content="#0C0C0C" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Anamoul Rouf — Product Designer & UX Strategist" />
+<meta property="og:description" content="8+ years designing travel, health-tech and logistics products serving 2M+ users. Building bridges between business, technology and humans." />
+<meta property="og:url" content="https://anamoulrouf.com/" />
+<meta property="og:image" content="https://anamoulrouf.com/img/me-low.png" />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Anamoul Rouf — Product Designer & UX Strategist" />
+<meta name="twitter:description" content="8+ years designing travel, health-tech and logistics products serving 2M+ users." />
+<meta name="twitter:image" content="https://anamoulrouf.com/img/me-low.png" />
+
+<!-- Structured data: Person + WebSite + Services -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://anamoulrouf.com/#person",
+      "name": "Anamoul Rouf",
+      "jobTitle": "Product Designer",
+      "description": "Product designer with 8+ years of experience in UX strategy, mobile apps, web applications and design systems.",
+      "image": "https://anamoulrouf.com/img/me-low.png",
+      "email": "mailto:anamoulrouf.bd@gmail.com",
+      "address": { "@type": "PostalAddress", "addressLocality": "Dhaka", "addressCountry": "BD" },
+      "sameAs": [
+        "https://www.linkedin.com/in/roufuxdesigner/",
+        "https://www.figma.com/@uxdrouf",
+        "https://dribbble.com/roufuxdesigner",
+        "https://www.behance.net/roufuxdesigner"
+      ],
+      "knowsAbout": ["UX Design", "UI Design", "Design Systems", "Mobile App Design", "Web Application Design", "User Research"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://anamoulrouf.com/#website",
+      "url": "https://anamoulrouf.com/",
+      "name": "Anamoul Rouf — Product Designer",
+      "publisher": { "@id": "https://anamoulrouf.com/#person" }
+    },
+    {
+      "@type": "ItemList",
+      "name": "Selected Works",
+      "itemListElement": [
+        { "@type": "CreativeWork", "position": 1, "name": "ShareTrip Travel App", "url": "https://anamoulrouf.com/sharetrip", "description": "Travel booking app for Android & iOS — 76% booking success rate, 55% user revisit rate." },
+        { "@type": "CreativeWork", "position": 2, "name": "Truck Lagbe — Know Your Supplier", "url": "https://anamoulrouf.com/tlkys", "description": "Driver verification for a logistics platform — 30% fewer fraudulent cases, 35% higher trip completion, 2M+ users." },
+        { "@type": "CreativeWork", "position": 3, "name": "Sick.org Patient App", "url": "https://anamoulrouf.com/sick", "description": "HIPAA-compliant health-tech app providing nationwide 24/7 digital care access." }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  /* ============ GLOBAL ============ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  html, body { background: #0C0C0C; }
+  body { font-family: 'Kanit', sans-serif; overflow-x: clip; }
+  img { display: block; }
+  a { -webkit-tap-highlight-color: transparent; }
+
+  .hero-heading {
+    background: linear-gradient(180deg, #646973 0%, #BBCCD7 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Elements animated by GSAP start hidden (JS adds .js class to <html>) */
+  .js .fade-in { opacity: 0; }
+
+  /* ============ HERO ============ */
+  .hero {
+    height: 100vh; height: 100svh;
+    display: flex; flex-direction: column;
+    position: relative; overflow-x: clip;
+  }
+  .navbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 1.5rem 0;
+  }
+  .nav-link {
+    color: #D7E2EA; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.05em; font-size: 0.875rem;
+    text-decoration: none; transition: opacity 0.2s ease;
+  }
+  .nav-link:hover { opacity: 0.7; }
+  .nav-link:focus-visible, .ghost-btn:focus-visible, .contact-btn:focus-visible,
+  .contact-email:focus-visible, .social-link:focus-visible {
+    outline: 2px solid #E0218A; outline-offset: 3px;
+  }
+
+  .hero-h1-clip { overflow: hidden; }
+  .hero-h1 {
+    font-weight: 900; text-transform: uppercase; letter-spacing: -0.025em;
+    line-height: 1; white-space: nowrap; width: 100%; text-align: center;
+    font-size: 14vw; margin-top: 1.5rem;
+  }
+  .hero-role {
+    color: #D7E2EA; font-weight: 300; text-transform: uppercase;
+    letter-spacing: 0.2em; text-align: center;
+    font-size: clamp(0.7rem, 1.3vw, 1.1rem); opacity: 0.65;
+    margin-top: 0.75rem;
+  }
+  .js .hero-role.fade-in { opacity: 0; }
+
+  .hero-spacer { flex: 1; }
+
+  .hero-portrait-wrap {
+    position: absolute; left: 50%; top: 54%;
+    transform: translate(-50%, -50%); z-index: 10;
+  }
+  .magnet { will-change: transform; }
+  .hero-portrait-img {
+    width: 250px;
+    filter: drop-shadow(0 30px 60px rgba(118, 33, 176, 0.35));
+  }
+
+  .hero-bottom {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    padding: 0 1.5rem 1.75rem;
+  }
+  .hero-tagline {
+    color: #D7E2EA; font-weight: 300; text-transform: uppercase;
+    letter-spacing: 0.025em; line-height: 1.375;
+    font-size: clamp(0.75rem, 1.4vw, 1.5rem); max-width: 170px;
+  }
+  .hero-cta { position: relative; z-index: 20; }
+
+  /* ============ BUTTONS ============ */
+  .contact-btn {
+    display: inline-block; border-radius: 9999px; border: none; cursor: pointer;
+    background: linear-gradient(123deg, #1B6CFF 0%, #4D2DE0 38%, #8A2BE2 68%, #E0218A 100%);
+    background-size: 160% 160%;
+    box-shadow:
+      0 0 18px rgba(77, 45, 224, 0.55),
+      0 0 42px rgba(224, 33, 138, 0.35),
+      0 4px 14px rgba(27, 108, 255, 0.35),
+      inset 0 0 14px rgba(255, 255, 255, 0.18);
+    outline: 2px solid #FFFFFF; outline-offset: -3px;
+    color: #FFFFFF; font-family: 'Kanit', sans-serif; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none;
+    padding: 0.75rem 2rem; font-size: 0.75rem;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    animation: cta-glow 2.8s ease-in-out infinite, cta-shift 6s ease-in-out infinite;
+  }
+  .contact-btn:hover {
+    transform: scale(1.06);
+    box-shadow:
+      0 0 28px rgba(77, 45, 224, 0.85),
+      0 0 64px rgba(224, 33, 138, 0.6),
+      0 0 90px rgba(27, 108, 255, 0.4),
+      inset 0 0 16px rgba(255, 255, 255, 0.25);
+    animation-play-state: paused;
+  }
+  @keyframes cta-glow {
+    0%, 100% {
+      box-shadow:
+        0 0 18px rgba(77, 45, 224, 0.55),
+        0 0 42px rgba(224, 33, 138, 0.35),
+        0 4px 14px rgba(27, 108, 255, 0.35),
+        inset 0 0 14px rgba(255, 255, 255, 0.18);
+    }
+    50% {
+      box-shadow:
+        0 0 26px rgba(77, 45, 224, 0.8),
+        0 0 60px rgba(224, 33, 138, 0.55),
+        0 6px 22px rgba(27, 108, 255, 0.5),
+        inset 0 0 16px rgba(255, 255, 255, 0.22);
+    }
+  }
+  @keyframes cta-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .ghost-btn {
+    display: inline-block; border-radius: 9999px; background: transparent;
+    border: 2px solid #D7E2EA; color: #D7E2EA; cursor: pointer;
+    font-family: 'Kanit', sans-serif; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none;
+    padding: 0.75rem 2rem; font-size: 0.875rem;
+    transition: background 0.2s ease;
+  }
+  .ghost-btn:hover { background: rgba(215, 226, 234, 0.1); }
+
+  /* ============ MARQUEE ============ */
+  .marquee-section { background: #0C0C0C; padding: 6rem 0 2.5rem; overflow: hidden; }
+  .marquee-rows { display: flex; flex-direction: column; gap: 0.75rem; }
+  .marquee-row { display: flex; gap: 0.75rem; will-change: transform; margin-left: -50%; }
+  a .work-links{}
+  .marquee-tile {
+    width: 420px; height: 270px; border-radius: 1rem; flex-shrink: 0;
+    background: #14141a; border: 1px solid rgba(215, 226, 234, 0.08);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
+  }
+  .marquee-tile img { max-width: 88%; max-height: 88%; object-fit: contain; }
+  .marquee-label {
+    position: absolute; bottom: 0.9rem; left: 1.2rem;
+    color: #D7E2EA; opacity: 0.55; text-transform: uppercase;
+    letter-spacing: 0.15em; font-size: 0.7rem; font-weight: 400;
+  }
+
+  /* ============ ABOUT ============ */
+  .about-section {
+    min-height: 100vh; position: relative; display: flex;
+    flex-direction: column; align-items: center; justify-content: center;
+    padding: 5rem 1.25rem; gap: 2.5rem;
+  }
+  .big-heading {
+    font-weight: 900; text-transform: uppercase; line-height: 1;
+    letter-spacing: -0.025em; text-align: center;
+    font-size: clamp(3rem, 12vw, 160px);
+  }
+  .about-stat { position: absolute; pointer-events: none; text-align: center; }
+  .about-stat .num { font-weight: 900; line-height: 1; font-size: clamp(2rem, 5vw, 4.5rem); }
+  .about-stat .lbl {
+    color: #D7E2EA; opacity: 0.5; text-transform: uppercase;
+    letter-spacing: 0.15em; font-weight: 300;
+    font-size: clamp(0.6rem, 1vw, 0.85rem); margin-top: 0.25rem;
+  }
+  .stat-tl { top: 6%; left: 3%; }
+  .stat-bl { bottom: 10%; left: 5%; }
+  .stat-tr { top: 6%; right: 3%; }
+  .stat-br { bottom: 10%; right: 5%; }
+
+  .about-text {
+    color: #D7E2EA; font-weight: 500; text-align: center;
+    line-height: 1.625; max-width: 620px;
+    font-size: clamp(1rem, 2vw, 1.35rem);
+  }
+  .about-text .word { display: inline-block; white-space: nowrap; }
+  .about-text .char { opacity: 0.2; }
+  .about-btn-gap { margin-top: 1.5rem; }
+
+  /* ============ SERVICES ============ */
+  .services-section {
+    background: #FFFFFF; position: relative;
+    border-top-left-radius: 40px; border-top-right-radius: 40px;
+    padding: 5rem 1.25rem;
+  }
+  .services-heading { color: #0C0C0C; margin-bottom: 4rem; }
+  .services-list { max-width: 64rem; margin: 0 auto; }
+  .service-item {
+    display: flex; gap: 1.5rem; align-items: flex-start;
+    padding: 2rem 0; border-bottom: 1px solid rgba(12, 12, 12, 0.15);
+  }
+  .service-item:first-child { border-top: 1px solid rgba(12, 12, 12, 0.15); }
+  .service-num {
+    font-weight: 900; color: #0C0C0C; line-height: 1;
+    font-size: clamp(3rem, 10vw, 140px); flex-shrink: 0;
+  }
+  .service-name {
+    color: #0C0C0C; font-weight: 500; text-transform: uppercase;
+    font-size: clamp(1rem, 2.2vw, 2.1rem); margin-bottom: 0.5rem;
+  }
+  .service-desc {
+    color: #0C0C0C; font-weight: 300; line-height: 1.625; max-width: 42rem;
+    font-size: clamp(0.85rem, 1.6vw, 1.25rem); opacity: 0.6;
+  }
+
+  /* ============ PROJECTS ============ */
+  .projects-section {
+    background: #0C0C0C; position: relative; z-index: 10;
+    border-top-left-radius: 40px; border-top-right-radius: 40px;
+    margin-top: -2.5rem; padding: 5rem 1.25rem 4rem;
+  }
+  .projects-heading { margin-bottom: 4rem; }
+  .project-card-wrap { height: 85vh; }
+  .project-card {
+    position: sticky; top: 6rem;
+    border-radius: 40px; border: 2px solid #D7E2EA; background: #0C0C0C;
+    padding: 1rem; max-width: 72rem; margin: 0 auto;
+    transform-origin: top center; will-change: transform;
+  }
+  .project-top {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem;
+    margin-bottom: 1.5rem; padding: 0.5rem 0.5rem 0;
+  }
+  .project-num { font-weight: 900; line-height: 1; font-size: clamp(2.5rem, 8vw, 110px); }
+  .project-meta { flex: 1; min-width: 150px; }
+  .project-cat {
+    color: #D7E2EA; opacity: 0.55; text-transform: uppercase;
+    letter-spacing: 0.1em; font-weight: 300;
+    font-size: clamp(0.7rem, 1.2vw, 0.95rem);
+  }
+  .project-name {
+    color: #D7E2EA; font-weight: 600; text-transform: uppercase;
+    font-size: clamp(1.1rem, 2.6vw, 2.2rem); line-height: 1.1;
+  }
+  .project-grid { display: flex; gap: 0.75rem; }
+  .project-col-1 { width: 40%; display: flex; flex-direction: column; gap: 0.75rem; }
+  .project-col-2 { width: 60%; }
+  .stat-tile {
+    border-radius: 40px; background: rgba(215, 226, 234, 0.05);
+    border: 1px solid rgba(215, 226, 234, 0.15);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; text-align: center; padding: 0.75rem;
+  }
+  .stat-tile .num { font-weight: 900; line-height: 1; font-size: clamp(1.6rem, 4.5vw, 4rem); }
+  .stat-tile .lbl {
+    color: #D7E2EA; opacity: 0.55; text-transform: uppercase;
+    letter-spacing: 0.12em; font-weight: 300;
+    font-size: clamp(0.55rem, 1vw, 0.85rem); margin-top: 0.4rem; max-width: 18ch;
+  }
+  .tile-a { height: clamp(130px, 16vw, 230px); }
+  .tile-b { height: clamp(160px, 22vw, 340px); }
+  .project-shot {
+    width: 100%; display: flex; align-items: center; justify-content: center;
+    border-radius: 40px; background: #14141a;
+    border: 1px solid rgba(215, 226, 234, 0.12); overflow: hidden;
+    height: calc(clamp(130px, 16vw, 230px) + clamp(160px, 22vw, 340px) + 0.75rem);
+  }
+  .project-shot img { max-width: 88%; max-height: 90%; object-fit: contain; }
+
+  /* ============ CONTACT ============ */
+  .contact-section {
+    min-height: 90vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+    padding: 5rem 1.25rem; gap: 2rem;
+  }
+  .contact-sub {
+    color: #D7E2EA; font-weight: 300; opacity: 0.65; max-width: 480px;
+    font-size: clamp(0.9rem, 1.6vw, 1.15rem); line-height: 1.6;
+  }
+  .contact-email {
+    color: #D7E2EA; font-weight: 500;
+    font-size: clamp(1rem, 2.4vw, 1.6rem); text-decoration: none;
+    border-bottom: 1px solid rgba(215, 226, 234, 0.4);
+    transition: opacity 0.2s ease;
+  }
+  .contact-email:hover { opacity: 0.7; }
+  .socials { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+  .social-link {
+    border-radius: 9999px; border: 1px solid rgba(215, 226, 234, 0.35);
+    color: #D7E2EA; text-decoration: none; text-transform: uppercase;
+    letter-spacing: 0.12em; font-weight: 400;
+    padding: 0.6rem 1.4rem; font-size: 0.75rem;
+    transition: background 0.2s ease;
+  }
+  .social-link:hover { background: rgba(215, 226, 234, 0.1); }
+  .footer-note {
+    color: #D7E2EA; opacity: 0.35; font-weight: 300;
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    margin-top: 2rem;
+  }
+
+  .button-center{
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (min-width: 640px) {
+    .hero-h1 { font-size: 15vw; margin-top: 1rem; }
+    .hero-bottom { padding-bottom: 2rem; }
+    .hero-tagline { max-width: 230px; }
+    .hero-portrait-wrap { top: auto; bottom: 0; transform: translateX(-50%); }
+    .hero-portrait-img { width: 320px; }
+    .contact-btn { padding: 0.875rem 2.5rem; font-size: 0.875rem; }
+    .ghost-btn { padding: 0.875rem 2.5rem; font-size: 1rem; }
+    .marquee-section { padding-top: 8rem; }
+    .about-section { padding: 5rem 2rem; gap: 3.5rem; }
+    .about-btn-gap { margin-top: 2.5rem; }
+    .services-section { border-top-left-radius: 50px; border-top-right-radius: 50px; padding: 6rem 2rem; }
+    .services-heading { margin-bottom: 5rem; }
+    .service-item { padding: 2.5rem 0; gap: 2.5rem; }
+    .projects-section { border-top-left-radius: 50px; border-top-right-radius: 50px; margin-top: -3rem; padding: 6rem 2rem 4rem; }
+    .project-card { border-radius: 50px; padding: 1.5rem; }
+    .project-grid, .project-col-1 { gap: 1rem; }
+    .stat-tile, .project-shot { border-radius: 50px; }
+    .project-shot { height: calc(clamp(130px, 16vw, 230px) + clamp(160px, 22vw, 340px) + 1rem); }
+  }
+  @media (min-width: 768px) {
+    .navbar { padding: 2rem 2.5rem 0; }
+    .nav-link { font-size: 1.125rem; }
+    .hero-h1 { font-size: 16vw; margin-top: -1.25rem; }
+    .hero-bottom { padding: 0 2.5rem 2.5rem; }
+    .hero-tagline { max-width: 270px; }
+    .hero-portrait-img { width: 400px; }
+    .contact-btn { padding: 1rem 3rem; font-size: 1rem; }
+    .marquee-section { padding-top: 10rem; }
+    .about-section { padding: 5rem 2.5rem; gap: 4rem; }
+    .about-btn-gap { margin-top: 3.5rem; }
+    .stat-tl { left: 7%; } .stat-bl { left: 11%; }
+    .stat-tr { right: 7%; } .stat-br { right: 11%; }
+    .services-section { border-top-left-radius: 60px; border-top-right-radius: 60px; padding: 8rem 2.5rem; }
+    .services-heading { margin-bottom: 7rem; }
+    .service-item { padding: 3rem 0; gap: 4rem; }
+    .projects-section { border-top-left-radius: 60px; border-top-right-radius: 60px; margin-top: -3.5rem; padding: 8rem 2.5rem 5rem; }
+    .project-card { border-radius: 60px; padding: 2rem; top: 8rem; }
+    .stat-tile, .project-shot { border-radius: 60px; }
+  }
+  @media (min-width: 1024px) {
+    .nav-link { font-size: 1.4rem; }
+    .hero-h1 { font-size: 17.5vw; }
+    .hero-portrait-img { width: 460px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .js .fade-in { opacity: 1; }
+    .about-text .char { opacity: 1; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <nav class="navbar fade-in" data-fade data-delay="0" data-y="-20" aria-label="Main navigation">
+    <a class="nav-link" href="#projects">Works</a>
+    <a class="nav-link" href="#services">Services</a>
+    <a class="nav-link" href="#about">About</a>
+    <a class="nav-link" href="#contact">Contact</a>
+  </nav>
+
+  <div class="hero-h1-clip">
+    <h1 class="hero-h1 hero-heading fade-in" data-fade data-delay="0.15" data-y="40">Hi, i&rsquo;m rouf</h1>
+    <p class="hero-role fade-in" data-fade data-delay="0.3" data-y="10" data-final-opacity="0.65">
+      Product Designer &middot; UX Strategist &middot; Dhaka, Bangladesh
+    </p>
+  </div>
+
+  <div class="hero-spacer"></div>
+
+  <div class="hero-portrait-wrap fade-in" data-fade data-delay="0.6" data-y="30">
+    <div class="magnet" data-magnet data-padding="150" data-strength="3">
+      <img class="hero-portrait-img" src="../img/avatar.png"
+           alt="Anamoul Rouf, product designer portrait" />
+    </div>
+  </div>
+
+  <div class="hero-bottom">
+    <p class="hero-tagline fade-in" data-fade data-delay="0.35" data-y="20">
+      a product designer building bridges between business, technology and humans
+    </p>
+
+    <div class="hero-cta fade-in" data-fade data-delay="0.5" data-y="20">
+      <a class="contact-btn" href="#contact">Let&rsquo;s Connect</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= MARQUEE ================= -->
+<section id="works" class="marquee-section" aria-label="Selected work reel">
+  <div class="marquee-rows">
+    <div class="marquee-row" id="marquee-row-1"></div>
+    <div class="marquee-row" id="marquee-row-2"></div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about" class="about-section">
+  <div class="about-stat stat-tl fade-in" data-fade data-delay="0.1" data-x="-80" data-duration="0.9">
+    <div class="num hero-heading">8+</div><div class="lbl">Years of Experience</div>
+  </div>
+  <div class="about-stat stat-bl fade-in" data-fade data-delay="0.25" data-x="-80" data-duration="0.9">
+    <div class="num hero-heading">15+</div><div class="lbl">Web Apps Designed</div>
+  </div>
+  <div class="about-stat stat-tr fade-in" data-fade data-delay="0.15" data-x="80" data-duration="0.9">
+    <div class="num hero-heading">8+</div><div class="lbl">Mobile Apps Shipped</div>
+  </div>
+  <div class="about-stat stat-br fade-in" data-fade data-delay="0.3" data-x="80" data-duration="0.9">
+    <div class="num hero-heading">2M+</div><div class="lbl">Users Served</div>
+  </div>
+
+  <h2 class="big-heading hero-heading fade-in" data-fade data-y="40">About me</h2>
+
+  <p class="about-text" id="about-text">With over 8 years of experience, I create intuitive digital experiences from travel booking apps and health tech to logistics platforms serving millions. Let&rsquo;s build the bridge between people and technology!</p>
+
+  <div class="about-btn-gap fade-in" data-fade data-delay="0.1" data-y="20">
+    <a class="contact-btn" href="#contact">Let&rsquo;s Connect</a>
+  </div>
+
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section id="services" class="services-section" aria-labelledby="services-title">
+  <h2 id="services-title" class="big-heading services-heading fade-in" data-fade data-y="40">Services</h2>
+  <div class="services-list">
+    <div class="service-item fade-in" data-fade data-delay="0" data-y="30">
+      <div class="service-num" aria-hidden="true">01</div>
+      <div><h3 class="service-name">UX Design</h3>
+      <p class="service-desc">Intuitive, seamless user experiences across platforms — research-driven flows, wireframes, and journeys grounded in real user needs.</p></div>
+    </div>
+    <div class="service-item fade-in" data-fade data-delay="0.1" data-y="30">
+      <div class="service-num" aria-hidden="true">02</div>
+      <div><h3 class="service-name">UI Design</h3>
+      <p class="service-desc">Visually engaging interfaces that align with brand identity and user preferences, crafted with precision down to the pixel.</p>
+    </div>
+    </div>
+    <div class="service-item fade-in" data-fade data-delay="0.2" data-y="30">
+      <div class="service-num" aria-hidden="true">03</div>
+      <div><h3 class="service-name">Mobile App Design</h3>
+      <p class="service-desc">Native and cross-platform apps for iOS and Android, designed for diverse user preferences and device capabilities.</p></div>
+    </div>
+    <div class="service-item fade-in" data-fade data-delay="0.3" data-y="30">
+      <div class="service-num" aria-hidden="true">04</div>
+      <div><h3 class="service-name">Web Application Design</h3>
+      <p class="service-desc">Web apps that deliver a seamless experience across browsers and devices — clean, modern, and conversion-focused.</p></div>
+    </div>
+    <div class="service-item fade-in" data-fade data-delay="0.4" data-y="30">
+      <div class="service-num" aria-hidden="true">05</div>
+      <div><h3 class="service-name">Design Systems</h3>
+      <p class="service-desc">Reusable components, typography guidelines, color palettes, and patterns that cut design-to-development time by up to 25%.</p></div>
+    </div>
+    <div class="service-item fade-in" data-fade data-delay="0.5" data-y="30">
+      <div class="service-num" aria-hidden="true">06</div>
+      <div><h3 class="service-name">Research &amp; Testing</h3>
+      <p class="service-desc">Prototyping and user testing methodologies that surface usability issues, improve navigation, and optimize interactions before launch.</p></div>
+    </div>
+  </div>
+
+  <div class="fade-in button-center" data-fade data-delay="0.25" data-y="20">
+    <a class="contact-btn" href="https://anamoulrouf.com">Learn More</a>
+  </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section id="projects" class="projects-section" aria-labelledby="works-title">
+  <h2 id="works-title" class="big-heading hero-heading projects-heading fade-in" data-fade data-y="40">Works</h2>
+  <div id="projects-stack">
+
+    <div class="project-card-wrap">
+      <article class="project-card" style="top: calc(6rem + 0px)">
+        <div class="project-top">
+          <div class="project-num hero-heading" aria-hidden="true">01</div>
+          <div class="project-meta">
+            <p class="project-cat">Travel &middot; Android &amp; iOS</p>
+            <h3 class="project-name">ShareTrip Travel App</h3>
+          </div>
+          <a class="ghost-btn" href="https://anamoulrouf.com/sharetrip" target="_blank" rel="noreferrer">Case Study</a>
+        </div>
+        <div class="project-grid">
+          <div class="project-col-1">
+            <div class="stat-tile tile-a"><div class="num hero-heading">76%</div><div class="lbl">Booking success rate</div></div>
+            <div class="stat-tile tile-b"><div class="num hero-heading">55%</div><div class="lbl">User revisit rate &middot; +25% online bookings</div></div>
+          </div>
+          <div class="project-col-2">
+            <div class="project-shot"><img src="https://anamoulrouf.com/img/st-app.png" alt="ShareTrip travel booking app interface screens" loading="lazy"></div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="project-card-wrap">
+      <article class="project-card" style="top: calc(6rem + 28px)">
+        <div class="project-top">
+          <div class="project-num hero-heading" aria-hidden="true">02</div>
+          <div class="project-meta">
+            <p class="project-cat">Logistics &middot; Driver Verification</p>
+            <h3 class="project-name">Truck Lagbe &middot; KYS</h3>
+          </div>
+          <a class="ghost-btn" href="https://anamoulrouf.com/tlkys" target="_blank" rel="noreferrer">Case Study</a>
+        </div>
+        <div class="project-grid">
+          <div class="project-col-1">
+            <div class="stat-tile tile-a"><div class="num hero-heading">-30%</div><div class="lbl">Fraudulent cases</div></div>
+            <div class="stat-tile tile-b"><div class="num hero-heading">+35%</div><div class="lbl">Trip completion &middot; 2M+ users served</div></div>
+          </div>
+          <div class="project-col-2">
+            <div class="project-shot"><img src="https://anamoulrouf.com/img/tl-kys.png" alt="Truck Lagbe Know Your Supplier driver verification screens" loading="lazy"></div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="project-card-wrap">
+      <article class="project-card" style="top: calc(6rem + 56px)">
+        <div class="project-top">
+          <div class="project-num hero-heading" aria-hidden="true">03</div>
+          <div class="project-meta">
+            <p class="project-cat">Health Tech &middot; iOS &amp; Android</p>
+            <h3 class="project-name">Sick.org Patient App</h3>
+          </div>
+          <a class="ghost-btn" href="https://anamoulrouf.com/sick" target="_blank" rel="noreferrer">Case Study</a>
+        </div>
+        <div class="project-grid">
+          <div class="project-col-1">
+            <div class="stat-tile tile-a"><div class="num hero-heading">HIPAA</div><div class="lbl">Compliant &amp; fully secure</div></div>
+            <div class="stat-tile tile-b"><div class="num hero-heading">24/7</div><div class="lbl">Nationwide digital care access</div></div>
+          </div>
+          <div class="project-col-2">
+            <div class="project-shot"><img src="https://anamoulrouf.com/img/sick-01.png" alt="Sick.org patient health app interface screens" loading="lazy"></div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+
+  <div class="fade-in button-center" data-fade data-delay="0.25" data-y="20">
+    <a class="contact-btn" href="https://anamoulrouf.com">Learn More</a>
+  </div>
+
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="contact-section">
+  <h2 class="big-heading hero-heading fade-in" data-fade data-y="40">Let&rsquo;s Connect</h2>
+  <p class="contact-sub fade-in" data-fade data-delay="0.15" data-y="20" data-final-opacity="0.65">
+    It will be my great pleasure to connect and discuss your next product with you.
+  </p>
+  <div class="fade-in" data-fade data-delay="0.25" data-y="20">
+    <a class="contact-email" href="mailto:anamoulrouf.bd@gmail.com">anamoulrouf.bd@gmail.com</a>
+  </div>
+  <div class="socials fade-in" data-fade data-delay="0.35" data-y="20">
+    <a class="social-link" href="https://www.linkedin.com/in/roufuxdesigner/" target="_blank" rel="noreferrer">LinkedIn</a>
+    <a class="social-link" href="https://www.figma.com/@uxdrouf" target="_blank" rel="noreferrer">Figma</a>
+    <a class="social-link" href="https://dribbble.com/roufuxdesigner" target="_blank" rel="noreferrer">Dribbble</a>
+    <a class="social-link" href="https://www.behance.net/roufuxdesigner" target="_blank" rel="noreferrer">Behance</a>
+  </div>
+  <p class="footer-note fade-in" data-fade data-delay="0.45" data-y="10" data-final-opacity="0.35">
+    &copy; 2026 Anamoul Rouf &middot; Product Designer &middot; Dhaka
+  </p>
+
+  <div class="fade-in button-center" data-fade data-delay="0.25" data-y="20">
+    <a class="contact-btn" href="https://anamoulrouf.com">Go to Main Site</a>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function () {
+  "use strict";
+  document.documentElement.classList.add("js");
+
+  var prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  gsap.registerPlugin(ScrollTrigger);
+  var EASE = "cubic-bezier(0.25, 0.1, 0.25, 1)"; // matched via gsap custom ease below
+  var GSAP_EASE = "power2.out"; // close visual match to [0.25,0.1,0.25,1]
+
+  /* ---------- DATA (decorative marquee only — page content is static HTML for SEO) ---------- */
+
+  var WORK_SHOTS = [
+    { href: "https://anamoulrouf.com/sharetrip", src: "https://anamoulrouf.com/img/st-app.png", label: "ShareTrip · Travel" },
+    { href: "https://anamoulrouf.com/tl-kys", src: "https://anamoulrouf.com/img/tl-kys.png", label: "Truck Lagbe · Logistics" },
+    { href: "https://anamoulrouf.com/sick", src: "https://anamoulrouf.com/img/sick-01.png", label: "Sick.org · Health" },
+    { href: "https://anamoulrouf.com/comingsoon", src: "https://anamoulrouf.com/img/kap-games.png", label: "KAP Games · Web3" },
+    { href: "https://anamoulrouf.com/comingsoon", src: "https://anamoulrouf.com/img/ces-01.png", label: "COSMOS TMS · AI Logistics" },
+    { href: "https://anamoulrouf.com/jobike", src: "https://anamoulrouf.com/img/jobike-app.png", label: "Jobike · Mobility" },
+    { href: "https://anamoulrouf.com/rinkel", src: "https://anamoulrouf.com/img/rinkel-0.png", label: "Rinkel · e-Commerce" },
+    { href: "https://anamoulrouf.com/airqi", src: "https://anamoulrouf.com/img/air-aq.png", label: "AirQI · AQI App"},
+    { href: "https://anamoulrouf.com/workd", src: "https://anamoulrouf.com/img/workd-webapp.png", label: "Workd · Careers" }
+  ];
+
+  /* ---------- BUILD: marquee rows ---------- */
+  function buildRow(rowEl, shots, repeats) {
+    var frag = document.createDocumentFragment();
+    for (var r = 0; r < repeats; r++) {
+      shots.forEach(function (s) {
+        var link = document.createElement("a");
+        link.href = s.href; 
+        link.className = "work-links";
+
+        var tile = document.createElement("div");
+        tile.className = "marquee-tile";
+
+        var img = document.createElement("img");
+        img.src = s.src; img.alt = s.label; img.loading = "lazy";
+
+        var label = document.createElement("span");
+        label.className = "marquee-label"; label.textContent = s.label;
+
+        // Put image and label inside the link
+        tile.appendChild(img);
+        tile.appendChild(label);
+
+        // Put link inside tile
+        link.appendChild(tile);
+
+        frag.appendChild(link);
+      });
+    }
+    rowEl.appendChild(frag);
+  }
+  buildRow(document.getElementById("marquee-row-1"), WORK_SHOTS.slice(0, 4), 3);
+  buildRow(document.getElementById("marquee-row-2"), WORK_SHOTS.slice(4), 4);
+
+  if (prefersReduced) {
+    // Show everything statically, skip all motion.
+    document.querySelectorAll(".fade-in").forEach(function (el) {
+      el.style.opacity = el.getAttribute("data-final-opacity") || "1";
+    });
+    return;
+  }
+
+  /* ---------- ANIM: FadeIn (whileInView equivalent) ---------- */
+  document.querySelectorAll("[data-fade]").forEach(function (el) {
+    var delay = parseFloat(el.getAttribute("data-delay") || "0");
+    var duration = parseFloat(el.getAttribute("data-duration") || "0.7");
+    var x = parseFloat(el.getAttribute("data-x") || "0");
+    var y = parseFloat(el.getAttribute("data-y") || "30");
+    var finalOpacity = parseFloat(el.getAttribute("data-final-opacity") || "1");
+    gsap.fromTo(el,
+      { opacity: 0, x: x, y: y },
+      {
+        opacity: finalOpacity, x: 0, y: 0,
+        duration: duration, delay: delay, ease: GSAP_EASE,
+        scrollTrigger: { trigger: el, start: "top bottom+=50px", once: true }
+      }
+    );
+  });
+
+  /* ---------- ANIM: scroll-linked marquee ---------- */
+  var marqueeSection = document.querySelector(".marquee-section");
+  var row1 = document.getElementById("marquee-row-1");
+  var row2 = document.getElementById("marquee-row-2");
+  var marqueeTicking = false;
+  function updateMarquee() {
+    marqueeTicking = false;
+    var rect = marqueeSection.getBoundingClientRect();
+    var sectionTop = rect.top + window.scrollY;
+    var offset = (window.scrollY - sectionTop + window.innerHeight) * 0.3;
+    row1.style.transform = "translateX(" + (offset - 200) + "px)";
+    row2.style.transform = "translateX(" + (-(offset - 200)) + "px)";
+  }
+  window.addEventListener("scroll", function () {
+    if (!marqueeTicking) { marqueeTicking = true; requestAnimationFrame(updateMarquee); }
+  }, { passive: true });
+  updateMarquee();
+
+  /* ---------- ANIM: character-by-character text reveal ---------- */
+  var aboutText = document.getElementById("about-text");
+  var raw = aboutText.textContent;
+  aboutText.textContent = "";
+  var frag = document.createDocumentFragment();
+  raw.split(" ").forEach(function (word, wi, arr) {
+    var w = document.createElement("span");
+    w.className = "word";
+    word.split("").forEach(function (c) {
+      var s = document.createElement("span");
+      s.className = "char";
+      s.textContent = c;
+      w.appendChild(s);
+    });
+    frag.appendChild(w);
+    if (wi < arr.length - 1) frag.appendChild(document.createTextNode(" "));
+  });
+  aboutText.appendChild(frag);
+
+  gsap.to(aboutText.querySelectorAll(".char"), {
+    opacity: 1,
+    ease: "none",
+    stagger: 0.4,            // relative spacing; scrub maps it onto scroll
+    scrollTrigger: {
+      trigger: aboutText,
+      start: "top 80%",      // matches offset ['start 0.8', ...]
+      end: "bottom 20%",     // ... 'end 0.2']
+      scrub: true
+    }
+  });
+
+  /* ---------- ANIM: sticky card stack scaling ---------- */
+  var stack = document.getElementById("projects-stack");
+  var cards = document.querySelectorAll(".project-card");
+  var totalCards = cards.length;
+  cards.forEach(function (card, index) {
+    var targetScale = 1 - (totalCards - 1 - index) * 0.03;
+    gsap.fromTo(card,
+      { scale: 1 },
+      {
+        scale: targetScale,
+        ease: "none",
+        scrollTrigger: {
+          trigger: stack,
+          start: function () {
+            // begins when this card's share of the stack starts (index / total)
+            var stackHeight = stack.offsetHeight;
+            return "top+=" + (stackHeight * index / totalCards) + " top";
+          },
+          end: "bottom bottom",
+          scrub: true,
+          invalidateOnRefresh: true
+        }
+      }
+    );
+  });
+
+  /* ---------- INTERACTION: magnetic portrait ---------- */
+  var magnet = document.querySelector("[data-magnet]");
+  if (magnet && window.matchMedia("(pointer: fine)").matches) {
+    var padding = parseFloat(magnet.getAttribute("data-padding") || "150");
+    var strength = parseFloat(magnet.getAttribute("data-strength") || "3");
+    var ACTIVE = "transform 0.3s ease-out";
+    var INACTIVE = "transform 0.6s ease-in-out";
+    window.addEventListener("mousemove", function (e) {
+      var r = magnet.getBoundingClientRect();
+      var cx = r.left + r.width / 2;
+      var cy = r.top + r.height / 2;
+      var inside =
+        Math.abs(e.clientX - cx) < r.width / 2 + padding &&
+        Math.abs(e.clientY - cy) < r.height / 2 + padding;
+      if (inside) {
+        magnet.style.transition = ACTIVE;
+        magnet.style.transform =
+          "translate3d(" + ((e.clientX - cx) / strength) + "px, " +
+          ((e.clientY - cy) / strength) + "px, 0)";
+      } else {
+        magnet.style.transition = INACTIVE;
+        magnet.style.transform = "translate3d(0, 0, 0)";
+      }
+    }, { passive: true });
+  }
+
+  /* Recalculate ScrollTrigger positions once images settle */
+  window.addEventListener("load", function () { ScrollTrigger.refresh(); });
+})();
+</script>
+</body>
+</html>
